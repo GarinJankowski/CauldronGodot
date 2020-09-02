@@ -1,0 +1,90 @@
+Name	Turns	G/B	Flags			
+Strength Up	0	Good	"gainStat: Strength, Val"			
+Dexterity Up	0	Good	"gainStat: Dexterity, Val"			
+Intelligence Up	0	Good	"gainStat: Intelligence, Val"			
+Max Health Up	0	Good	"gainStat: Max Health, Val"			
+Max Mana Up	0	Good	"gainStat: Max Mana, Val"			
+Strength Down	0	Bad	"gainStat: Strength, Val"			
+Dexterity Down	0	Bad	"gainStat: Dexterity, Val"			
+Intelligence Down	0	Bad	"gainStat: Intelligence, Val"			
+Max Health Down	0	Bad	"gainStat: Max Health, Val"			
+Max Mana Down	0	Bad	"gainStat: Max Mana, Val"			
+						
+Gain Health	0	Good	gainHealth: Val			
+Gain Mana	0	Good	gainMana: Val			
+Gain Energy	0	Good	gainEnergy: Val			
+Gain Extra Turns	0	Good	gainExtraTurns: Val			
+Gain Block	0	Good	gainBlock: Val			
+Gain Shield	0	Good	gainShield: Val			
+Lose Health	0	Bad	takeIndirectDamage: Val			
+Lose Energy	0	Bad	gainEnergy: -Val			
+Take Damage	0	Bad	takeDirectDamage: Val			
+						
+Extra Turns	-1	Good	priority 1			
+Deflect	0	Good	priority 2	(trigger)self: decrement		
+Sense	0	Good	priority 3	(trigger)useCard: Sense Energy	(trigger)self: remove	
+Dodge	0	Good	priority 3	(trigger)useCard: Dodge Energy	(trigger)self: remove	
+Elude	0	Good	priority 4			
+Unbreakable	0	Good	priority 5			
+Block	-1	Good	priority 6			
+Shield	-1	Good	priority 7			
+Stranglehold (Attacker)	-1	Good	priority 8	unstackable	(trigger)self: UNIQUEFUNCTION	
+Stranglehold (Target)	-1	Bad	priority 1	replaceable	trigger: Stranglehold (Attacker)	(trigger)self: UNIQUEFUNCTION
+						
+Arise	-1	Good	ally	dealDirectDamage: 2 d 3		
+Dagger with Legs	-1	Good	ally	dealDirectDamage: 1 d Str		
+Hammer with Legs	-1	Good	ally	dealDirectDamage: Str d 2		
+Sword with Legs	-1	Good	ally	dealDirectDamage: 1 d Str		
+Tumefy	-1	Good	ally			
+Rally	-1	Good	ally	everyOther	dealDirectDamage: 1 d Int	
+Decay	-1	Good	ally	gainMana: Int	gainEnergy: -10	
+						
+Attack Heal	0	Good	N/A			
+Charm	0	Good	(trigger)gainMana: Int	(trigger)self: remove		
+Energized	0	Good	N/A			
+Fear	0	Good	action: pierce			
+Focus	0	Good	(end)fill: Spell			
+No Mana Cost	0	Good	N/A			
+Nullify	0	Good	N/A			
+Persist	0	Good	N/A			
+Rat	0	Good	(trigger)useCard: Rat Bite			
+Crab	0	Good	delay	(trigger)useCard: Crab Shell		
+Salamander	0	Good	(trigger)useCard: Salamander Charge	(end)useCard: Salamander Spit		
+Sear	0	Good	(trigger)useCard: Sear Enemy	(trigger)self: remove		
+Spell Shield	0	Good	(trigger)useCard: Repulse Shield	(trigger)self: remove		
+Tireless	0	Good	N/A			
+Tornado	0	Good	gainEnergy: 6			
+Weightless	0	Good	N/A			
+Invisibility	0	Good	N/A			
+Sandstorm	0	Good	takeDirectDamage: 1 d Int	dealDirectDamage: 1 d Int		
+						
+Attack Trap	0	Bad	(trigger)useCard: Attack Trap Triggered	(trigger)self: remove		
+Defend Trap	0	Bad	(trigger)useCard: Defend Trap Triggered	(trigger)self: remove		
+Spell Trap	0	Bad	(trigger)useCard: Spell Trap Triggered	(trigger)self: remove		
+Confuse	0	Bad	N/A			
+Curse	0	Bad	N/A			
+Lose Energy Later	0	Bad	(end)gainEnergy: -Val			
+Shuffle	0	Bad	shuffle	replaceable		
+Spike Trap	0	Bad	action: selfPierce	takeDirectDamage: Val		
+Taunt	0	Bad	N/A			
+Sleep	0	Bad	replaceable	(trigger)self: remove	(end)useCard: Wake Up	
+						
+Augment	-1	Good	N/A			
+Bide	-1	Good	N/A			
+Forget	-1	Good	delay	(trigger)gainMana: Int	(trigger)self: decrement	
+Pummel	-1	Good	N/A			
+Sneak	-1	Good	gainEnergy: Val	(trigger)self: remove		
+Stealth	-1	Good	gainEnergy: Val	(trigger)gainExtraTurns: -effect(Extra_Turns)	(trigger)self: remove	
+Spikes	-1	Good	(trigger)useCard: Spike Enemy	(trigger)self: decrement		
+Thunderstorm	-1	Good	unstackable	manaCost: 2	dealDirectDamage: Val	
+Transmute	-1	Good	gainHealth: -Val	(trigger)useCard: Blood Strike		
+Wasp	-1	Good	N/A			
+Copy	-1	Good	N/A			
+						
+Drown (Target)	-1	Bad	trigger: Drown (Attacker)	(trigger)takeIndirectDamage: Val		
+Drown (Attacker)	-1	Bad	(trigger)manaCost: Val	(trigger)trigger: Drown (Target)		
+Trick (Target)	-1	Bad	unstackable	(trigger)trigger: Trick (Attacker)	(trigger)self: remove	
+Trick (Attacker)	-1	Good	(trigger)useCard: Tricked (Val)	(trigger)self: remove		
+Wound	-1	Bad	takeIndirectDamage: Val	(trigger)takeIndirectDamage: Val		
+						
+Breakpoint	-1	Good	N/A			

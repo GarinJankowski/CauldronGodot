@@ -1,0 +1,534 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://UI/Shapes/question.png" type="Texture" id=1]
+[ext_resource path="res://TIMESS__.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://UI/Shapes/squareshadow.png" type="Texture" id=3]
+[ext_resource path="res://Events/Empty.gd" type="Script" id=4]
+[ext_resource path="res://UI/Gear/scrollIcon_Scroll of Teleportation.png" type="Texture" id=5]
+[ext_resource path="res://UI/Gear/scrollIcon_Scroll of Sight.png" type="Texture" id=6]
+[ext_resource path="res://UI/Shapes/squareglow.png" type="Texture" id=7]
+[ext_resource path="res://UI/Gear/scrollIcon_Scroll of Healing.png" type="Texture" id=8]
+[ext_resource path="res://UI/Gear/scrollIcon_Scroll of Time.png" type="Texture" id=9]
+[ext_resource path="res://Events/scrollArea.gd" type="Script" id=10]
+
+[sub_resource type="DynamicFont" id=1]
+size = 38
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 62, 45 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 40
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 40
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 77, 61 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 55
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 37
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 32
+font_data = ExtResource( 2 )
+
+[node name="eventEmpty" type="Node2D"]
+z_index = 2
+script = ExtResource( 4 )
+
+[node name="right" type="Node2D" parent="."]
+position = Vector2( 866, 781 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow" type="NinePatchRect" parent="right"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -73.0
+margin_top = -51.9999
+margin_right = 622.0
+margin_bottom = 478.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 3 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="question" type="NinePatchRect" parent="right"]
+margin_left = -62.0
+margin_top = -39.0
+margin_right = 231.0
+margin_bottom = 165.0
+rect_scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 1 )
+patch_margin_left = 103
+patch_margin_top = 101
+patch_margin_right = 100
+patch_margin_bottom = 103
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="buttonMoveRight" type="TextureButton" parent="right"]
+margin_left = -66.0
+margin_top = -43.0
+margin_right = 58.0
+margin_bottom = 47.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="glow" type="NinePatchRect" parent="right"]
+visible = false
+modulate = Color( 0.639216, 0.588235, 0.478431, 0.235294 )
+margin_left = -78.0
+margin_top = -55.0
+margin_right = 1402.0
+margin_bottom = 1065.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 7 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="right"]
+margin_left = -53.0
+margin_top = -29.0
+margin_right = 43.0
+margin_bottom = 33.0
+custom_fonts/font = SubResource( 1 )
+text = "Right"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="moveAreaRight" type="Area2D" parent="right"]
+visible = false
+
+[node name="moveCollision" type="CollisionShape2D" parent="right/moveAreaRight"]
+position = Vector2( -4, 2 )
+shape = SubResource( 2 )
+
+[node name="up" type="Node2D" parent="."]
+position = Vector2( 711, 774 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow" type="NinePatchRect" parent="up"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -71.0
+margin_top = -45.9999
+margin_right = 624.0
+margin_bottom = 484.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 3 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="question" type="NinePatchRect" parent="up"]
+margin_left = -60.0
+margin_top = -33.0
+margin_right = 232.0
+margin_bottom = 174.0
+rect_scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 1 )
+patch_margin_left = 97
+patch_margin_top = 100
+patch_margin_right = 99
+patch_margin_bottom = 100
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="buttonMoveUp" type="TextureButton" parent="up"]
+margin_left = -65.0
+margin_top = -38.0
+margin_right = 61.0
+margin_bottom = 55.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="glow" type="NinePatchRect" parent="up"]
+visible = false
+modulate = Color( 0.639216, 0.588235, 0.478431, 0.235294 )
+margin_left = -76.0
+margin_top = -48.0
+margin_right = 1404.0
+margin_bottom = 1072.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 7 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="up"]
+margin_left = -50.0
+margin_top = -23.0
+margin_right = 46.0
+margin_bottom = 39.0
+custom_fonts/font = SubResource( 1 )
+text = "Up"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="moveAreaUp" type="Area2D" parent="up"]
+visible = false
+position = Vector2( 2, 6 )
+
+[node name="moveCollision" type="CollisionShape2D" parent="up/moveAreaUp"]
+position = Vector2( -4, 2 )
+shape = SubResource( 2 )
+
+[node name="where" type="Node2D" parent="."]
+position = Vector2( 784, 677 )
+z_index = 1
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow" type="NinePatchRect" parent="where"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -183.0
+margin_top = -58.9999
+margin_right = 1712.0
+margin_bottom = 471.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 3 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="question" type="NinePatchRect" parent="where"]
+modulate = Color( 0.654902, 0.611765, 0.556863, 1 )
+margin_left = -173.0
+margin_top = -46.0
+margin_right = 724.0
+margin_bottom = 162.0
+rect_scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 1 )
+patch_margin_left = 102
+patch_margin_top = 101
+patch_margin_right = 101
+patch_margin_bottom = 100
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="where"]
+margin_left = -153.0
+margin_top = -36.0
+margin_right = 164.0
+margin_bottom = 26.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 0.843137 )
+text = "Where will you go?"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="teleportation" type="Node2D" parent="."]
+visible = false
+position = Vector2( 492, 733 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="scrollSprite" type="Sprite" parent="teleportation"]
+position = Vector2( 11.625, 4.625 )
+scale = Vector2( 0.153864, 0.153864 )
+texture = ExtResource( 5 )
+
+[node name="buttonTeleportation" type="TextureButton" parent="teleportation"]
+margin_left = -65.7501
+margin_top = -54.0002
+margin_right = 88.2499
+margin_bottom = 67.9998
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="glow" type="NinePatchRect" parent="teleportation"]
+visible = false
+modulate = Color( 0.639216, 0.588235, 0.478431, 0.235294 )
+margin_left = -91.0
+margin_top = -82.0
+margin_right = 924.0
+margin_bottom = 793.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 7 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="teleportation"]
+margin_left = -44.7501
+margin_top = -43.0002
+margin_right = 72.2499
+margin_bottom = 59.9998
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.247059, 0.156863, 0.0588235, 1 )
+text = "Move Up"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="scrollArea" type="Area2D" parent="teleportation"]
+script = ExtResource( 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="teleportation/scrollArea"]
+position = Vector2( 11, 7 )
+shape = SubResource( 5 )
+
+[node name="healing" type="Node2D" parent="."]
+visible = false
+position = Vector2( 492, 733 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="scrollSprite" type="Sprite" parent="healing"]
+position = Vector2( 11.625, 4.625 )
+scale = Vector2( 0.153864, 0.153864 )
+texture = ExtResource( 8 )
+
+[node name="buttonHealing" type="TextureButton" parent="healing"]
+margin_left = -65.7501
+margin_top = -54.0002
+margin_right = 88.2499
+margin_bottom = 67.9998
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="glow" type="NinePatchRect" parent="healing"]
+visible = false
+modulate = Color( 0.639216, 0.588235, 0.478431, 0.235294 )
+margin_left = -91.0
+margin_top = -82.0
+margin_right = 924.0
+margin_bottom = 793.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 7 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="healing"]
+margin_left = -55.7501
+margin_top = -40.0002
+margin_right = 80.2499
+margin_bottom = 55.9998
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color = Color( 0.247059, 0.156863, 0.0588235, 1 )
+text = "Rest"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="scrollArea" type="Area2D" parent="healing"]
+script = ExtResource( 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="healing/scrollArea"]
+position = Vector2( 11, 7 )
+shape = SubResource( 5 )
+
+[node name="sight" type="Node2D" parent="."]
+visible = false
+position = Vector2( 492, 733 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="scrollSprite" type="Sprite" parent="sight"]
+position = Vector2( 11.625, 4.625 )
+scale = Vector2( 0.153864, 0.153864 )
+texture = ExtResource( 6 )
+
+[node name="buttonSight" type="TextureButton" parent="sight"]
+margin_left = -65.7501
+margin_top = -54.0002
+margin_right = 88.2499
+margin_bottom = 67.9998
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="glow" type="NinePatchRect" parent="sight"]
+visible = false
+modulate = Color( 0.639216, 0.588235, 0.478431, 0.235294 )
+margin_left = -91.0
+margin_top = -82.0
+margin_right = 924.0
+margin_bottom = 793.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 7 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="sight"]
+margin_left = -53.7501
+margin_top = -43.0002
+margin_right = 80.2499
+margin_bottom = 54.9998
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0.247059, 0.156863, 0.0588235, 1 )
+text = "Light the Way"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="scrollArea" type="Area2D" parent="sight"]
+script = ExtResource( 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sight/scrollArea"]
+position = Vector2( 11, 7 )
+shape = SubResource( 5 )
+
+[node name="time" type="Node2D" parent="."]
+visible = false
+position = Vector2( 492, 733 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="scrollSprite" type="Sprite" parent="time"]
+position = Vector2( 11.625, 4.625 )
+scale = Vector2( 0.153864, 0.153864 )
+texture = ExtResource( 9 )
+
+[node name="buttonTime" type="TextureButton" parent="time"]
+margin_left = -65.7501
+margin_top = -54.0002
+margin_right = 88.2499
+margin_bottom = 67.9998
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="glow" type="NinePatchRect" parent="time"]
+visible = false
+modulate = Color( 0.639216, 0.588235, 0.478431, 0.235294 )
+margin_left = -91.0
+margin_top = -82.0
+margin_right = 924.0
+margin_bottom = 793.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 7 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="time"]
+margin_left = -53.7501
+margin_top = -43.0002
+margin_right = 80.2499
+margin_bottom = 54.9998
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 0.247059, 0.156863, 0.0588235, 1 )
+text = "Restore the Land"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="scrollArea" type="Area2D" parent="time"]
+script = ExtResource( 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="time/scrollArea"]
+position = Vector2( 11, 7 )
+shape = SubResource( 5 )
+[connection signal="pressed" from="right/buttonMoveRight" to="." method="_on_buttonMoveRight_pressed"]
+[connection signal="area_entered" from="right/moveAreaRight" to="." method="_on_moveAreaRight_area_entered"]
+[connection signal="area_exited" from="right/moveAreaRight" to="." method="_on_moveAreaRight_area_exited"]
+[connection signal="pressed" from="up/buttonMoveUp" to="." method="_on_buttonMoveUp_pressed"]
+[connection signal="area_entered" from="up/moveAreaUp" to="." method="_on_moveAreaUp_area_entered"]
+[connection signal="area_exited" from="up/moveAreaUp" to="." method="_on_moveAreaUp_area_exited"]
+[connection signal="pressed" from="teleportation/buttonTeleportation" to="." method="_on_buttonTeleportation_pressed"]
+[connection signal="area_entered" from="teleportation/scrollArea" to="teleportation/scrollArea" method="_on_scrollArea_area_entered"]
+[connection signal="area_exited" from="teleportation/scrollArea" to="teleportation/scrollArea" method="_on_scrollArea_area_exited"]
+[connection signal="pressed" from="healing/buttonHealing" to="." method="_on_buttonHealing_pressed"]
+[connection signal="area_entered" from="healing/scrollArea" to="healing/scrollArea" method="_on_scrollArea_area_entered"]
+[connection signal="area_exited" from="healing/scrollArea" to="healing/scrollArea" method="_on_scrollArea_area_exited"]
+[connection signal="pressed" from="sight/buttonSight" to="." method="_on_buttonSight_pressed"]
+[connection signal="area_entered" from="sight/scrollArea" to="sight/scrollArea" method="_on_scrollArea_area_entered"]
+[connection signal="area_exited" from="sight/scrollArea" to="sight/scrollArea" method="_on_scrollArea_area_exited"]
+[connection signal="pressed" from="time/buttonTime" to="." method="_on_buttonTime_pressed"]
+[connection signal="area_entered" from="time/scrollArea" to="time/scrollArea" method="_on_scrollArea_area_entered"]
+[connection signal="area_exited" from="time/scrollArea" to="time/scrollArea" method="_on_scrollArea_area_exited"]

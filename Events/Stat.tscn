@@ -1,0 +1,395 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://UI/Shapes/question.png" type="Texture" id=1]
+[ext_resource path="res://UI/Shapes/squareshadow.png" type="Texture" id=2]
+[ext_resource path="res://TIMESS__.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Events/Stat.gd" type="Script" id=4]
+[ext_resource path="res://UI/Shapes/squareglow.png" type="Texture" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 55
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 79, 54 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 40
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="str" type="Node2D" parent="."]
+position = Vector2( 319, 790 )
+
+[node name="shadow2" type="NinePatchRect" parent="str"]
+modulate = Color( 0.752941, 0.215686, 1, 0.196078 )
+margin_left = -83.0
+margin_top = -53.9999
+margin_right = 787.0
+margin_bottom = 561.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 2 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="glow" type="NinePatchRect" parent="str"]
+modulate = Color( 1, 0.886275, 0.498039, 0.27451 )
+margin_left = -83.0
+margin_top = -53.9999
+margin_right = 787.0
+margin_bottom = 561.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="question" type="NinePatchRect" parent="str"]
+modulate = Color( 0.847059, 0.67451, 0.215686, 1 )
+margin_left = -71.0
+margin_top = -41.0
+margin_right = 229.0
+margin_bottom = 159.0
+rect_scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 1 )
+patch_margin_left = 99
+patch_margin_top = 97
+patch_margin_right = 102
+patch_margin_bottom = 104
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="buttonStr" type="TextureButton" parent="str"]
+margin_left = -75.0
+margin_top = -45.0
+margin_right = 83.0
+margin_bottom = 63.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="glow2" type="NinePatchRect" parent="str"]
+visible = false
+modulate = Color( 1, 0.886275, 0.498039, 0.117647 )
+margin_left = -95.0
+margin_top = -66.0
+margin_right = 905.0
+margin_bottom = 679.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="str"]
+margin_left = -47.0
+margin_top = -23.0
+margin_right = 49.0
+margin_bottom = 39.0
+custom_fonts/font = SubResource( 1 )
+text = "+Str"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="statAreaStr" type="Area2D" parent="str"]
+visible = false
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="statCollision" type="CollisionShape2D" parent="str/statAreaStr"]
+position = Vector2( 4, 9 )
+shape = SubResource( 2 )
+
+[node name="dex" type="Node2D" parent="."]
+position = Vector2( 507, 800 )
+
+[node name="shadow3" type="NinePatchRect" parent="dex"]
+modulate = Color( 0.752941, 0.215686, 1, 0.196078 )
+margin_left = -77.0
+margin_top = -63.9999
+margin_right = 793.0
+margin_bottom = 551.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 2 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="glow" type="NinePatchRect" parent="dex"]
+modulate = Color( 0.396078, 0.858824, 1, 0.27451 )
+margin_left = -76.0
+margin_top = -64.9999
+margin_right = 794.0
+margin_bottom = 550.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="question" type="NinePatchRect" parent="dex"]
+modulate = Color( 0.392157, 0.737255, 0.941176, 1 )
+margin_left = -65.0
+margin_top = -52.0
+margin_right = 235.0
+margin_bottom = 148.0
+rect_scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 1 )
+patch_margin_left = 102
+patch_margin_top = 98
+patch_margin_right = 99
+patch_margin_bottom = 100
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="buttonDex" type="TextureButton" parent="dex"]
+margin_left = -69.0
+margin_top = -56.0
+margin_right = 89.0
+margin_bottom = 52.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="glow2" type="NinePatchRect" parent="dex"]
+visible = false
+modulate = Color( 0.396078, 0.858824, 1, 0.117647 )
+margin_left = -91.0
+margin_top = -76.0
+margin_right = 914.0
+margin_bottom = 664.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="dex"]
+margin_left = -51.0
+margin_top = -34.0
+margin_right = 72.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 1 )
+text = "+Dex"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="statAreaDex" type="Area2D" parent="dex"]
+visible = false
+position = Vector2( 6, -11 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="statCollision" type="CollisionShape2D" parent="dex/statAreaDex"]
+position = Vector2( 4, 9 )
+shape = SubResource( 2 )
+
+[node name="int" type="Node2D" parent="."]
+position = Vector2( 711, 797 )
+
+[node name="shadow" type="NinePatchRect" parent="int"]
+modulate = Color( 0.752941, 0.215686, 1, 0.196078 )
+margin_left = -84.9999
+margin_top = -59.9999
+margin_right = 785.0
+margin_bottom = 555.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 2 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="glow" type="NinePatchRect" parent="int"]
+modulate = Color( 0.619608, 0.407843, 1, 0.27451 )
+margin_left = -86.0
+margin_top = -58.0
+margin_right = 784.0
+margin_bottom = 557.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="question" type="NinePatchRect" parent="int"]
+modulate = Color( 0.470588, 0.164706, 1, 1 )
+margin_left = -74.0
+margin_top = -47.0
+margin_right = 226.0
+margin_bottom = 153.0
+rect_scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 1 )
+patch_margin_left = 100
+patch_margin_top = 99
+patch_margin_right = 99
+patch_margin_bottom = 103
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="buttonInt" type="TextureButton" parent="int"]
+margin_left = -78.0
+margin_top = -51.0
+margin_right = 80.0
+margin_bottom = 57.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="glow2" type="NinePatchRect" parent="int"]
+visible = false
+modulate = Color( 0.619608, 0.407843, 1, 0.117647 )
+margin_left = -99.0
+margin_top = -71.0
+margin_right = 901.0
+margin_bottom = 674.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="int"]
+margin_left = -49.0
+margin_top = -28.0
+margin_right = 47.0
+margin_bottom = 34.0
+custom_fonts/font = SubResource( 1 )
+text = "+Int"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="statAreaInt" type="Area2D" parent="int"]
+visible = false
+position = Vector2( -3, -6 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="statCollision" type="CollisionShape2D" parent="int/statAreaInt"]
+position = Vector2( 4, 9 )
+shape = SubResource( 2 )
+
+[node name="which" type="Node2D" parent="."]
+position = Vector2( 500, 677 )
+z_index = 1
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow" type="NinePatchRect" parent="which"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -206.0
+margin_top = -51.9999
+margin_right = 2059.0
+margin_bottom = 478.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 2 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="question" type="NinePatchRect" parent="which"]
+modulate = Color( 0.654902, 0.611765, 0.556863, 1 )
+margin_left = -196.0
+margin_top = -39.0
+margin_right = 884.0
+margin_bottom = 174.0
+rect_scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 1 )
+patch_margin_left = 103
+patch_margin_top = 105
+patch_margin_right = 100
+patch_margin_bottom = 102
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="which"]
+margin_left = -176.0
+margin_top = -29.0
+margin_right = 213.0
+margin_bottom = 33.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 0.843137 )
+text = "Which will you choose?"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="str/buttonStr" to="." method="_on_buttonStr_pressed"]
+[connection signal="area_entered" from="str/statAreaStr" to="." method="_on_statAreaStr_area_entered"]
+[connection signal="area_exited" from="str/statAreaStr" to="." method="_on_statAreaStr_area_exited"]
+[connection signal="pressed" from="dex/buttonDex" to="." method="_on_buttonDex_pressed"]
+[connection signal="area_entered" from="dex/statAreaDex" to="." method="_on_statAreaDex_area_entered"]
+[connection signal="area_exited" from="dex/statAreaDex" to="." method="_on_statAreaDex_area_exited"]
+[connection signal="pressed" from="int/buttonInt" to="." method="_on_buttonInt_pressed"]
+[connection signal="area_entered" from="int/statAreaInt" to="." method="_on_statAreaInt_area_entered"]
+[connection signal="area_exited" from="int/statAreaInt" to="." method="_on_statAreaInt_area_exited"]

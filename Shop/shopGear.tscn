@@ -1,0 +1,190 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Shop/shopGear.gd" type="Script" id=1]
+[ext_resource path="res://UI/Gear/weaponIcon.png" type="Texture" id=2]
+[ext_resource path="res://TIMESS__.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://UI/Shapes/squareglow.png" type="Texture" id=4]
+[ext_resource path="res://Shop/visuals/itemcorner.png" type="Texture" id=5]
+[ext_resource path="res://Shop/visuals/geartab.png" type="Texture" id=6]
+[ext_resource path="res://UI/Shapes/question.png" type="Texture" id=7]
+[ext_resource path="res://UI/Shapes/squareshadow.png" type="Texture" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 38
+font_data = ExtResource( 3 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 131, 61 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 20
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="geartab" type="Sprite" parent="."]
+position = Vector2( -109, -60 )
+scale = Vector2( 0.107, 0.107 )
+texture = ExtResource( 6 )
+
+[node name="geartab2" type="Sprite" parent="."]
+position = Vector2( 109, -60 )
+scale = Vector2( 0.107, 0.107 )
+texture = ExtResource( 6 )
+
+[node name="glow" type="NinePatchRect" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0.588235 )
+margin_left = -140.0
+margin_top = -73.0
+margin_right = 2640.0
+margin_bottom = 1367.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Top" type="Node2D" parent="."]
+
+[node name="gearType" type="Sprite" parent="Top"]
+position = Vector2( 0.5, -3.5 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="Top"]
+margin_left = -118.0
+margin_top = -56.0
+margin_right = 119.0
+margin_bottom = 56.0
+custom_fonts/font = SubResource( 1 )
+text = "Gear"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="buttonCard" type="TextureButton" parent="."]
+margin_left = -130.0
+margin_top = -61.0
+margin_right = 131.0
+margin_bottom = 61.0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cardArea" type="Area2D" parent="."]
+
+[node name="cardCollision" type="CollisionShape2D" parent="cardArea"]
+visible = false
+shape = SubResource( 2 )
+
+[node name="itemcorner" type="Sprite" parent="cardArea/cardCollision"]
+position = Vector2( -113, -49 )
+texture = ExtResource( 5 )
+
+[node name="itemcorner" type="Sprite" parent="."]
+visible = false
+position = Vector2( -119, -49 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 5 )
+
+[node name="itemcorner2" type="Sprite" parent="."]
+visible = false
+position = Vector2( -119, 47 )
+rotation = -1.5708
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 5 )
+
+[node name="itemcorner3" type="Sprite" parent="."]
+visible = false
+position = Vector2( 119, -50 )
+rotation = 1.5708
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 5 )
+
+[node name="itemcorner4" type="Sprite" parent="."]
+visible = false
+position = Vector2( 120, 47 )
+rotation = 3.14159
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 5 )
+
+[node name="cost" type="Node2D" parent="."]
+position = Vector2( -69, -28 )
+rotation = -0.12284
+
+[node name="squareshadow" type="NinePatchRect" parent="cost"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -65.0
+margin_top = -49.0
+margin_right = 606.0
+margin_bottom = 413.0
+rect_scale = Vector2( 0.08, 0.08 )
+texture = ExtResource( 8 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="glow" type="NinePatchRect" parent="cost"]
+visible = false
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -68.0
+margin_top = -53.0
+margin_right = 535.0
+margin_bottom = 403.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="question" type="NinePatchRect" parent="cost"]
+modulate = Color( 0.905882, 0.815686, 0.411765, 1 )
+margin_left = -61.0
+margin_top = -45.0
+margin_right = 392.0
+margin_bottom = 249.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 7 )
+patch_margin_left = 103
+patch_margin_top = 101
+patch_margin_right = 100
+patch_margin_bottom = 103
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="cost"]
+margin_left = -63.0
+margin_top = -43.0
+margin_right = -13.0
+margin_bottom = -19.0
+custom_fonts/font = SubResource( 6 )
+text = "g"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="buttonCard" to="." method="_on_buttonCard_pressed"]
+[connection signal="area_entered" from="cardArea" to="." method="_on_cardArea_area_entered"]
+[connection signal="area_exited" from="cardArea" to="." method="_on_cardArea_area_exited"]

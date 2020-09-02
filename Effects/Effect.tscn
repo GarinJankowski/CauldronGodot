@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Effects/Effect.gd" type="Script" id=2]
+[ext_resource path="res://TIMESS__.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="StreamTexture" id=1]
+flags = 4
+load_path = "res://.import/effect_Block.png-21b8aafa5f8e3253c83888c317b91cc2.stex"
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 3 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 16, 11 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="tick" type="Node2D" parent="."]
+
+[node name="effectSprite" type="Sprite" parent="tick"]
+position = Vector2( 1.19209e-07, -2.84217e-14 )
+scale = Vector2( 0.15, 0.15 )
+texture = SubResource( 1 )
+
+[node name="effectSprite2" type="Sprite" parent="tick"]
+visible = false
+position = Vector2( -33, 12 )
+scale = Vector2( 0.15, 0.15 )
+texture = SubResource( 1 )
+
+[node name="amount" type="Label" parent="tick"]
+margin_left = -47.0
+margin_top = -9.0
+margin_right = -9.0
+margin_bottom = 10.0
+custom_fonts/font = SubResource( 2 )
+text = "###"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="effectArea" type="Area2D" parent="."]
+position = Vector2( -30, 0 )
+collision_layer = 4
+collision_mask = 4
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="effectArea"]
+shape = SubResource( 3 )
+[connection signal="area_entered" from="effectArea" to="." method="_on_effectArea_area_entered"]
+[connection signal="area_exited" from="effectArea" to="." method="_on_effectArea_area_exited"]

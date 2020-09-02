@@ -1,0 +1,396 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://Card/CardSprites/cardCost.png" type="Texture" id=1]
+[ext_resource path="res://Card/CardIcons/cardIcon_Smack.png" type="Texture" id=2]
+[ext_resource path="res://Card/CardSprites/cardShadow.png" type="Texture" id=3]
+[ext_resource path="res://Bag/displayCard.gd" type="Script" id=4]
+[ext_resource path="res://Card/CardSprites/card_Attack.png" type="Texture" id=5]
+[ext_resource path="res://Modifiers/mod_Push.png" type="Texture" id=6]
+[ext_resource path="res://Modifiers/mod_Void.png" type="Texture" id=7]
+[ext_resource path="res://TIMESS__.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Modifiers/mod_Link.png" type="Texture" id=9]
+[ext_resource path="res://Modifiers/mod_Stay.png" type="Texture" id=10]
+[ext_resource path="res://Modifiers/mod_Burn.png" type="Texture" id=11]
+[ext_resource path="res://Modifiers/mod_Flow.png" type="Texture" id=12]
+[ext_resource path="res://Modifiers/mod_Copy.png" type="Texture" id=13]
+[ext_resource path="res://Bag/modButton.gd" type="Script" id=14]
+
+[sub_resource type="DynamicFont" id=1]
+size = 44
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 26
+font_data = ExtResource( 8 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 17, 18 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 32
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 134, 187 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="Shadow" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.392157 )
+position = Vector2( -2.5, 0 )
+scale = Vector2( 0.444, 0.415238 )
+texture = ExtResource( 3 )
+
+[node name="Top" type="Node2D" parent="."]
+
+[node name="cardSprite" type="Sprite" parent="Top"]
+modulate = Color( 0.909804, 0.909804, 0.909804, 1 )
+scale = Vector2( 0.357, 0.357 )
+texture = ExtResource( 5 )
+
+[node name="cardCost" type="Sprite" parent="Top"]
+modulate = Color( 0.105882, 0.105882, 0.105882, 0.380392 )
+position = Vector2( 0.468687, 145 )
+scale = Vector2( 0.357, 0.357 )
+texture = ExtResource( 1 )
+
+[node name="cardIcon" type="Sprite" parent="Top"]
+visible = false
+modulate = Color( 1, 1, 1, 0.0980392 )
+position = Vector2( -3.8147e-06, 3.8147e-06 )
+scale = Vector2( 0.357, 0.357 )
+texture = ExtResource( 2 )
+
+[node name="nameText" type="Label" parent="Top"]
+margin_left = -123.0
+margin_top = -177.0
+margin_right = 122.0
+margin_bottom = -109.0
+custom_fonts/font = SubResource( 1 )
+text = "Name"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="descriptionText" type="Label" parent="Top"]
+margin_left = -120.0
+margin_top = -65.0
+margin_right = 120.0
+margin_bottom = 109.0
+custom_fonts/font = SubResource( 2 )
+text = "Description"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="costText" type="Label" parent="Top"]
+margin_left = -123.0
+margin_top = 111.0
+margin_right = 123.0
+margin_bottom = 179.0
+custom_fonts/font = SubResource( 2 )
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mods" type="Node2D" parent="."]
+position = Vector2( -512, -472 )
+
+[node name="forgeButtonsCard" type="Node2D" parent="Mods"]
+
+[node name="Burn" type="Node2D" parent="Mods/forgeButtonsCard"]
+position = Vector2( 350, 911 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="modButtonCard" type="TextureButton" parent="Mods/forgeButtonsCard/Burn"]
+margin_left = 71.0
+margin_top = -543.0
+margin_right = 105.0
+margin_bottom = -507.0
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod" type="Node2D" parent="Mods/forgeButtonsCard/Burn"]
+position = Vector2( 88, -529 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="button_Mod" type="Sprite" parent="Mods/forgeButtonsCard/Burn/mod"]
+scale = Vector2( 0.12, 0.12 )
+texture = ExtResource( 11 )
+
+[node name="modAreaDisplay" type="Area2D" parent="Mods/forgeButtonsCard/Burn"]
+position = Vector2( 96, -532 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mods/forgeButtonsCard/Burn/modAreaDisplay"]
+position = Vector2( -8, 7 )
+shape = SubResource( 3 )
+
+[node name="Flow" type="Node2D" parent="Mods/forgeButtonsCard"]
+position = Vector2( 423, 914 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="modButtonCard" type="TextureButton" parent="Mods/forgeButtonsCard/Flow"]
+margin_left = 34.0
+margin_top = -546.0
+margin_right = 68.0
+margin_bottom = -510.0
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod" type="Node2D" parent="Mods/forgeButtonsCard/Flow"]
+position = Vector2( 52, -529 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="button_Mod" type="Sprite" parent="Mods/forgeButtonsCard/Flow/mod"]
+scale = Vector2( 0.12, 0.12 )
+texture = ExtResource( 12 )
+
+[node name="modAreaDisplay" type="Area2D" parent="Mods/forgeButtonsCard/Flow"]
+position = Vector2( 96, -532 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mods/forgeButtonsCard/Flow/modAreaDisplay"]
+position = Vector2( -45, 4 )
+shape = SubResource( 3 )
+
+[node name="Stay" type="Node2D" parent="Mods/forgeButtonsCard"]
+position = Vector2( 530, 911 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="modButtonCard" type="TextureButton" parent="Mods/forgeButtonsCard/Stay"]
+margin_left = 71.0
+margin_top = -543.0
+margin_right = 105.0
+margin_bottom = -507.0
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod" type="Node2D" parent="Mods/forgeButtonsCard/Stay"]
+position = Vector2( 90, -526 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="button_Mod" type="Sprite" parent="Mods/forgeButtonsCard/Stay/mod"]
+scale = Vector2( 0.12, 0.12 )
+texture = ExtResource( 10 )
+
+[node name="text" type="Label" parent="Mods/forgeButtonsCard/Stay/mod"]
+margin_left = -34.0
+margin_top = -20.0
+margin_right = 31.0
+margin_bottom = 16.0
+rect_pivot_offset = Vector2( 32, 19 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.184314, 0.854902, 0.109804, 1 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="modAreaDisplay" type="Area2D" parent="Mods/forgeButtonsCard/Stay"]
+position = Vector2( 96, -532 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mods/forgeButtonsCard/Stay/modAreaDisplay"]
+position = Vector2( -8, 7 )
+shape = SubResource( 3 )
+
+[node name="Void" type="Node2D" parent="Mods/forgeButtonsCard"]
+position = Vector2( 421, 911 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="modButtonCard" type="TextureButton" parent="Mods/forgeButtonsCard/Void"]
+margin_left = 71.0
+margin_top = -543.0
+margin_right = 105.0
+margin_bottom = -507.0
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod" type="Node2D" parent="Mods/forgeButtonsCard/Void"]
+position = Vector2( 88, -526 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="button_Mod" type="Sprite" parent="Mods/forgeButtonsCard/Void/mod"]
+scale = Vector2( 0.12, 0.12 )
+texture = ExtResource( 7 )
+
+[node name="modAreaDisplay" type="Area2D" parent="Mods/forgeButtonsCard/Void"]
+position = Vector2( 96, -532 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mods/forgeButtonsCard/Void/modAreaDisplay"]
+position = Vector2( -8, 7 )
+shape = SubResource( 3 )
+
+[node name="Link" type="Node2D" parent="Mods/forgeButtonsCard"]
+position = Vector2( 314, 911 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="modButtonCard" type="TextureButton" parent="Mods/forgeButtonsCard/Link"]
+margin_left = 71.0
+margin_top = -543.0
+margin_right = 105.0
+margin_bottom = -507.0
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod" type="Node2D" parent="Mods/forgeButtonsCard/Link"]
+position = Vector2( 87, -525 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="button_Mod" type="Sprite" parent="Mods/forgeButtonsCard/Link/mod"]
+scale = Vector2( 0.12, 0.12 )
+texture = ExtResource( 9 )
+
+[node name="text" type="Label" parent="Mods/forgeButtonsCard/Link/mod"]
+margin_left = -35.0
+margin_top = -21.0
+margin_right = 37.0
+margin_bottom = 15.0
+rect_pivot_offset = Vector2( 36, 19 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="modAreaDisplay" type="Area2D" parent="Mods/forgeButtonsCard/Link"]
+position = Vector2( 96, -532 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mods/forgeButtonsCard/Link/modAreaDisplay"]
+position = Vector2( -8, 7 )
+shape = SubResource( 3 )
+
+[node name="Push" type="Node2D" parent="Mods/forgeButtonsCard"]
+position = Vector2( 456, 911 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="modButtonCard" type="TextureButton" parent="Mods/forgeButtonsCard/Push"]
+margin_left = 71.0
+margin_top = -543.0
+margin_right = 105.0
+margin_bottom = -507.0
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod" type="Node2D" parent="Mods/forgeButtonsCard/Push"]
+position = Vector2( 88, -527 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="button_Mod" type="Sprite" parent="Mods/forgeButtonsCard/Push/mod"]
+scale = Vector2( 0.12, 0.12 )
+texture = ExtResource( 6 )
+
+[node name="modAreaDisplay" type="Area2D" parent="Mods/forgeButtonsCard/Push"]
+position = Vector2( 96, -532 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mods/forgeButtonsCard/Push/modAreaDisplay"]
+position = Vector2( -8, 7 )
+shape = SubResource( 3 )
+
+[node name="Copy" type="Node2D" parent="Mods/forgeButtonsCard"]
+position = Vector2( 492, 911 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="modButtonCard" type="TextureButton" parent="Mods/forgeButtonsCard/Copy"]
+margin_left = 71.0
+margin_top = -543.0
+margin_right = 105.0
+margin_bottom = -507.0
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod" type="Node2D" parent="Mods/forgeButtonsCard/Copy"]
+position = Vector2( 89, -526 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="button_Mod" type="Sprite" parent="Mods/forgeButtonsCard/Copy/mod"]
+scale = Vector2( 0.12, 0.12 )
+texture = ExtResource( 13 )
+
+[node name="modAreaDisplay" type="Area2D" parent="Mods/forgeButtonsCard/Copy"]
+position = Vector2( 96, -532 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mods/forgeButtonsCard/Copy/modAreaDisplay"]
+position = Vector2( -8, 7 )
+shape = SubResource( 3 )
+
+[node name="displayArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="displayArea"]
+visible = false
+shape = SubResource( 6 )
+[connection signal="pressed" from="Mods/forgeButtonsCard/Burn/modButtonCard" to="Mods/forgeButtonsCard/Burn/modButtonCard" method="_on_modButtonCard_pressed"]
+[connection signal="area_entered" from="Mods/forgeButtonsCard/Burn/modAreaDisplay" to="Mods/forgeButtonsCard/Burn/modButtonCard" method="_on_modAreaDisplay_area_entered"]
+[connection signal="area_exited" from="Mods/forgeButtonsCard/Burn/modAreaDisplay" to="Mods/forgeButtonsCard/Burn/modButtonCard" method="_on_modAreaDisplay_area_exited"]
+[connection signal="pressed" from="Mods/forgeButtonsCard/Flow/modButtonCard" to="Mods/forgeButtonsCard/Flow/modButtonCard" method="_on_modButtonCard_pressed"]
+[connection signal="area_entered" from="Mods/forgeButtonsCard/Flow/modAreaDisplay" to="Mods/forgeButtonsCard/Flow/modButtonCard" method="_on_modAreaDisplay_area_entered"]
+[connection signal="area_exited" from="Mods/forgeButtonsCard/Flow/modAreaDisplay" to="Mods/forgeButtonsCard/Flow/modButtonCard" method="_on_modAreaDisplay_area_exited"]
+[connection signal="pressed" from="Mods/forgeButtonsCard/Stay/modButtonCard" to="Mods/forgeButtonsCard/Stay/modButtonCard" method="_on_modButtonCard_pressed"]
+[connection signal="area_entered" from="Mods/forgeButtonsCard/Stay/modAreaDisplay" to="Mods/forgeButtonsCard/Stay/modButtonCard" method="_on_modAreaDisplay_area_entered"]
+[connection signal="area_exited" from="Mods/forgeButtonsCard/Stay/modAreaDisplay" to="Mods/forgeButtonsCard/Stay/modButtonCard" method="_on_modAreaDisplay_area_exited"]
+[connection signal="pressed" from="Mods/forgeButtonsCard/Void/modButtonCard" to="Mods/forgeButtonsCard/Void/modButtonCard" method="_on_modButtonCard_pressed"]
+[connection signal="area_entered" from="Mods/forgeButtonsCard/Void/modAreaDisplay" to="Mods/forgeButtonsCard/Void/modButtonCard" method="_on_modAreaDisplay_area_entered"]
+[connection signal="area_exited" from="Mods/forgeButtonsCard/Void/modAreaDisplay" to="Mods/forgeButtonsCard/Void/modButtonCard" method="_on_modAreaDisplay_area_exited"]
+[connection signal="pressed" from="Mods/forgeButtonsCard/Link/modButtonCard" to="Mods/forgeButtonsCard/Link/modButtonCard" method="_on_modButtonCard_pressed"]
+[connection signal="area_entered" from="Mods/forgeButtonsCard/Link/modAreaDisplay" to="Mods/forgeButtonsCard/Link/modButtonCard" method="_on_modAreaDisplay_area_entered"]
+[connection signal="area_exited" from="Mods/forgeButtonsCard/Link/modAreaDisplay" to="Mods/forgeButtonsCard/Link/modButtonCard" method="_on_modAreaDisplay_area_exited"]
+[connection signal="pressed" from="Mods/forgeButtonsCard/Push/modButtonCard" to="Mods/forgeButtonsCard/Push/modButtonCard" method="_on_modButtonCard_pressed"]
+[connection signal="area_entered" from="Mods/forgeButtonsCard/Push/modAreaDisplay" to="Mods/forgeButtonsCard/Push/modButtonCard" method="_on_modAreaDisplay_area_entered"]
+[connection signal="area_exited" from="Mods/forgeButtonsCard/Push/modAreaDisplay" to="Mods/forgeButtonsCard/Push/modButtonCard" method="_on_modAreaDisplay_area_exited"]
+[connection signal="pressed" from="Mods/forgeButtonsCard/Copy/modButtonCard" to="Mods/forgeButtonsCard/Copy/modButtonCard" method="_on_modButtonCard_pressed"]
+[connection signal="area_entered" from="Mods/forgeButtonsCard/Copy/modAreaDisplay" to="Mods/forgeButtonsCard/Copy/modButtonCard" method="_on_modAreaDisplay_area_entered"]
+[connection signal="area_exited" from="Mods/forgeButtonsCard/Copy/modAreaDisplay" to="Mods/forgeButtonsCard/Copy/modButtonCard" method="_on_modAreaDisplay_area_exited"]
+[connection signal="area_entered" from="displayArea" to="." method="_on_displayArea_area_entered"]
+[connection signal="area_exited" from="displayArea" to="." method="_on_displayArea_area_exited"]

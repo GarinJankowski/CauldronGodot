@@ -1,0 +1,6 @@
+Claws	Attacks deal 2d(Mut) extra damage.	enemyMutation
+Spines	Getting attacked deals (Mut)+3 damage.	enemyMutation
+Exoskeleton	Gain 1d(Mut/2) block every turn.	enemyMutation
+Reconstruction	"Instead of dying, lose 2 Mut."	enemyMutation
+Carnivore	Gain (Mut)/2 Max Health after every combat.	N/A
+Camouflage	Gain 8 +(Mut)x2 Energy at the start of combat.	N/A

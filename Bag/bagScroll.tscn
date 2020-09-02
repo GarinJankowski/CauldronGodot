@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Bag/UI Elements/bagScroll.png" type="Texture" id=1]
+[ext_resource path="res://Bag/bagScroll.gd" type="Script" id=2]
+[ext_resource path="res://Bag/UI Elements/button_Bag.png" type="Texture" id=3]
+[ext_resource path="res://TIMESS__.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 22
+font_data = ExtResource( 4 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 12, 12 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.24, 0.24 )
+texture = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -103.0
+margin_top = -13.0
+margin_right = 104.0
+margin_bottom = 12.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.247059, 0.156863, 0.0588235, 1 )
+text = "Scroll of Teleportation"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="dropbutton" type="Node2D" parent="."]
+position = Vector2( 120, 0 )
+
+[node name="x" type="Sprite" parent="dropbutton"]
+position = Vector2( 1.52588e-05, 1.14441e-05 )
+scale = Vector2( 0.024, 0.024 )
+texture = ExtResource( 3 )
+
+[node name="drop" type="TextureButton" parent="dropbutton"]
+margin_left = -12.0
+margin_top = -12.0
+margin_right = 12.0
+margin_bottom = 12.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="dropArea" type="Area2D" parent="dropbutton"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="dropbutton/dropArea"]
+visible = false
+shape = SubResource( 2 )
+[connection signal="button_down" from="dropbutton/drop" to="." method="_on_drop_button_down"]
+[connection signal="button_up" from="dropbutton/drop" to="." method="_on_drop_button_up"]
+[connection signal="pressed" from="dropbutton/drop" to="." method="_on_drop_pressed"]
+[connection signal="area_entered" from="dropbutton/dropArea" to="." method="_on_dropArea_area_entered"]
+[connection signal="area_exited" from="dropbutton/dropArea" to="." method="_on_dropArea_area_exited"]

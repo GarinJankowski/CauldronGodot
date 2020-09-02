@@ -1,0 +1,234 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Shop/shopCard.gd" type="Script" id=1]
+[ext_resource path="res://TIMESS__.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Shop/visuals/itemcorner.png" type="Texture" id=3]
+[ext_resource path="res://Map/whitesquare.png" type="Texture" id=4]
+[ext_resource path="res://UI/Shapes/squareglow.png" type="Texture" id=5]
+[ext_resource path="res://UI/Shapes/question.png" type="Texture" id=6]
+[ext_resource path="res://UI/Shapes/squareshadow.png" type="Texture" id=7]
+[ext_resource path="res://Card/CardSprites/card_Attack.png" type="Texture" id=8]
+[ext_resource path="res://Card/CardSprites/cardCost.png" type="Texture" id=9]
+[ext_resource path="res://Card/CardSprites/cardShadow.png" type="Texture" id=10]
+
+[sub_resource type="DynamicFont" id=7]
+size = 24
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 14
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 79, 109 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 20
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="glow" type="NinePatchRect" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0.588235 )
+margin_left = -89.0
+margin_top = -119.0
+margin_right = 1671.0
+margin_bottom = 2241.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 5 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Top" type="Node2D" parent="."]
+
+[node name="Shadow" type="Sprite" parent="Top"]
+modulate = Color( 1, 1, 1, 0.627451 )
+position = Vector2( -1, 2 )
+scale = Vector2( 0.251333, 0.233333 )
+texture = ExtResource( 10 )
+
+[node name="cardSprite" type="Sprite" parent="Top"]
+modulate = Color( 0.909804, 0.909804, 0.909804, 1 )
+scale = Vector2( 0.199833, 0.199833 )
+texture = ExtResource( 8 )
+
+[node name="cardCost" type="Sprite" parent="Top"]
+modulate = Color( 0.105882, 0.105882, 0.105882, 0.380392 )
+position = Vector2( 0.468687, 81 )
+scale = Vector2( 0.20125, 0.199833 )
+texture = ExtResource( 9 )
+
+[node name="nameBack" type="Sprite" parent="Top"]
+modulate = Color( 0, 0, 0, 0 )
+position = Vector2( -0.500003, -80 )
+scale = Vector2( 0.139, 0.0384583 )
+texture = ExtResource( 4 )
+
+[node name="costBack" type="Sprite" parent="Top"]
+modulate = Color( 0, 0, 0, 0 )
+position = Vector2( -7.62939e-06, 81 )
+scale = Vector2( 0.138, 0.0384583 )
+texture = ExtResource( 4 )
+
+[node name="nameText" type="Label" parent="Top"]
+margin_left = -70.0
+margin_top = -100.0
+margin_right = 69.0
+margin_bottom = -60.0
+custom_fonts/font = SubResource( 7 )
+text = "Name"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="descriptionText" type="Label" parent="Top"]
+margin_left = -67.0
+margin_top = -38.0
+margin_right = 67.0
+margin_bottom = 63.0
+custom_fonts/font = SubResource( 8 )
+text = "Description"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="costText" type="Label" parent="Top"]
+margin_left = -69.0
+margin_top = 61.0
+margin_right = 69.0
+margin_bottom = 100.0
+custom_fonts/font = SubResource( 8 )
+text = "Cost"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="buttonCard" type="TextureButton" parent="."]
+margin_left = -79.0
+margin_top = -109.0
+margin_right = 79.0
+margin_bottom = 109.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cardArea" type="Area2D" parent="."]
+
+[node name="cardCollision" type="CollisionShape2D" parent="cardArea"]
+visible = false
+shape = SubResource( 9 )
+
+[node name="itemcorner" type="Sprite" parent="."]
+position = Vector2( -71, -100 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 3 )
+
+[node name="itemcorner2" type="Sprite" parent="."]
+position = Vector2( -71, 101 )
+rotation = -1.5708
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 3 )
+
+[node name="itemcorner3" type="Sprite" parent="."]
+position = Vector2( 70, -101 )
+rotation = 1.5708
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 3 )
+
+[node name="itemcorner4" type="Sprite" parent="."]
+position = Vector2( 71, 101 )
+rotation = -3.14159
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 3 )
+
+[node name="cost" type="Node2D" parent="."]
+position = Vector2( -25, -83 )
+rotation = -0.12284
+
+[node name="squareshadow" type="NinePatchRect" parent="cost"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -65.0
+margin_top = -49.0
+margin_right = 606.0
+margin_bottom = 413.0
+rect_scale = Vector2( 0.08, 0.08 )
+texture = ExtResource( 7 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="glow" type="NinePatchRect" parent="cost"]
+visible = false
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -66.3111
+margin_top = -50.5057
+margin_right = 1049.69
+margin_bottom = 793.494
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 5 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="question" type="NinePatchRect" parent="cost"]
+modulate = Color( 0.905882, 0.815686, 0.411765, 1 )
+margin_left = -61.0
+margin_top = -45.0
+margin_right = 392.0
+margin_bottom = 249.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 6 )
+patch_margin_left = 103
+patch_margin_top = 101
+patch_margin_right = 100
+patch_margin_bottom = 103
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="cost"]
+margin_left = -60.0
+margin_top = -44.0
+margin_right = -17.0
+margin_bottom = -17.0
+custom_fonts/font = SubResource( 10 )
+text = "g"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="buttonCard" to="." method="_on_buttonCard_pressed"]
+[connection signal="area_entered" from="cardArea" to="." method="_on_cardArea_area_entered"]
+[connection signal="area_exited" from="cardArea" to="." method="_on_cardArea_area_exited"]

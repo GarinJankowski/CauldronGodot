@@ -1,0 +1,871 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://UI/Shapes/healthBarRect Back.png" type="Texture" id=1]
+[ext_resource path="res://Character/Character.gd" type="Script" id=2]
+[ext_resource path="res://UI/Shapes/healthBarRect In.png" type="Texture" id=3]
+[ext_resource path="res://UI/Shapes/manaBarRect Back.png" type="Texture" id=4]
+[ext_resource path="res://UI/Shapes/manaBarRect In.png" type="Texture" id=5]
+[ext_resource path="res://Map/whitesquare.png" type="Texture" id=6]
+[ext_resource path="res://UI/Shapes/healthBarRect Front.png" type="Texture" id=7]
+[ext_resource path="res://UI/Shapes/manaBarRect Front.png" type="Texture" id=8]
+[ext_resource path="res://UI/Shapes/energyBarRect Back.png" type="Texture" id=9]
+[ext_resource path="res://UI/Shapes/energyBarRect InLeft.png" type="Texture" id=10]
+[ext_resource path="res://UI/Shapes/energyBarRect InRight.png" type="Texture" id=11]
+[ext_resource path="res://UI/Shapes/energyBarRect Front.png" type="Texture" id=12]
+[ext_resource path="res://UI/Shapes/xpBar Front.png" type="Texture" id=13]
+[ext_resource path="res://UI/Shapes/xpBar Back.png" type="Texture" id=14]
+[ext_resource path="res://TIMESS__.ttf" type="DynamicFontData" id=15]
+[ext_resource path="res://UI/Shapes/statBarRect Back.png" type="Texture" id=16]
+[ext_resource path="res://UI/Shapes/statBarRect Front.png" type="Texture" id=17]
+[ext_resource path="res://UI/Shapes/xpBar In.png" type="Texture" id=18]
+[ext_resource path="res://UI/Shapes/border.png" type="Texture" id=20]
+[ext_resource path="res://UI/Shapes/squareshadow.png" type="Texture" id=21]
+
+[sub_resource type="DynamicFont" id=1]
+size = 18
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 15 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 20
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 15 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 20
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 15 )
+
+[sub_resource type="DynamicFont" id=4]
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 15 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 20
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 15 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 20
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 15 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 20
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 15 )
+
+[node name="Character" type="Node"]
+script = ExtResource( 2 )
+
+[node name="Control" type="Node2D" parent="."]
+position = Vector2( 64, 56 )
+z_index = 2
+
+[node name="topnode" type="Node" parent="Control"]
+
+[node name="Gold" type="Control" parent="Control"]
+margin_left = 3475.0
+margin_top = 998.0
+margin_right = 3515.0
+margin_bottom = 1038.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="GoldBack" type="NinePatchRect" parent="Control/Gold"]
+margin_left = -3080.0
+margin_top = -788.0
+margin_right = -1760.0
+margin_bottom = 92.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 16 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GoldFront" type="NinePatchRect" parent="Control/Gold"]
+modulate = Color( 0.976471, 0.870588, 0, 1 )
+margin_left = -3076.0
+margin_top = -768.0
+margin_right = -2276.0
+margin_bottom = -368.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 17 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Gold" type="Label" parent="Control/Gold"]
+modulate = Color( 1, 1, 1, 0.823529 )
+margin_left = -3086.0
+margin_top = -790.0
+margin_right = -3028.0
+margin_bottom = -767.0
+custom_fonts/font = SubResource( 1 )
+text = "Gold"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Amount" type="Label" parent="Control/Gold"]
+modulate = Color( 1, 1, 1, 0.823529 )
+margin_left = -3076.0
+margin_top = -771.0
+margin_right = -3036.0
+margin_bottom = -746.0
+custom_fonts/font = SubResource( 2 )
+text = "#"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="squareshadow" type="NinePatchRect" parent="Control"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = 331.0
+margin_top = 99.0
+margin_right = 2671.0
+margin_bottom = 1819.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 21 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="border" type="NinePatchRect" parent="Control"]
+visible = false
+margin_left = 316.0
+margin_top = 116.0
+margin_right = 844.0
+margin_bottom = 468.0
+rect_scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 20 )
+patch_margin_left = 99
+patch_margin_top = 101
+patch_margin_right = 99
+patch_margin_bottom = 100
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="character back" type="Sprite" parent="Control"]
+modulate = Color( 0.160784, 0.117647, 0.0901961, 1 )
+position = Vector2( 448, 183.75 )
+scale = Vector2( 0.212, 0.1445 )
+texture = ExtResource( 6 )
+
+[node name="Experience" type="Control" parent="Control"]
+margin_left = 681.0
+margin_top = 130.0
+margin_right = 721.0
+margin_bottom = 170.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ExperienceBack" type="NinePatchRect" parent="Control/Experience"]
+margin_left = -328.0
+margin_top = 74.0
+margin_right = 3512.0
+margin_bottom = 474.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 13 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExperienceFront" type="NinePatchRect" parent="Control/Experience"]
+margin_left = -296.0
+margin_top = 76.0
+margin_right = 2824.0
+margin_bottom = 396.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExperienceIn" type="NinePatchRect" parent="Control/Experience"]
+margin_left = -296.0
+margin_top = 76.0
+margin_right = 2824.0
+margin_bottom = 396.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 18 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XP" type="Label" parent="Control/Experience"]
+modulate = Color( 1, 1, 1, 0.823529 )
+margin_left = -325.0
+margin_top = 72.0
+margin_right = -285.0
+margin_bottom = 95.0
+custom_fonts/font = SubResource( 3 )
+text = "XP"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Amount" type="Label" parent="Control/Experience"]
+margin_left = -239.0
+margin_top = 73.0
+margin_right = -199.0
+margin_bottom = 96.0
+custom_fonts/font = SubResource( 4 )
+text = "#/#"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="Control" parent="Control"]
+margin_left = 680.0
+margin_top = 58.0
+margin_right = 720.0
+margin_bottom = 98.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBack" type="NinePatchRect" parent="Control/Health"]
+margin_left = -328.0
+margin_top = 74.0
+margin_right = 3512.0
+margin_bottom = 474.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthFront" type="NinePatchRect" parent="Control/Health"]
+margin_left = -296.0
+margin_top = 76.0
+margin_right = 2824.0
+margin_bottom = 396.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthIn" type="NinePatchRect" parent="Control/Health"]
+margin_left = -296.0
+margin_top = 76.0
+margin_right = 2824.0
+margin_bottom = 396.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HP" type="Label" parent="Control/Health"]
+modulate = Color( 1, 1, 1, 0.823529 )
+margin_left = -325.0
+margin_top = 72.0
+margin_right = -285.0
+margin_bottom = 95.0
+custom_fonts/font = SubResource( 3 )
+text = "HP"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Amount" type="Label" parent="Control/Health"]
+margin_left = -239.0
+margin_top = 72.0
+margin_right = -199.0
+margin_bottom = 95.0
+custom_fonts/font = SubResource( 4 )
+text = "#/#"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Energy" type="Control" parent="Control"]
+margin_left = 1768.0
+margin_top = 1306.0
+margin_right = 1808.0
+margin_bottom = 1346.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="EnergyBack" type="NinePatchRect" parent="Control/Energy"]
+modulate = Color( 0.917647, 0.917647, 0.917647, 1 )
+margin_left = -1416.0
+margin_top = -1150.0
+margin_right = 2424.0
+margin_bottom = -750.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 9 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnergyFront" type="NinePatchRect" parent="Control/Energy"]
+modulate = Color( 0.878431, 0.878431, 0.878431, 1 )
+margin_left = -1383.0
+margin_top = -1148.0
+margin_right = 1717.0
+margin_bottom = -828.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 122
+patch_margin_right = 122
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnergyInRight" type="NinePatchRect" parent="Control/Energy"]
+margin_left = -1306.0
+margin_top = -1148.0
+margin_right = 254.0
+margin_bottom = -828.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnergyInLeft" type="NinePatchRect" parent="Control/Energy"]
+margin_left = -1306.0
+margin_top = -1132.0
+margin_right = 236.0
+margin_bottom = -812.0
+rect_rotation = 180.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 10 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 133
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Energyy" type="Label" parent="Control/Energy"]
+modulate = Color( 1, 1, 1, 0.941176 )
+margin_left = -1414.0
+margin_top = -1152.0
+margin_right = -1386.0
+margin_bottom = -1129.0
+custom_fonts/font = SubResource( 5 )
+text = "EP"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Amount" type="Label" parent="Control/Energy"]
+margin_left = -1327.0
+margin_top = -1152.0
+margin_right = -1287.0
+margin_bottom = -1129.0
+custom_fonts/font = SubResource( 4 )
+text = "#/#"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mana" type="Control" parent="Control"]
+margin_left = 680.0
+margin_top = 718.0
+margin_right = 720.0
+margin_bottom = 758.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ManaBack" type="NinePatchRect" parent="Control/Mana"]
+margin_left = -328.0
+margin_top = -538.0
+margin_right = 3512.0
+margin_bottom = -138.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ManaFront" type="NinePatchRect" parent="Control/Mana"]
+margin_left = -296.0
+margin_top = -536.0
+margin_right = 2824.0
+margin_bottom = -216.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ManaIn" type="NinePatchRect" parent="Control/Mana"]
+margin_left = -296.0
+margin_top = -536.0
+margin_right = 2824.0
+margin_bottom = -216.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MP" type="Label" parent="Control/Mana"]
+modulate = Color( 1, 1, 1, 0.823529 )
+margin_left = -327.0
+margin_top = -540.0
+margin_right = -287.0
+margin_bottom = -517.0
+custom_fonts/font = SubResource( 3 )
+text = "MP"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Amount" type="Label" parent="Control/Mana"]
+margin_left = -240.0
+margin_top = -539.0
+margin_right = -200.0
+margin_bottom = -516.0
+custom_fonts/font = SubResource( 4 )
+text = "#/#"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Strength" type="Control" parent="Control"]
+margin_left = 130.0
+margin_top = 1004.0
+margin_right = 170.0
+margin_bottom = 1044.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="StrBack" type="NinePatchRect" parent="Control/Strength"]
+anchor_left = 22.8
+anchor_top = -25.0
+anchor_right = 22.8
+anchor_bottom = -25.0
+margin_left = -696.0
+margin_top = 224.0
+margin_right = 264.0
+margin_bottom = 1104.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 16 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StrFront" type="NinePatchRect" parent="Control/Strength"]
+modulate = Color( 0.682353, 0.54902, 0.188235, 1 )
+margin_left = 220.0
+margin_top = -756.0
+margin_right = 1020.0
+margin_bottom = -356.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 17 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Str" type="Label" parent="Control/Strength"]
+modulate = Color( 1, 1, 1, 0.823529 )
+margin_left = 210.0
+margin_top = -778.0
+margin_right = 268.0
+margin_bottom = -755.0
+custom_fonts/font = SubResource( 1 )
+text = "Str"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Amount" type="RichTextLabel" parent="Control/Strength"]
+margin_left = 213.0
+margin_top = -757.0
+margin_right = 267.0
+margin_bottom = -735.0
+custom_fonts/normal_font = SubResource( 6 )
+bbcode_enabled = true
+bbcode_text = "#"
+text = "#"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dexterity" type="Control" parent="Control"]
+margin_left = 1294.0
+margin_top = 1016.0
+margin_right = 1334.0
+margin_bottom = 1056.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="DexBack" type="NinePatchRect" parent="Control/Dexterity"]
+margin_left = -896.0
+margin_top = -788.0
+margin_right = 64.0
+margin_bottom = 92.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 16 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DexFront" type="NinePatchRect" parent="Control/Dexterity"]
+modulate = Color( 0.352941, 0.580392, 0.666667, 1 )
+margin_left = -892.0
+margin_top = -768.0
+margin_right = -92.0
+margin_bottom = -368.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 17 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dex" type="Label" parent="Control/Dexterity"]
+modulate = Color( 1, 1, 1, 0.823529 )
+margin_left = -902.0
+margin_top = -790.0
+margin_right = -844.0
+margin_bottom = -767.0
+custom_fonts/font = SubResource( 1 )
+text = "Dex"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Amount" type="RichTextLabel" parent="Control/Dexterity"]
+margin_left = -899.0
+margin_top = -769.0
+margin_right = -845.0
+margin_bottom = -747.0
+custom_fonts/normal_font = SubResource( 6 )
+bbcode_enabled = true
+bbcode_text = "#"
+text = "#"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Intelligence" type="Control" parent="Control"]
+margin_left = 2430.0
+margin_top = 1016.0
+margin_right = 2470.0
+margin_bottom = 1056.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="IntBack" type="NinePatchRect" parent="Control/Intelligence"]
+margin_left = -1980.0
+margin_top = -788.0
+margin_right = -1020.0
+margin_bottom = 92.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 16 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IntFront" type="NinePatchRect" parent="Control/Intelligence"]
+modulate = Color( 0.392157, 0.141176, 0.839216, 1 )
+margin_left = -1976.0
+margin_top = -768.0
+margin_right = -1176.0
+margin_bottom = -368.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 17 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Int" type="Label" parent="Control/Intelligence"]
+modulate = Color( 1, 1, 1, 0.823529 )
+margin_left = -1985.0
+margin_top = -790.0
+margin_right = -1927.0
+margin_bottom = -767.0
+custom_fonts/font = SubResource( 1 )
+text = "Int"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Amount" type="RichTextLabel" parent="Control/Intelligence"]
+margin_left = -1983.0
+margin_top = -769.0
+margin_right = -1929.0
+margin_bottom = -747.0
+custom_fonts/normal_font = SubResource( 6 )
+bbcode_enabled = true
+bbcode_text = "#"
+text = "#"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mutation Level" type="Control" parent="Control"]
+margin_left = 3582.0
+margin_top = 1016.0
+margin_right = 3622.0
+margin_bottom = 1056.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="MutBack" type="NinePatchRect" parent="Control/Mutation Level"]
+margin_left = -3080.0
+margin_top = -788.0
+margin_right = -2120.0
+margin_bottom = 92.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 16 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MutFront" type="NinePatchRect" parent="Control/Mutation Level"]
+modulate = Color( 0.87451, 0, 1, 1 )
+margin_left = -3076.0
+margin_top = -768.0
+margin_right = -2276.0
+margin_bottom = -368.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 17 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mut" type="Label" parent="Control/Mutation Level"]
+modulate = Color( 1, 1, 1, 0.823529 )
+margin_left = -3086.0
+margin_top = -790.0
+margin_right = -3028.0
+margin_bottom = -767.0
+custom_fonts/font = SubResource( 1 )
+text = "Mut"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Amount" type="RichTextLabel" parent="Control/Mutation Level"]
+margin_left = -3083.0
+margin_top = -769.0
+margin_right = -3029.0
+margin_bottom = -747.0
+custom_fonts/normal_font = SubResource( 6 )
+bbcode_enabled = true
+bbcode_text = "#"
+text = "#"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Control" parent="Control"]
+margin_left = 1767.0
+margin_top = -1624.0
+margin_right = 1807.0
+margin_bottom = -1584.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="squareshadow2" type="NinePatchRect" parent="Control/Name"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = -1420.0
+margin_top = 1722.0
+margin_right = 2620.0
+margin_bottom = 2422.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 21 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBack" type="NinePatchRect" parent="Control/Name"]
+margin_left = -1415.0
+margin_top = 1728.0
+margin_right = 2425.0
+margin_bottom = 2208.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 16 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Namee" type="Label" parent="Control/Name"]
+margin_left = -1345.0
+margin_top = 1728.0
+margin_right = -1297.0
+margin_bottom = 1751.0
+custom_fonts/font = SubResource( 7 )
+text = "You"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

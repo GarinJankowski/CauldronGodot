@@ -1,0 +1,6 @@
+Frenzy	Take and deal double damage.	enemyMutation
+Sensitive	Every-turn effects on you occur twice.	enemyMutation
+Volatile	Take and deal 5x(Mut) damage every 4 turns.	enemyMutation
+Shrinkage	"+3x(Mut) Dex, -4x(Mut) Max Health"	enemyMutation
+Asthma	+(Mut) Max Energy	N/A
+Brain Worm	"+2x(Mut) Max Mana, -3x(Mut) Max Health"	enemyMutation

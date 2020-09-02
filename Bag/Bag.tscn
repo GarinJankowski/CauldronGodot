@@ -1,0 +1,1385 @@
+[gd_scene load_steps=33 format=2]
+
+[ext_resource path="res://Bag/Bag.gd" type="Script" id=1]
+[ext_resource path="res://Map/whitesquare.png" type="Texture" id=2]
+[ext_resource path="res://Card/CardSprites/cardBack.png" type="Texture" id=3]
+[ext_resource path="res://UI/Shapes/squareshadow.png" type="Texture" id=4]
+[ext_resource path="res://TIMESS__.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://UI/Shapes/statBarRect Back.png" type="Texture" id=6]
+[ext_resource path="res://UI/Buttons/button_Bag.png" type="Texture" id=7]
+[ext_resource path="res://UI/Buttons/button_Exit.png" type="Texture" id=8]
+[ext_resource path="res://UI/Buttons/button_Body.png" type="Texture" id=9]
+[ext_resource path="res://Modifiers/runeback.png" type="Texture" id=10]
+[ext_resource path="res://Modifiers/mod_Burn.png" type="Texture" id=11]
+[ext_resource path="res://Modifiers/mod_Flow.png" type="Texture" id=12]
+[ext_resource path="res://Modifiers/mod_Push.png" type="Texture" id=13]
+[ext_resource path="res://Modifiers/mod_Link.png" type="Texture" id=14]
+[ext_resource path="res://Modifiers/mod_Stay.png" type="Texture" id=15]
+[ext_resource path="res://Modifiers/mod_Void.png" type="Texture" id=16]
+[ext_resource path="res://Modifiers/mod_Copy.png" type="Texture" id=17]
+[ext_resource path="res://Bag/modButton.gd" type="Script" id=19]
+[ext_resource path="res://Bag/UI Elements/button_Bag_ScrollUp.png" type="Texture" id=20]
+[ext_resource path="res://Bag/UI Elements/baggear_NoArmor.png" type="Texture" id=21]
+[ext_resource path="res://Bag/UI Elements/baggear_NoHeadgear.png" type="Texture" id=22]
+[ext_resource path="res://Bag/UI Elements/baggear_NoWeapon.png" type="Texture" id=23]
+[ext_resource path="res://Bag/UI Elements/button_Bag_ScrollDown.png" type="Texture" id=24]
+[ext_resource path="res://UI/Shapes/statBarRect Front.png" type="Texture" id=27]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 20
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 5 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 25, 25 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 34, 12 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 148, 350 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 20
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 18
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 20
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 5 )
+
+[node name="Node2D" type="Node2D"]
+z_index = 25
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_vertical_guides_": [  ]
+}
+
+[node name="bagButtonMain" type="Node2D" parent="."]
+position = Vector2( 443, 88 )
+z_index = 1
+z_as_relative = false
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="button_Bag" type="Sprite" parent="bagButtonMain"]
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 7 )
+
+[node name="buttonBag" type="TextureButton" parent="bagButtonMain"]
+margin_left = -56.0
+margin_top = -56.0
+margin_right = 56.0
+margin_bottom = 56.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bodyButtonMain" type="Node2D" parent="."]
+position = Vector2( 581, 88 )
+z_index = 1
+z_as_relative = false
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="button_Body" type="Sprite" parent="bodyButtonMain"]
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 9 )
+
+[node name="buttonBody" type="TextureButton" parent="bodyButtonMain"]
+margin_left = -56.0
+margin_top = -56.0
+margin_right = 56.0
+margin_bottom = 56.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="back" type="Node2D" parent="."]
+
+[node name="back2" type="Sprite" parent="back"]
+modulate = Color( 0.552941, 0.552941, 0.552941, 1 )
+position = Vector2( 512, -300 )
+scale = Vector2( 1.008, 0.584 )
+texture = ExtResource( 2 )
+
+[node name="cardBack" type="Sprite" parent="back"]
+visible = false
+position = Vector2( 512, -211 )
+scale = Vector2( 0.357, 0.357 )
+texture = ExtResource( 3 )
+
+[node name="bodyButtonMenu" type="Node2D" parent="back"]
+position = Vector2( 333, -459 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="button_Body" type="Sprite" parent="back/bodyButtonMenu"]
+scale = Vector2( 0.07, 0.07 )
+texture = ExtResource( 9 )
+
+[node name="buttonBodyMenu" type="TextureButton" parent="back/bodyButtonMenu"]
+margin_left = -35.0
+margin_top = -35.0
+margin_right = 35.0
+margin_bottom = 35.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bagButtonMenu" type="Node2D" parent="back"]
+position = Vector2( 333, -545 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="button_Bag" type="Sprite" parent="back/bagButtonMenu"]
+scale = Vector2( 0.07, 0.07 )
+texture = ExtResource( 8 )
+
+[node name="buttonBagMenu" type="TextureButton" parent="back/bagButtonMenu"]
+margin_left = -35.0
+margin_top = -35.0
+margin_right = 35.0
+margin_bottom = 35.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mods" type="Node2D" parent="."]
+position = Vector2( 237, 1200 )
+
+[node name="squareshadow" type="NinePatchRect" parent="mods"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -232.0
+margin_top = -588.0
+margin_right = 3498.0
+margin_bottom = 3502.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="whitesquare" type="Sprite" parent="mods"]
+modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
+position = Vector2( -44, -384 )
+scale = Vector2( 0.351, 0.384 )
+texture = ExtResource( 2 )
+
+[node name="backs" type="Node2D" parent="mods"]
+modulate = Color( 0.741176, 0.741176, 0.741176, 0.313726 )
+position = Vector2( 0, 4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="whitesquare" type="Sprite" parent="mods/backs"]
+position = Vector2( 93, -537 )
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 10 )
+
+[node name="whitesquare2" type="Sprite" parent="mods/backs"]
+position = Vector2( 92.75, -485 )
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 10 )
+
+[node name="whitesquare3" type="Sprite" parent="mods/backs"]
+position = Vector2( 92.75, -433 )
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 10 )
+
+[node name="whitesquare6" type="Sprite" parent="mods/backs"]
+position = Vector2( 92.75, -381 )
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 10 )
+
+[node name="whitesquare5" type="Sprite" parent="mods/backs"]
+position = Vector2( 92.75, -329 )
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 10 )
+
+[node name="whitesquare4" type="Sprite" parent="mods/backs"]
+position = Vector2( 92.75, -277 )
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 10 )
+
+[node name="whitesquare7" type="Sprite" parent="mods/backs"]
+position = Vector2( 92.75, -225 )
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 10 )
+
+[node name="content" type="Node2D" parent="mods"]
+position = Vector2( -2, 6 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Burn" type="Node2D" parent="mods/content"]
+position = Vector2( -23, 51.063 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="mod_Burn" type="Sprite" parent="mods/content/Burn"]
+modulate = Color( 0, 0, 0, 0.313726 )
+position = Vector2( 118, -546 )
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 11 )
+
+[node name="Flow" type="Node2D" parent="mods/content"]
+position = Vector2( -23, 89.188 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="mod_Flow" type="Sprite" parent="mods/content/Flow"]
+modulate = Color( 0, 0, 0, 0.313726 )
+position = Vector2( 118.625, -532.375 )
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 12 )
+
+[node name="Stay" type="Node2D" parent="mods/content"]
+position = Vector2( 105, 207.188 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="mod_Stay" type="Sprite" parent="mods/content/Stay"]
+modulate = Color( 0, 0, 0, 0.313726 )
+position = Vector2( -8, -447 )
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 15 )
+
+[node name="Void" type="Node2D" parent="mods/content"]
+position = Vector2( 169, 40.188 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="mod_Void" type="Sprite" parent="mods/content/Void"]
+modulate = Color( 0, 0, 0, 0.313726 )
+position = Vector2( -72, -431 )
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 16 )
+
+[node name="Link" type="Node2D" parent="mods/content"]
+position = Vector2( -23, -134.812 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="mod_Link" type="Sprite" parent="mods/content/Link"]
+modulate = Color( 0, 0, 0, 0.313726 )
+position = Vector2( 118.625, -415 )
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 14 )
+
+[node name="Push" type="Node2D" parent="mods/content"]
+position = Vector2( 41, 20.188 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="mod_Push" type="Sprite" parent="mods/content/Push"]
+modulate = Color( 0, 0, 0, 0.313726 )
+position = Vector2( 55, -361 )
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 13 )
+
+[node name="Copy" type="Node2D" parent="mods/content"]
+position = Vector2( 105, 21.125 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="mod_Copy" type="Sprite" parent="mods/content/Copy"]
+modulate = Color( 0, 0, 0, 0.313726 )
+position = Vector2( -9, -308 )
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 17 )
+
+[node name="forgeButtonsBag" type="Node2D" parent="mods"]
+position = Vector2( -3, 0 )
+
+[node name="Burn" type="Node2D" parent="mods/forgeButtonsBag"]
+position = Vector2( 0, 52 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow" type="NinePatchRect" parent="mods/forgeButtonsBag/Burn"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = 64.0
+margin_top = -565.0
+margin_right = 704.0
+margin_bottom = 89.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod" type="Node2D" parent="mods/forgeButtonsBag/Burn"]
+position = Vector2( 96, -533 )
+
+[node name="modback" type="Sprite" parent="mods/forgeButtonsBag/Burn/mod"]
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 10 )
+
+[node name="button_Mod" type="Sprite" parent="mods/forgeButtonsBag/Burn/mod"]
+position = Vector2( 0, -8 )
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 11 )
+
+[node name="modButton" type="TextureButton" parent="mods/forgeButtonsBag/Burn"]
+margin_left = 71.0
+margin_top = -558.0
+margin_right = 121.0
+margin_bottom = -508.0
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="mods/forgeButtonsBag/Burn"]
+margin_left = 69.0
+margin_top = -527.687
+margin_right = 123.0
+margin_bottom = -504.687
+custom_fonts/font = SubResource( 1 )
+text = "x0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Flow" type="Node2D" parent="mods/forgeButtonsBag"]
+position = Vector2( 0, 104 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow2" type="NinePatchRect" parent="mods/forgeButtonsBag/Flow"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = 64.0
+margin_top = -565.0
+margin_right = 704.0
+margin_bottom = 89.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod" type="Node2D" parent="mods/forgeButtonsBag/Flow"]
+position = Vector2( 96, -533 )
+
+[node name="whitesquare8" type="Sprite" parent="mods/forgeButtonsBag/Flow/mod"]
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 10 )
+
+[node name="button_Mod" type="Sprite" parent="mods/forgeButtonsBag/Flow/mod"]
+position = Vector2( 0, -7.75 )
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 12 )
+
+[node name="modButton" type="TextureButton" parent="mods/forgeButtonsBag/Flow"]
+margin_left = 71.0
+margin_top = -558.0
+margin_right = 121.0
+margin_bottom = -508.0
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="mods/forgeButtonsBag/Flow"]
+margin_left = 69.0
+margin_top = -527.562
+margin_right = 123.0
+margin_bottom = -504.562
+custom_fonts/font = SubResource( 1 )
+text = "x0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stay" type="Node2D" parent="mods/forgeButtonsBag"]
+position = Vector2( 0, 312 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow3" type="NinePatchRect" parent="mods/forgeButtonsBag/Stay"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = 64.0
+margin_top = -565.0
+margin_right = 704.0
+margin_bottom = 89.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod" type="Node2D" parent="mods/forgeButtonsBag/Stay"]
+position = Vector2( 96, -533 )
+
+[node name="whitesquare8" type="Sprite" parent="mods/forgeButtonsBag/Stay/mod"]
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 10 )
+
+[node name="button_Mod" type="Sprite" parent="mods/forgeButtonsBag/Stay/mod"]
+position = Vector2( 0, -9.75 )
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 15 )
+
+[node name="modButton" type="TextureButton" parent="mods/forgeButtonsBag/Stay"]
+margin_left = 71.0
+margin_top = -558.0
+margin_right = 121.0
+margin_bottom = -508.0
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="mods/forgeButtonsBag/Stay"]
+margin_left = 69.0
+margin_top = -527.562
+margin_right = 123.0
+margin_bottom = -504.562
+custom_fonts/font = SubResource( 1 )
+text = "x0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Void" type="Node2D" parent="mods/forgeButtonsBag"]
+position = Vector2( 0, 156 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow4" type="NinePatchRect" parent="mods/forgeButtonsBag/Void"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = 64.0
+margin_top = -566.0
+margin_right = 704.0
+margin_bottom = 88.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod" type="Node2D" parent="mods/forgeButtonsBag/Void"]
+position = Vector2( 96, -533 )
+
+[node name="whitesquare8" type="Sprite" parent="mods/forgeButtonsBag/Void/mod"]
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 10 )
+
+[node name="button_Mod" type="Sprite" parent="mods/forgeButtonsBag/Void/mod"]
+position = Vector2( 0, -7.75 )
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 16 )
+
+[node name="modButton" type="TextureButton" parent="mods/forgeButtonsBag/Void"]
+margin_left = 71.0
+margin_top = -558.0
+margin_right = 121.0
+margin_bottom = -508.0
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="mods/forgeButtonsBag/Void"]
+margin_left = 69.0
+margin_top = -527.562
+margin_right = 123.0
+margin_bottom = -504.562
+custom_fonts/font = SubResource( 1 )
+text = "x0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Link" type="Node2D" parent="mods/forgeButtonsBag"]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow5" type="NinePatchRect" parent="mods/forgeButtonsBag/Link"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = 64.0
+margin_top = -566.0
+margin_right = 704.0
+margin_bottom = 88.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod" type="Node2D" parent="mods/forgeButtonsBag/Link"]
+position = Vector2( 96, -533 )
+
+[node name="whitesquare8" type="Sprite" parent="mods/forgeButtonsBag/Link/mod"]
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 10 )
+
+[node name="button_Mod" type="Sprite" parent="mods/forgeButtonsBag/Link/mod"]
+position = Vector2( 0, -9.75 )
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 14 )
+
+[node name="modButton" type="TextureButton" parent="mods/forgeButtonsBag/Link"]
+margin_left = 71.0
+margin_top = -558.0
+margin_right = 121.0
+margin_bottom = -508.0
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="mods/forgeButtonsBag/Link"]
+margin_left = 69.0
+margin_top = -527.562
+margin_right = 123.0
+margin_bottom = -504.562
+custom_fonts/font = SubResource( 1 )
+text = "x0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Push" type="Node2D" parent="mods/forgeButtonsBag"]
+position = Vector2( 0, 208 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow6" type="NinePatchRect" parent="mods/forgeButtonsBag/Push"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = 64.0
+margin_top = -566.0
+margin_right = 704.0
+margin_bottom = 88.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod" type="Node2D" parent="mods/forgeButtonsBag/Push"]
+position = Vector2( 96, -533 )
+
+[node name="whitesquare8" type="Sprite" parent="mods/forgeButtonsBag/Push/mod"]
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 10 )
+
+[node name="button_Mod" type="Sprite" parent="mods/forgeButtonsBag/Push/mod"]
+position = Vector2( 0, -7.75 )
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 13 )
+
+[node name="modButton" type="TextureButton" parent="mods/forgeButtonsBag/Push"]
+margin_left = 71.0
+margin_top = -558.0
+margin_right = 121.0
+margin_bottom = -508.0
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="mods/forgeButtonsBag/Push"]
+margin_left = 69.0
+margin_top = -527.562
+margin_right = 123.0
+margin_bottom = -504.562
+custom_fonts/font = SubResource( 1 )
+text = "x0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Copy" type="Node2D" parent="mods/forgeButtonsBag"]
+position = Vector2( 0, 260 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow7" type="NinePatchRect" parent="mods/forgeButtonsBag/Copy"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = 64.0
+margin_top = -566.0
+margin_right = 704.0
+margin_bottom = 88.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod" type="Node2D" parent="mods/forgeButtonsBag/Copy"]
+position = Vector2( 96, -533 )
+
+[node name="whitesquare8" type="Sprite" parent="mods/forgeButtonsBag/Copy/mod"]
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 10 )
+
+[node name="button_Mod" type="Sprite" parent="mods/forgeButtonsBag/Copy/mod"]
+position = Vector2( 0, -7.75 )
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 17 )
+
+[node name="modButton" type="TextureButton" parent="mods/forgeButtonsBag/Copy"]
+margin_left = 71.0
+margin_top = -558.0
+margin_right = 121.0
+margin_bottom = -508.0
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="mods/forgeButtonsBag/Copy"]
+margin_left = 69.0
+margin_top = -527.625
+margin_right = 123.0
+margin_bottom = -504.625
+custom_fonts/font = SubResource( 1 )
+text = "x0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Node2D" parent="mods"]
+position = Vector2( -97, -61 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow2" type="NinePatchRect" parent="mods/Label"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 150.0
+margin_top = -532.0
+margin_right = 1670.0
+margin_bottom = 141.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 4 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBack" type="NinePatchRect" parent="mods/Label"]
+margin_left = 154.0
+margin_top = -527.0
+margin_right = 1514.0
+margin_bottom = -47.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Namee" type="Label" parent="mods/Label"]
+margin_left = 160.0
+margin_top = -527.0
+margin_right = 216.0
+margin_bottom = -504.0
+custom_fonts/font = SubResource( 2 )
+text = "Runes"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="modForgeAreas" type="Node2D" parent="mods"]
+position = Vector2( -237, -1201 )
+
+[node name="Burn" type="Node2D" parent="mods/modForgeAreas"]
+position = Vector2( 0, 52 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="modArea" type="Area2D" parent="mods/modForgeAreas/Burn"]
+position = Vector2( 330, 668 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mods/modForgeAreas/Burn/modArea"]
+shape = SubResource( 3 )
+
+[node name="Flow" type="Node2D" parent="mods/modForgeAreas"]
+position = Vector2( 0, 52 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="modArea" type="Area2D" parent="mods/modForgeAreas/Flow"]
+position = Vector2( 330, 720 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mods/modForgeAreas/Flow/modArea"]
+shape = SubResource( 3 )
+
+[node name="Stay" type="Node2D" parent="mods/modForgeAreas"]
+position = Vector2( 0, 208 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="modArea" type="Area2D" parent="mods/modForgeAreas/Stay"]
+position = Vector2( 330, 772 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mods/modForgeAreas/Stay/modArea"]
+shape = SubResource( 3 )
+
+[node name="Void" type="Node2D" parent="mods/modForgeAreas"]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="modArea" type="Area2D" parent="mods/modForgeAreas/Void"]
+position = Vector2( 330, 824 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mods/modForgeAreas/Void/modArea"]
+shape = SubResource( 3 )
+
+[node name="Link" type="Node2D" parent="mods/modForgeAreas"]
+position = Vector2( 0, -208 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="modArea" type="Area2D" parent="mods/modForgeAreas/Link"]
+position = Vector2( 330, 876 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mods/modForgeAreas/Link/modArea"]
+shape = SubResource( 3 )
+
+[node name="Push" type="Node2D" parent="mods/modForgeAreas"]
+position = Vector2( 0, -52 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="modArea" type="Area2D" parent="mods/modForgeAreas/Push"]
+position = Vector2( 330, 928 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mods/modForgeAreas/Push/modArea"]
+shape = SubResource( 3 )
+
+[node name="Copy" type="Node2D" parent="mods/modForgeAreas"]
+position = Vector2( 0, -52 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="modArea" type="Area2D" parent="mods/modForgeAreas/Copy"]
+position = Vector2( 330, 980 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mods/modForgeAreas/Copy/modArea"]
+shape = SubResource( 3 )
+
+[node name="runesArea" type="Area2D" parent="mods"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mods/runesArea"]
+position = Vector2( 91, -576 )
+shape = SubResource( 4 )
+disabled = true
+
+[node name="deck" type="Node2D" parent="."]
+position = Vector2( -457, 604 )
+
+[node name="squareshadow2" type="NinePatchRect" parent="deck"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = 79.0
+margin_top = -674.0
+margin_right = 3069.0
+margin_bottom = 6576.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="whitesquare2" type="Sprite" parent="deck"]
+modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
+position = Vector2( 228.5, -312.5 )
+scale = Vector2( 0.271, 0.697 )
+texture = ExtResource( 2 )
+
+[node name="bagCards" type="Node2D" parent="deck"]
+
+[node name="Label" type="Node2D" parent="deck"]
+position = Vector2( 51, -65 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow2" type="NinePatchRect" parent="deck/Label"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 36.0
+margin_top = -532.0
+margin_right = 5696.0
+margin_bottom = 141.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 4 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBack" type="NinePatchRect" parent="deck/Label"]
+margin_left = 40.0
+margin_top = -527.0
+margin_right = 5540.0
+margin_bottom = -47.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Namee" type="Label" parent="deck/Label"]
+margin_left = 152.0
+margin_top = -527.0
+margin_right = 200.0
+margin_bottom = -504.0
+custom_fonts/font = SubResource( 2 )
+text = "Deck"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="scrollArea" type="Area2D" parent="deck"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="deck/scrollArea"]
+position = Vector2( 218, -313 )
+shape = SubResource( 5 )
+
+[node name="pageUpButton" type="Node2D" parent="deck"]
+position = Vector2( -41, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="scrollPageButton" type="Sprite" parent="deck/pageUpButton"]
+position = Vector2( 91, -418.25 )
+scale = Vector2( 0.2275, 0.2275 )
+texture = ExtResource( 20 )
+
+[node name="button_ScrollPageUp" type="TextureButton" parent="deck/pageUpButton"]
+margin_left = 80.0
+margin_top = -531.0
+margin_right = 102.0
+margin_bottom = -306.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pageDownButton" type="Node2D" parent="deck"]
+position = Vector2( -41, 229 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="scrollPageButton" type="Sprite" parent="deck/pageDownButton"]
+position = Vector2( 91, -418.25 )
+scale = Vector2( 0.2275, 0.2275 )
+texture = ExtResource( 24 )
+
+[node name="button_ScrollPageDown" type="TextureButton" parent="deck/pageDownButton"]
+margin_left = 80.0
+margin_top = -531.0
+margin_right = 102.0
+margin_bottom = -306.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bag" type="Node2D" parent="."]
+position = Vector2( 1020, 604 )
+
+[node name="bagCardDisplay" type="Node2D" parent="bag"]
+
+[node name="squareshadow" type="NinePatchRect" parent="bag"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = 8.0
+margin_top = -588.0
+margin_right = 3688.0
+margin_bottom = 1632.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="whitesquare" type="Sprite" parent="bag"]
+modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
+position = Vector2( 192, -474 )
+scale = Vector2( 0.344, 0.204 )
+texture = ExtResource( 2 )
+
+[node name="Label2" type="Node2D" parent="bag"]
+position = Vector2( 7, -65 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow2" type="NinePatchRect" parent="bag/Label2"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 61.0
+margin_top = -532.0
+margin_right = 4721.0
+margin_bottom = 141.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 4 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBack" type="NinePatchRect" parent="bag/Label2"]
+margin_left = 65.9999
+margin_top = -527.0
+margin_right = 4526.0
+margin_bottom = -47.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Namee" type="Label" parent="bag/Label2"]
+margin_left = 66.0
+margin_top = -527.0
+margin_right = 288.0
+margin_bottom = -504.0
+custom_fonts/font = SubResource( 2 )
+text = "Gear"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="squareshadow2" type="NinePatchRect" parent="bag"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = 8.0
+margin_top = -391.0
+margin_right = 3708.0
+margin_bottom = 3489.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="whitesquare2" type="Sprite" parent="bag"]
+modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
+position = Vector2( 192, -198 )
+scale = Vector2( 0.344, 0.356 )
+texture = ExtResource( 2 )
+
+[node name="Label" type="Node2D" parent="bag"]
+position = Vector2( 15, 139 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow2" type="NinePatchRect" parent="bag/Label"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 61.0
+margin_top = -532.0
+margin_right = 4721.0
+margin_bottom = 141.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 4 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBack" type="NinePatchRect" parent="bag/Label"]
+margin_left = 65.9999
+margin_top = -527.0
+margin_right = 4526.0
+margin_bottom = -47.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Namee" type="Label" parent="bag/Label"]
+margin_left = 68.0
+margin_top = -527.0
+margin_right = 289.0
+margin_bottom = -504.0
+custom_fonts/font = SubResource( 2 )
+text = "Bag"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="backsquares" type="Node2D" parent="bag"]
+
+[node name="bag" type="Node2D" parent="bag/backsquares"]
+modulate = Color( 0.223529, 0.223529, 0.223529, 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="bagsquare" type="Sprite" parent="bag/backsquares/bag"]
+position = Vector2( 192, -328 )
+scale = Vector2( 0.29, 0.046 )
+texture = ExtResource( 2 )
+
+[node name="bagsquare2" type="Sprite" parent="bag/backsquares/bag"]
+position = Vector2( 192, -274 )
+scale = Vector2( 0.29, 0.046 )
+texture = ExtResource( 2 )
+
+[node name="bagsquare3" type="Sprite" parent="bag/backsquares/bag"]
+position = Vector2( 192, -220 )
+scale = Vector2( 0.29, 0.046 )
+texture = ExtResource( 2 )
+
+[node name="bagsquare6" type="Sprite" parent="bag/backsquares/bag"]
+position = Vector2( 192, -166 )
+scale = Vector2( 0.29, 0.046 )
+texture = ExtResource( 2 )
+
+[node name="bagsquare5" type="Sprite" parent="bag/backsquares/bag"]
+position = Vector2( 192, -112 )
+scale = Vector2( 0.29, 0.046 )
+texture = ExtResource( 2 )
+
+[node name="bagsquare4" type="Sprite" parent="bag/backsquares/bag"]
+position = Vector2( 192, -58 )
+scale = Vector2( 0.29, 0.046 )
+texture = ExtResource( 2 )
+
+[node name="bagsquare9" type="Sprite" parent="bag/backsquares/bag"]
+position = Vector2( 192, -534 )
+scale = Vector2( 0.29, 0.046 )
+texture = ExtResource( 2 )
+
+[node name="bagsquare8" type="Sprite" parent="bag/backsquares/bag"]
+position = Vector2( 192, -480 )
+scale = Vector2( 0.29, 0.046 )
+texture = ExtResource( 2 )
+
+[node name="bagsquare7" type="Sprite" parent="bag/backsquares/bag"]
+position = Vector2( 192, -426 )
+scale = Vector2( 0.29, 0.046 )
+texture = ExtResource( 2 )
+
+[node name="NoWeapon" type="Node2D" parent="bag"]
+z_index = 1
+
+[node name="No_Weapon" type="Sprite" parent="bag/NoWeapon"]
+position = Vector2( 192, -534 )
+scale = Vector2( 0.24, 0.24 )
+texture = ExtResource( 23 )
+
+[node name="Label" type="Label" parent="bag/NoWeapon"]
+modulate = Color( 1, 1, 1, 0.784314 )
+margin_left = 92.0
+margin_top = -546.0
+margin_right = 299.0
+margin_bottom = -522.0
+custom_fonts/font = SubResource( 6 )
+text = "No Weapon"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NoArmor" type="Node2D" parent="bag"]
+z_index = 1
+
+[node name="No _Armor" type="Sprite" parent="bag/NoArmor"]
+position = Vector2( 192, -480 )
+scale = Vector2( 0.24, 0.24 )
+texture = ExtResource( 21 )
+
+[node name="Label2" type="Label" parent="bag/NoArmor"]
+modulate = Color( 1, 1, 1, 0.784314 )
+margin_left = 92.0
+margin_top = -492.0
+margin_right = 299.0
+margin_bottom = -468.0
+custom_fonts/font = SubResource( 6 )
+text = "No Armor"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NoHeadgear" type="Node2D" parent="bag"]
+z_index = 1
+
+[node name="No_Headgear" type="Sprite" parent="bag/NoHeadgear"]
+position = Vector2( 192, -426 )
+scale = Vector2( 0.24, 0.24 )
+texture = ExtResource( 22 )
+
+[node name="Label3" type="Label" parent="bag/NoHeadgear"]
+modulate = Color( 1, 1, 1, 0.784314 )
+margin_left = 92.0
+margin_top = -438.0
+margin_right = 299.0
+margin_bottom = -414.0
+custom_fonts/font = SubResource( 6 )
+text = "No Headgear"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Gold" type="Control" parent="bag"]
+margin_left = 3100.0
+margin_top = 390.0
+margin_right = 3140.0
+margin_bottom = 430.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="squareshadow3" type="NinePatchRect" parent="bag/Gold"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = -3084.0
+margin_top = -793.0
+margin_right = -1624.0
+margin_bottom = 307.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 4 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GoldBack" type="NinePatchRect" parent="bag/Gold"]
+margin_left = -3080.0
+margin_top = -788.0
+margin_right = -1800.0
+margin_bottom = 92.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GoldFront" type="NinePatchRect" parent="bag/Gold"]
+modulate = Color( 0.976471, 0.870588, 0, 1 )
+margin_left = -3076.0
+margin_top = -768.0
+margin_right = -1956.0
+margin_bottom = -368.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 27 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Gold" type="Label" parent="bag/Gold"]
+modulate = Color( 1, 1, 1, 0.823529 )
+margin_left = -3079.0
+margin_top = -790.0
+margin_right = -3021.0
+margin_bottom = -767.0
+custom_fonts/font = SubResource( 7 )
+text = "Gold"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Amount" type="Label" parent="bag/Gold"]
+modulate = Color( 1, 1, 1, 0.823529 )
+margin_left = -3080.0
+margin_top = -771.0
+margin_right = -3017.0
+margin_bottom = -746.0
+custom_fonts/font = SubResource( 8 )
+text = "#"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="button_down" from="bagButtonMain/buttonBag" to="." method="_on_buttonBag_button_down"]
+[connection signal="button_up" from="bagButtonMain/buttonBag" to="." method="_on_buttonBag_button_up"]
+[connection signal="pressed" from="bagButtonMain/buttonBag" to="." method="_on_buttonBag_pressed"]
+[connection signal="button_down" from="bodyButtonMain/buttonBody" to="." method="_on_buttonBody_button_down"]
+[connection signal="button_up" from="bodyButtonMain/buttonBody" to="." method="_on_buttonBody_button_up"]
+[connection signal="pressed" from="bodyButtonMain/buttonBody" to="." method="_on_buttonBody_pressed"]
+[connection signal="button_down" from="back/bodyButtonMenu/buttonBodyMenu" to="." method="_on_buttonBodyMenu_button_down"]
+[connection signal="button_up" from="back/bodyButtonMenu/buttonBodyMenu" to="." method="_on_buttonBodyMenu_button_up"]
+[connection signal="pressed" from="back/bodyButtonMenu/buttonBodyMenu" to="." method="_on_buttonBodyMenu_pressed"]
+[connection signal="button_down" from="back/bagButtonMenu/buttonBagMenu" to="." method="_on_buttonBagMenu_button_down"]
+[connection signal="button_up" from="back/bagButtonMenu/buttonBagMenu" to="." method="_on_buttonBagMenu_button_up"]
+[connection signal="pressed" from="back/bagButtonMenu/buttonBagMenu" to="." method="_on_buttonBagMenu_pressed"]
+[connection signal="pressed" from="mods/forgeButtonsBag/Burn/modButton" to="mods/forgeButtonsBag/Burn/modButton" method="_on_modButton_pressed"]
+[connection signal="pressed" from="mods/forgeButtonsBag/Flow/modButton" to="mods/forgeButtonsBag/Flow/modButton" method="_on_modButton_pressed"]
+[connection signal="pressed" from="mods/forgeButtonsBag/Stay/modButton" to="mods/forgeButtonsBag/Stay/modButton" method="_on_modButton_pressed"]
+[connection signal="pressed" from="mods/forgeButtonsBag/Void/modButton" to="mods/forgeButtonsBag/Void/modButton" method="_on_modButton_pressed"]
+[connection signal="pressed" from="mods/forgeButtonsBag/Link/modButton" to="mods/forgeButtonsBag/Link/modButton" method="_on_modButton_pressed"]
+[connection signal="pressed" from="mods/forgeButtonsBag/Push/modButton" to="mods/forgeButtonsBag/Push/modButton" method="_on_modButton_pressed"]
+[connection signal="pressed" from="mods/forgeButtonsBag/Copy/modButton" to="mods/forgeButtonsBag/Copy/modButton" method="_on_modButton_pressed"]
+[connection signal="area_entered" from="mods/modForgeAreas/Burn/modArea" to="mods/forgeButtonsBag/Burn/modButton" method="_on_modArea_area_entered"]
+[connection signal="area_exited" from="mods/modForgeAreas/Burn/modArea" to="mods/forgeButtonsBag/Burn/modButton" method="_on_modArea_area_exited"]
+[connection signal="area_entered" from="mods/modForgeAreas/Flow/modArea" to="mods/forgeButtonsBag/Flow/modButton" method="_on_modArea_area_entered"]
+[connection signal="area_exited" from="mods/modForgeAreas/Flow/modArea" to="mods/forgeButtonsBag/Flow/modButton" method="_on_modArea_area_exited"]
+[connection signal="area_entered" from="mods/modForgeAreas/Stay/modArea" to="mods/forgeButtonsBag/Stay/modButton" method="_on_modArea_area_entered"]
+[connection signal="area_exited" from="mods/modForgeAreas/Stay/modArea" to="mods/forgeButtonsBag/Stay/modButton" method="_on_modArea_area_exited"]
+[connection signal="area_entered" from="mods/modForgeAreas/Void/modArea" to="mods/forgeButtonsBag/Void/modButton" method="_on_modArea_area_entered"]
+[connection signal="area_exited" from="mods/modForgeAreas/Void/modArea" to="mods/forgeButtonsBag/Void/modButton" method="_on_modArea_area_exited"]
+[connection signal="area_entered" from="mods/modForgeAreas/Link/modArea" to="mods/forgeButtonsBag/Link/modButton" method="_on_modArea_area_entered"]
+[connection signal="area_exited" from="mods/modForgeAreas/Link/modArea" to="mods/forgeButtonsBag/Link/modButton" method="_on_modArea_area_exited"]
+[connection signal="area_entered" from="mods/modForgeAreas/Push/modArea" to="mods/forgeButtonsBag/Push/modButton" method="_on_modArea_area_entered"]
+[connection signal="area_exited" from="mods/modForgeAreas/Push/modArea" to="mods/forgeButtonsBag/Push/modButton" method="_on_modArea_area_exited"]
+[connection signal="area_entered" from="mods/modForgeAreas/Copy/modArea" to="mods/forgeButtonsBag/Copy/modButton" method="_on_modArea_area_entered"]
+[connection signal="area_exited" from="mods/modForgeAreas/Copy/modArea" to="mods/forgeButtonsBag/Copy/modButton" method="_on_modArea_area_exited"]
+[connection signal="area_entered" from="mods/runesArea" to="." method="_on_runesArea_area_entered"]
+[connection signal="area_exited" from="mods/runesArea" to="." method="_on_runesArea_area_exited"]
+[connection signal="area_entered" from="deck/scrollArea" to="." method="_on_scrollArea_area_entered"]
+[connection signal="area_exited" from="deck/scrollArea" to="." method="_on_scrollArea_area_exited"]
+[connection signal="button_down" from="deck/pageUpButton/button_ScrollPageUp" to="." method="_on_button_ScrollPageUp_button_down"]
+[connection signal="button_up" from="deck/pageUpButton/button_ScrollPageUp" to="." method="_on_button_ScrollPageUp_button_up"]
+[connection signal="pressed" from="deck/pageUpButton/button_ScrollPageUp" to="." method="_on_button_ScrollPageUp_pressed"]
+[connection signal="button_down" from="deck/pageDownButton/button_ScrollPageDown" to="." method="_on_button_ScrollPageDown_button_down"]
+[connection signal="button_up" from="deck/pageDownButton/button_ScrollPageDown" to="." method="_on_button_ScrollPageDown_button_up"]
+[connection signal="pressed" from="deck/pageDownButton/button_ScrollPageDown" to="." method="_on_button_ScrollPageDown_pressed"]

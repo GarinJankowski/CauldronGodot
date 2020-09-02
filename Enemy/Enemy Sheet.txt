@@ -1,0 +1,45 @@
+Name	Tier	Max Health	Strength	Dexterity	Intelligence	Mutation Level	Cards	Terrain		
+Rat	A	5	3	3	3	0	Bite (1)	N/A		
+Hawk	A	8	3	8	4	0	"Scratch (3), Tear (1)"	"Forest, Hills, Desert"		
+Vine Growth	A	8	2	2	0	0	"Slap (3), Constrict (1)"	"Forest, Caves, Hills"		
+Beetle	A	3	2	3	1	0	"Bite (2), Nip (1), Shell (1), StartCard"	"Forest, Caves, Hills, Desert"		
+										
+Crab	B	12	3	4	1	0	"Shell (2), Pinch (2), Slam (2)"	"Hills, Desert"		
+Mole	B	12	3	3	2	0	"Scratch (3), Stones (2)"	"Caves, Hills"		
+Salamander	B	12	1	1	6	0	"Spit Fire (1), Charge (1)"	"Caves, Desert"		
+Wasp	B	12	2	8	1	0	"Bite (3), Call Wasp (2)"	"Forest, Desert"		
+										
+Caterpillar	C	25	2	4	0	0	"Urticate (2), Curl (3), Bite (1)"	"Forest, Caves, Desert"		
+Slime	C	20	4	2	-1	0	"Corrode (5), Rear (2), Hit (1), Bounce (2)"	"Forest, Caves, Hills"		
+Tortoise	C	20	4	2	1	0	"Snap (3), Carapace (1), StartCard"	"Forest, Hills, Desert"		
+Hound	C	20	4	6	8	0	"Dog Bite (4), Pant (2)"	"Forest, Hills, Desert"		
+										
+Buffalo	D	40	6	1	1	0	"Ram (4), Buffalo Charge (1), Paw the Ground (2)"	"Forest, Hills, Desert"		
+Spider	D	35	4	3	2	0	"Webs (1), More Webs (1), Venom Bite (1), Dry Bite (4)"	"Forest, Caves, Desert"		
+Worm	D	35	3	10	1	0	"Worm Bite (4), Dig (1), Strangulate (1)"	"Caves, Hills, Desert"		
+										
+Gryphon	E	60	6	3	1	0	"Shred (1), Flap (1), Peck (2), Claw (3)"	"Forest, Hills, Desert"		
+Fairy	E	50	5	10	10	0	"Attack Trap (1), Defend Trap (1), Spell Trap (1), Hide (1), Shank (3)"	"Forest, Caves, Hills"		
+Bear	E	70	10	5	2	0	"Single Claw (1), Double Claw (1), Chomp (1), Rush (2), Battle Roar (2)"	"Forest, Caves, Hills, Desert"		
+Elemental	E	55	6	2	6		N/A	"Forest, Caves, Hills, Desert"		
+										
+Snail	F	70	3	1	2	0	"Tooth (1), Digest (1), Pound (3), Cone Shell (2)"	"Forest, Caves, Hills, Desert"		
+Elemental	F	80	8	4	8		N/A	"Forest, Caves, Hills, Desert"		
+										
+Water Elemental	N/A	N/A	N/A	N/A	N/A	N/A	"Suffocate (1), Flood Waters (1), Water Slap (2), Evaporate (2), Chill (2)"	Forest		
+Earth Elemental	N/A	N/A	N/A	N/A	N/A	N/A	"Rock Throw (2), Form Rocks (2), Stone Shield (2), Form Boulder (1), Stone Slam (2), Stone Spike (1)"	Caves		
+Air Elemental	N/A	N/A	N/A	N/A	N/A	N/A	"Spin (1), Wind Punch (2), Wind Flurry (1), Gust (1), Whirlwind (1)"	Hills		
+Fire Elemental	N/A	N/A	N/A	N/A	N/A	N/A	"Curl Up (1), Explode (1), Flame Strike (2), Sear (2), Stoke (2)"	Desert		
+Blank Elemental	N/A	N/A	N/A	N/A	N/A	N/A	"Blank Smack (3), Blank Endure (1)"	Field		
+										
+Berserker	Boss A	20	3	3	3	0	"Quick Rest (2), Single Hack (3), Go Berserk (50%)"	Twin Axes	"Burn, Burn"	Device: Handle Wrap
+Rogue	Boss A	15	2	6	3	0	"Quick Stab (3), Tip-Toe (2), Hide Self (50%)"	Light Boots	"Link, Link"	Scroll: Teleportation
+Student	Boss A	20	3	3	4	0	"Small Zap (1), Small Charge (2), Big Charge (50%)"	Training Hat	"Flow, Flow"	Device: Worn Pamphlet
+Machinist	Boss B	40	8	6	8	0	"Prepare Dagger (2), Vent Machines (1), Create Hammer (50%)"	Sword with Legs	"Push, Link, Link"	Device: Brown Belt
+Shieldbearer	Boss B	50	6	10	6	0	"Block Attack (3), Lift Shield (1), Double Slam (1), Last Stand (30%)"	Tower Shield	"Stay, Flow"	
+Blood Mage	Boss B	30	4	3	14	0	"Slit (3), Gain Blood (1), Blood Weapon (1), Harden Blood (70%), Harden Blood (30%)"	Sharp Tiara	Copy	
+Blademaster	Boss C	140	3	3	3	0	Bite (1)	Curved Blades	"Flow, Push, Flow"	
+Metallurgist	Boss C	110	3	3	3	0	Bite (1)	Perfect Plates	"Stay, Burn, Burn"	
+Lich	Boss C	10	3	3	3	0	Bite (1)	Ancient Crown	"Link, Link, Void"	
+										
+Dragon	Final Boss	300	0	0	0	0	Bite (1)			

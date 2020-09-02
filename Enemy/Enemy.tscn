@@ -1,0 +1,265 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Enemy/Enemy.gd" type="Script" id=1]
+[ext_resource path="res://Map/whitesquare.png" type="Texture" id=2]
+[ext_resource path="res://UI/Shapes/healthBarRect Back.png" type="Texture" id=3]
+[ext_resource path="res://TIMESS__.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://UI/Shapes/healthBarRect In.png" type="Texture" id=5]
+[ext_resource path="res://UI/Shapes/healthBarRect Front.png" type="Texture" id=6]
+[ext_resource path="res://UI/Shapes/blockRect.png" type="Texture" id=7]
+[ext_resource path="res://UI/Shapes/blockRect Front.png" type="Texture" id=8]
+[ext_resource path="res://UI/Shapes/statBarRect Back.png" type="Texture" id=9]
+[ext_resource path="res://UI/Shapes/squareshadow.png" type="Texture" id=10]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 14
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
+[node name="Enemy" type="Node"]
+script = ExtResource( 1 )
+
+[node name="Control" type="Node2D" parent="."]
+position = Vector2( 0, -172 )
+z_index = 2
+
+[node name="topnode" type="Node" parent="Control"]
+
+[node name="squareshadow" type="NinePatchRect" parent="Control"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = 396.0
+margin_top = 69.0
+margin_right = 2706.0
+margin_bottom = 1039.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 10 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="enemy back" type="Sprite" parent="Control"]
+modulate = Color( 0.207843, 0.207843, 0.207843, 1 )
+position = Vector2( 512, 118 )
+scale = Vector2( 0.212, 0.075936 )
+texture = ExtResource( 2 )
+
+[node name="Health" type="Control" parent="Control"]
+margin_left = 810.0
+margin_top = 557.0
+margin_right = 850.0
+margin_bottom = 597.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBack" type="NinePatchRect" parent="Control/Health"]
+margin_left = -396.0
+margin_top = -448.0
+margin_right = 3524.0
+margin_bottom = 32.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthFront" type="NinePatchRect" parent="Control/Health"]
+margin_left = -364.0
+margin_top = -444.0
+margin_right = 2836.0
+margin_bottom = -124.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthIn" type="NinePatchRect" parent="Control/Health"]
+margin_left = -364.0
+margin_top = -444.0
+margin_right = 2836.0
+margin_bottom = -124.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HP" type="Label" parent="Control/Health"]
+modulate = Color( 1, 1, 1, 0.823529 )
+margin_left = -394.0
+margin_top = -448.0
+margin_right = -354.0
+margin_bottom = -425.0
+custom_fonts/font = SubResource( 1 )
+text = "HP"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Amount" type="Label" parent="Control/Health"]
+margin_left = -346.0
+margin_top = -448.0
+margin_right = -221.0
+margin_bottom = -425.0
+custom_fonts/font = SubResource( 2 )
+text = "#/#"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Block" type="Control" parent="Control"]
+visible = false
+margin_left = 37.0
+margin_top = -914.0
+margin_right = 77.0
+margin_bottom = -874.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="BlockBack" type="NinePatchRect" parent="Control/Block"]
+margin_left = 328.0
+margin_top = 996.0
+margin_right = 1128.0
+margin_bottom = 1636.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BlockFront" type="NinePatchRect" parent="Control/Block"]
+margin_left = 332.0
+margin_top = 1012.0
+margin_right = 972.0
+margin_bottom = 1272.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Blockk" type="Label" parent="Control/Block"]
+modulate = Color( 1, 1, 1, 0.823529 )
+margin_left = 328.0
+margin_top = 993.0
+margin_right = 368.0
+margin_bottom = 1016.0
+custom_fonts/font = SubResource( 3 )
+text = "Block"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Amount" type="Label" parent="Control/Block"]
+modulate = Color( 1, 1, 1, 0.823529 )
+margin_left = 329.0
+margin_top = 1007.0
+margin_right = 369.0
+margin_bottom = 1030.0
+custom_fonts/font = SubResource( 3 )
+text = "#"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Control" parent="Control"]
+margin_left = 1832.0
+margin_top = -1664.0
+margin_right = 1872.0
+margin_bottom = -1624.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="squareshadow2" type="NinePatchRect" parent="Control/Name"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = -1422.0
+margin_top = 1722.0
+margin_right = 2658.0
+margin_bottom = 2422.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 10 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBack" type="NinePatchRect" parent="Control/Name"]
+margin_left = -1416.0
+margin_top = 1728.0
+margin_right = 2424.0
+margin_bottom = 2208.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 9 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Namee" type="Label" parent="Control/Name"]
+margin_left = -1429.0
+margin_top = 1728.0
+margin_right = -1210.0
+margin_bottom = 1751.0
+custom_fonts/font = SubResource( 1 )
+text = "Name"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

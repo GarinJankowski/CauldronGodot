@@ -1,0 +1,826 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://Map/background.png" type="Texture" id=1]
+[ext_resource path="res://Game.gd" type="Script" id=2]
+[ext_resource path="res://Map/background_Map.png" type="Texture" id=3]
+[ext_resource path="res://decisionBackground.png" type="Texture" id=4]
+[ext_resource path="res://cursor.png" type="Texture" id=5]
+[ext_resource path="res://cursor.gd" type="Script" id=6]
+[ext_resource path="res://UI/Shapes/statBarRect Back.png" type="Texture" id=7]
+[ext_resource path="res://UI/Shapes/squareshadow.png" type="Texture" id=8]
+[ext_resource path="res://Map/whitesquare.png" type="Texture" id=9]
+[ext_resource path="res://TIMESS__.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://Map/Terrain/Terrain Icons/terrain_Forest.png" type="Texture" id=11]
+[ext_resource path="res://Map/Room/Room Icons/Combat Room Icons/icon_RoomCombat_Rat.png" type="Texture" id=12]
+[ext_resource path="res://Modifiers/mod_Burn.png" type="Texture" id=13]
+[ext_resource path="res://Map/icon_Character.png" type="Texture" id=14]
+[ext_resource path="res://CanvasLayer.gd" type="Script" id=15]
+
+[sub_resource type="DynamicFont" id=1]
+size = 18
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 13
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 15
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=4]
+font_data = ExtResource( 10 )
+
+[sub_resource type="RayShape2D" id=5]
+length = 4.76837e-07
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Game" type="Node2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="Background" type="Sprite" parent="Game"]
+modulate = Color( 0.184314, 0.152941, 0.121569, 1 )
+position = Vector2( 517, 294 )
+scale = Vector2( 2.46, 2.46 )
+z_index = -2
+texture = ExtResource( 1 )
+
+[node name="Cross" type="Node2D" parent="Game/Background"]
+visible = false
+
+[node name="horizontal line" type="Sprite" parent="Game/Background/Cross"]
+position = Vector2( 630.894, 20.7324 )
+scale = Vector2( 2.2, 0.00800921 )
+texture = ExtResource( 3 )
+
+[node name="vertical line" type="Sprite" parent="Game/Background/Cross"]
+position = Vector2( -3.57628e-06, 1.21951 )
+scale = Vector2( 0.00650409, 2.46 )
+texture = ExtResource( 3 )
+
+[node name="decisionBackground" type="Sprite" parent="Game"]
+modulate = Color( 0.298039, 0.266667, 0.211765, 1 )
+position = Vector2( 512, 462 )
+scale = Vector2( 0.666667, 0.65 )
+texture = ExtResource( 4 )
+
+[node name="BackLayer" type="CanvasLayer" parent="Game"]
+script = ExtResource( 15 )
+
+[node name="MapLayer" type="CanvasLayer" parent="Game"]
+layer = 2
+script = ExtResource( 15 )
+
+[node name="CharacterLayer" type="CanvasLayer" parent="Game"]
+layer = 3
+script = ExtResource( 15 )
+
+[node name="CursorLayer" type="CanvasLayer" parent="Game"]
+layer = 4
+script = ExtResource( 15 )
+
+[node name="cursor" type="Node2D" parent="Game/CursorLayer"]
+z_index = 150
+script = ExtResource( 6 )
+
+[node name="youTooltip" type="Node2D" parent="Game/CursorLayer/cursor"]
+visible = false
+position = Vector2( 16, 182 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow" type="NinePatchRect" parent="Game/CursorLayer/cursor/youTooltip"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -157.0
+margin_top = -186.0
+margin_right = 1293.0
+margin_bottom = 467.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="whitesquare" type="Sprite" parent="Game/CursorLayer/cursor/youTooltip"]
+modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
+position = Vector2( -84.5, -148 )
+scale = Vector2( 0.121, 0.052 )
+texture = ExtResource( 9 )
+
+[node name="Label" type="Node2D" parent="Game/CursorLayer/cursor/youTooltip"]
+position = Vector2( -303, 340 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow2" type="NinePatchRect" parent="Game/CursorLayer/cursor/youTooltip/Label"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 159.0
+margin_top = -524.0
+margin_right = 3359.0
+margin_bottom = 409.0
+rect_scale = Vector2( 0.03, 0.03 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBack" type="NinePatchRect" parent="Game/CursorLayer/cursor/youTooltip/Label"]
+margin_left = 163.0
+margin_top = -520.0
+margin_right = 1923.0
+margin_bottom = -120.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="Game/CursorLayer/cursor/youTooltip/Label"]
+margin_left = 151.0
+margin_top = -521.0
+margin_right = 263.0
+margin_bottom = -499.0
+custom_fonts/font = SubResource( 1 )
+text = "You"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Icon" type="Node2D" parent="Game/CursorLayer/cursor/youTooltip"]
+position = Vector2( -214, 339 )
+
+[node name="squareshadow2" type="NinePatchRect" parent="Game/CursorLayer/cursor/youTooltip/Icon"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 162.0
+margin_top = -523.0
+margin_right = 1062.0
+margin_bottom = 410.0
+rect_scale = Vector2( 0.03, 0.03 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBack" type="NinePatchRect" parent="Game/CursorLayer/cursor/youTooltip/Icon"]
+margin_left = 166.0
+margin_top = -519.0
+margin_right = 566.0
+margin_bottom = -119.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pic" type="Sprite" parent="Game/CursorLayer/cursor/youTooltip/Icon"]
+position = Vector2( 176, -509 )
+scale = Vector2( 0.0558333, 0.0558333 )
+texture = ExtResource( 14 )
+
+[node name="roomTooltip" type="Node2D" parent="Game/CursorLayer/cursor"]
+visible = false
+position = Vector2( 16, 182 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow" type="NinePatchRect" parent="Game/CursorLayer/cursor/roomTooltip"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -157.0
+margin_top = -186.0
+margin_right = 1293.0
+margin_bottom = 1014.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="whitesquare" type="Sprite" parent="Game/CursorLayer/cursor/roomTooltip"]
+modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
+position = Vector2( -84.5, -126 )
+scale = Vector2( 0.121, 0.0959999 )
+texture = ExtResource( 9 )
+
+[node name="Description" type="Label" parent="Game/CursorLayer/cursor/roomTooltip"]
+margin_left = -141.0
+margin_top = -158.0
+margin_right = -27.0
+margin_bottom = -88.0
+custom_fonts/font = SubResource( 2 )
+text = "description"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Node2D" parent="Game/CursorLayer/cursor/roomTooltip"]
+position = Vector2( -303, 340 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow2" type="NinePatchRect" parent="Game/CursorLayer/cursor/roomTooltip/Label"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 159.0
+margin_top = -524.0
+margin_right = 3359.0
+margin_bottom = 409.0
+rect_scale = Vector2( 0.03, 0.03 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBack" type="NinePatchRect" parent="Game/CursorLayer/cursor/roomTooltip/Label"]
+margin_left = 163.0
+margin_top = -520.0
+margin_right = 1923.0
+margin_bottom = -120.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="Game/CursorLayer/cursor/roomTooltip/Label"]
+margin_left = 151.0
+margin_top = -521.0
+margin_right = 263.0
+margin_bottom = -499.0
+custom_fonts/font = SubResource( 1 )
+text = "Wasteland"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Icon" type="Node2D" parent="Game/CursorLayer/cursor/roomTooltip"]
+position = Vector2( -214, 339 )
+
+[node name="squareshadow2" type="NinePatchRect" parent="Game/CursorLayer/cursor/roomTooltip/Icon"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 162.0
+margin_top = -523.0
+margin_right = 1062.0
+margin_bottom = 410.0
+rect_scale = Vector2( 0.03, 0.03 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBack" type="NinePatchRect" parent="Game/CursorLayer/cursor/roomTooltip/Icon"]
+margin_left = 166.0
+margin_top = -519.0
+margin_right = 566.0
+margin_bottom = -119.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pic" type="Sprite" parent="Game/CursorLayer/cursor/roomTooltip/Icon"]
+position = Vector2( 176, -509 )
+scale = Vector2( 0.065, 0.065 )
+texture = ExtResource( 12 )
+
+[node name="terrainTooltip" type="Node2D" parent="Game/CursorLayer/cursor"]
+visible = false
+position = Vector2( 16, 278 )
+
+[node name="squareshadow" type="NinePatchRect" parent="Game/CursorLayer/cursor/terrainTooltip"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -157.0
+margin_top = -186.0
+margin_right = 1293.0
+margin_bottom = 1014.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="whitesquare" type="Sprite" parent="Game/CursorLayer/cursor/terrainTooltip"]
+modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
+position = Vector2( -84.5, -126 )
+scale = Vector2( 0.121, 0.0959999 )
+texture = ExtResource( 9 )
+
+[node name="Description" type="Label" parent="Game/CursorLayer/cursor/terrainTooltip"]
+margin_left = -141.0
+margin_top = -158.0
+margin_right = -27.0
+margin_bottom = -88.0
+custom_fonts/font = SubResource( 2 )
+text = "description"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Node2D" parent="Game/CursorLayer/cursor/terrainTooltip"]
+position = Vector2( -303, 340 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow2" type="NinePatchRect" parent="Game/CursorLayer/cursor/terrainTooltip/Label"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 159.0
+margin_top = -524.0
+margin_right = 3359.0
+margin_bottom = 409.0
+rect_scale = Vector2( 0.03, 0.03 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBack" type="NinePatchRect" parent="Game/CursorLayer/cursor/terrainTooltip/Label"]
+margin_left = 163.0
+margin_top = -520.0
+margin_right = 1923.0
+margin_bottom = -120.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="Game/CursorLayer/cursor/terrainTooltip/Label"]
+margin_left = 151.0
+margin_top = -521.0
+margin_right = 263.0
+margin_bottom = -499.0
+custom_fonts/font = SubResource( 1 )
+text = "Wasteland"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Icon" type="Node2D" parent="Game/CursorLayer/cursor/terrainTooltip"]
+position = Vector2( -214, 339 )
+
+[node name="squareshadow2" type="NinePatchRect" parent="Game/CursorLayer/cursor/terrainTooltip/Icon"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 162.0
+margin_top = -523.0
+margin_right = 1062.0
+margin_bottom = 410.0
+rect_scale = Vector2( 0.03, 0.03 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBack" type="NinePatchRect" parent="Game/CursorLayer/cursor/terrainTooltip/Icon"]
+margin_left = 166.0
+margin_top = -519.0
+margin_right = 566.0
+margin_bottom = -119.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="squareshadow3" type="NinePatchRect" parent="Game/CursorLayer/cursor/terrainTooltip/Icon"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 166.0
+margin_top = -519.0
+margin_right = 2166.0
+margin_bottom = 1481.0
+rect_scale = Vector2( 0.01, 0.01 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pic" type="Sprite" parent="Game/CursorLayer/cursor/terrainTooltip/Icon"]
+position = Vector2( 176, -509 )
+scale = Vector2( 0.055, 0.055 )
+texture = ExtResource( 11 )
+
+[node name="runeTooltip" type="Node2D" parent="Game/CursorLayer/cursor"]
+visible = false
+position = Vector2( 169, 94 )
+
+[node name="squareshadow" type="NinePatchRect" parent="Game/CursorLayer/cursor/runeTooltip"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -157.0
+margin_top = -186.0
+margin_right = 1933.0
+margin_bottom = 1134.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="whitesquare" type="Sprite" parent="Game/CursorLayer/cursor/runeTooltip"]
+modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
+position = Vector2( -53, -122 )
+scale = Vector2( 0.184, 0.104 )
+texture = ExtResource( 9 )
+
+[node name="Description" type="Label" parent="Game/CursorLayer/cursor/runeTooltip"]
+margin_left = -141.0
+margin_top = -157.0
+margin_right = 35.0
+margin_bottom = -74.0
+custom_fonts/font = SubResource( 3 )
+text = "description"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Node2D" parent="Game/CursorLayer/cursor/runeTooltip"]
+position = Vector2( -248, 340 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow2" type="NinePatchRect" parent="Game/CursorLayer/cursor/runeTooltip/Label"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 159.0
+margin_top = -524.0
+margin_right = 3359.0
+margin_bottom = 409.0
+rect_scale = Vector2( 0.03, 0.03 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBack" type="NinePatchRect" parent="Game/CursorLayer/cursor/runeTooltip/Label"]
+margin_left = 163.0
+margin_top = -520.0
+margin_right = 1923.0
+margin_bottom = -120.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="Game/CursorLayer/cursor/runeTooltip/Label"]
+margin_left = 163.0
+margin_top = -521.0
+margin_right = 251.0
+margin_bottom = -499.0
+custom_fonts/font = SubResource( 1 )
+text = "Wasteland"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Icon" type="Node2D" parent="Game/CursorLayer/cursor/runeTooltip"]
+position = Vector2( -275, 339 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow2" type="NinePatchRect" parent="Game/CursorLayer/cursor/runeTooltip/Icon"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 162.0
+margin_top = -523.0
+margin_right = 1062.0
+margin_bottom = 410.0
+rect_scale = Vector2( 0.03, 0.03 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="NameBack" type="NinePatchRect" parent="Game/CursorLayer/cursor/runeTooltip/Icon"]
+margin_left = 166.0
+margin_top = -519.0
+margin_right = 566.0
+margin_bottom = -119.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pic" type="Sprite" parent="Game/CursorLayer/cursor/runeTooltip/Icon"]
+position = Vector2( 176, -509 )
+scale = Vector2( 0.0621429, 0.0621429 )
+texture = ExtResource( 13 )
+
+[node name="effectGoodTooltip" type="Node2D" parent="Game/CursorLayer/cursor"]
+visible = false
+position = Vector2( 16, 122 )
+
+[node name="whitesquare" type="Node2D" parent="Game/CursorLayer/cursor/effectGoodTooltip"]
+position = Vector2( 0, -55 )
+scale = Vector2( 1, 0.59 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow" type="NinePatchRect" parent="Game/CursorLayer/cursor/effectGoodTooltip/whitesquare"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -194.0
+margin_top = -161.0
+margin_right = 1616.0
+margin_bottom = 1164.0
+rect_scale = Vector2( 0.1, 0.04 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="whitesquare" type="Sprite" parent="Game/CursorLayer/cursor/effectGoodTooltip/whitesquare"]
+modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
+position = Vector2( -104, -134 )
+scale = Vector2( 0.16, 0.04 )
+texture = ExtResource( 9 )
+
+[node name="Description" type="Label" parent="Game/CursorLayer/cursor/effectGoodTooltip"]
+margin_left = -182.0
+margin_top = -127.0
+margin_right = -26.0
+margin_bottom = -105.0
+custom_fonts/font = SubResource( 2 )
+text = "description"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Node2D" parent="Game/CursorLayer/cursor/effectGoodTooltip"]
+position = Vector2( -303, 349 )
+
+[node name="squareshadow2" type="NinePatchRect" parent="Game/CursorLayer/cursor/effectGoodTooltip/Label"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 117.0
+margin_top = -497.0
+margin_right = 5550.0
+margin_bottom = 436.0
+rect_scale = Vector2( 0.03, 0.03 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBack" type="NinePatchRect" parent="Game/CursorLayer/cursor/effectGoodTooltip/Label"]
+margin_left = 121.0
+margin_top = -493.0
+margin_right = 3241.0
+margin_bottom = -93.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="Game/CursorLayer/cursor/effectGoodTooltip/Label"]
+margin_left = 119.0
+margin_top = -494.0
+margin_right = 279.0
+margin_bottom = -472.0
+custom_fonts/font = SubResource( 4 )
+text = "Wasteland"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Turns" type="Node2D" parent="Game/CursorLayer/cursor/effectGoodTooltip"]
+
+[node name="effectBadTooltip" type="Node2D" parent="Game/CursorLayer/cursor"]
+visible = false
+position = Vector2( 200, 122 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="whitesquare" type="Node2D" parent="Game/CursorLayer/cursor/effectBadTooltip"]
+
+[node name="squareshadow" type="NinePatchRect" parent="Game/CursorLayer/cursor/effectBadTooltip/whitesquare"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -194.0
+margin_top = -161.0
+margin_right = 1616.0
+margin_bottom = 1214.0
+rect_scale = Vector2( 0.1, 0.04 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="whitesquare" type="Sprite" parent="Game/CursorLayer/cursor/effectBadTooltip/whitesquare"]
+modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
+position = Vector2( -104, -134 )
+scale = Vector2( 0.16, 0.04 )
+texture = ExtResource( 9 )
+
+[node name="Description" type="Label" parent="Game/CursorLayer/cursor/effectBadTooltip"]
+margin_left = -182.0
+margin_top = -127.0
+margin_right = -26.0
+margin_bottom = -105.0
+custom_fonts/font = SubResource( 2 )
+text = "description"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Node2D" parent="Game/CursorLayer/cursor/effectBadTooltip"]
+position = Vector2( -303, 349 )
+
+[node name="squareshadow2" type="NinePatchRect" parent="Game/CursorLayer/cursor/effectBadTooltip/Label"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 117.0
+margin_top = -497.0
+margin_right = 5550.0
+margin_bottom = 436.0
+rect_scale = Vector2( 0.03, 0.03 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameBack" type="NinePatchRect" parent="Game/CursorLayer/cursor/effectBadTooltip/Label"]
+margin_left = 121.0
+margin_top = -493.0
+margin_right = 3241.0
+margin_bottom = -93.0
+rect_scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 1000, 1000 )
+patch_margin_left = 122
+patch_margin_top = 123
+patch_margin_right = 119
+patch_margin_bottom = 122
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="Game/CursorLayer/cursor/effectBadTooltip/Label"]
+margin_left = 119.0
+margin_top = -494.0
+margin_right = 279.0
+margin_bottom = -472.0
+custom_fonts/font = SubResource( 4 )
+text = "Wasteland"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Turns" type="Node2D" parent="Game/CursorLayer/cursor/effectBadTooltip"]
+
+[node name="cursorSprite" type="Sprite" parent="Game/CursorLayer/cursor"]
+position = Vector2( 19, 16 )
+scale = Vector2( 0.063125, 0.063125 )
+texture = ExtResource( 5 )
+offset = Vector2( -170.079, 18.8976 )
+
+[node name="cursorArea" type="Area2D" parent="Game/CursorLayer/cursor"]
+collision_layer = 31
+collision_mask = 31
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/CursorLayer/cursor/cursorArea"]
+position = Vector2( -5.96046e-08, -5.96046e-08 )
+rotation = 2.58309
+scale = Vector2( 2.6, 4.2 )
+shape = SubResource( 5 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 512, 301 )
+current = true

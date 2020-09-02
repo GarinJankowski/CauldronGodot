@@ -1,0 +1,287 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://Card/Card.gd" type="Script" id=1]
+[ext_resource path="res://Card/CardSprites/card_Attack.png" type="Texture" id=2]
+[ext_resource path="res://TIMESS__.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Card/CardSprites/cardShadow.png" type="Texture" id=4]
+[ext_resource path="res://Modifiers/mod_Stay.png" type="Texture" id=5]
+[ext_resource path="res://Modifiers/mod_Flow.png" type="Texture" id=6]
+[ext_resource path="res://Modifiers/mod_Void.png" type="Texture" id=7]
+[ext_resource path="res://Modifiers/mod_Link.png" type="Texture" id=8]
+[ext_resource path="res://Modifiers/mod_Push.png" type="Texture" id=9]
+[ext_resource path="res://Modifiers/mod_Burn.png" type="Texture" id=10]
+[ext_resource path="res://Modifiers/mod_Copy.png" type="Texture" id=11]
+[ext_resource path="res://Card/CardSprites/cardCost.png" type="Texture" id=12]
+[ext_resource path="res://Card/buttonCard.gd" type="Script" id=13]
+[ext_resource path="res://UI/Shapes/squareglow.png" type="Texture" id=14]
+[ext_resource path="res://Card/cardArea.gd" type="Script" id=15]
+[ext_resource path="res://Card/CardIcons/cardIcon_Smack.png" type="Texture" id=16]
+[ext_resource path="res://Map/whitesquare.png" type="Texture" id=17]
+
+[sub_resource type="DynamicFont" id=1]
+resource_name = "font"
+size = 24
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 14
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 17
+outline_color = Color( 0.223529, 0.784314, 0.207843, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 17
+font_data = ExtResource( 3 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 79, 109 )
+
+[node name="CardSprite" type="Node2D"]
+z_index = 19
+z_as_relative = false
+script = ExtResource( 1 )
+
+[node name="Shadow" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.254902 )
+position = Vector2( -1, 2 )
+scale = Vector2( 0.251333, 0.233333 )
+texture = ExtResource( 4 )
+
+[node name="Top" type="Node2D" parent="."]
+
+[node name="cardSprite" type="Sprite" parent="Top"]
+modulate = Color( 0.909804, 0.909804, 0.909804, 1 )
+scale = Vector2( 0.199833, 0.199833 )
+texture = ExtResource( 2 )
+
+[node name="cardCost" type="Sprite" parent="Top"]
+modulate = Color( 0.105882, 0.105882, 0.105882, 0.380392 )
+position = Vector2( 0.468687, 81 )
+scale = Vector2( 0.20125, 0.199833 )
+texture = ExtResource( 12 )
+
+[node name="cardIcon" type="Sprite" parent="Top"]
+visible = false
+modulate = Color( 1, 1, 1, 0.0980392 )
+position = Vector2( -3.8147e-06, 3.8147e-06 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 16 )
+
+[node name="nameBack" type="Sprite" parent="Top"]
+modulate = Color( 0, 0, 0, 0 )
+position = Vector2( -0.500003, -80 )
+scale = Vector2( 0.139, 0.0384583 )
+texture = ExtResource( 17 )
+
+[node name="costBack" type="Sprite" parent="Top"]
+modulate = Color( 0, 0, 0, 0 )
+position = Vector2( -7.62939e-06, 81 )
+scale = Vector2( 0.138, 0.0384583 )
+texture = ExtResource( 17 )
+
+[node name="modBack" type="Node2D" parent="Top"]
+
+[node name="Burnback" type="Sprite" parent="Top/modBack"]
+modulate = Color( 0, 0, 0, 0 )
+position = Vector2( -42.25, -48.25 )
+scale = Vector2( 0.0155, 0.0155 )
+texture = ExtResource( 17 )
+
+[node name="Flowback" type="Sprite" parent="Top/modBack"]
+modulate = Color( 0, 0, 0, 0 )
+position = Vector2( -22, -48 )
+scale = Vector2( 0.0155, 0.0155 )
+texture = ExtResource( 17 )
+
+[node name="Stayback" type="Sprite" parent="Top/modBack"]
+modulate = Color( 0, 0, 0, 0 )
+position = Vector2( 59, -48.25 )
+scale = Vector2( 0.0155, 0.0155 )
+texture = ExtResource( 17 )
+
+[node name="Voidback" type="Sprite" parent="Top/modBack"]
+modulate = Color( 0, 0, 0, 0 )
+position = Vector2( -2, -48.25 )
+scale = Vector2( 0.0155, 0.0155 )
+texture = ExtResource( 17 )
+
+[node name="Linkback" type="Sprite" parent="Top/modBack"]
+modulate = Color( 0, 0, 0, 0 )
+position = Vector2( -61, -48.25 )
+scale = Vector2( 0.0155, 0.0155 )
+texture = ExtResource( 17 )
+
+[node name="Pushback" type="Sprite" parent="Top/modBack"]
+modulate = Color( 0, 0, 0, 0 )
+position = Vector2( 18.75, -48.25 )
+scale = Vector2( 0.0155, 0.0155 )
+texture = ExtResource( 17 )
+
+[node name="Copyback" type="Sprite" parent="Top/modBack"]
+modulate = Color( 0, 0, 0, 0 )
+position = Vector2( 38.75, -48.25 )
+scale = Vector2( 0.0155, 0.0155 )
+texture = ExtResource( 17 )
+
+[node name="nameText" type="Label" parent="Top"]
+margin_left = -70.0
+margin_top = -100.0
+margin_right = 69.0
+margin_bottom = -60.0
+custom_fonts/font = SubResource( 1 )
+text = "Name"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="descriptionText" type="Label" parent="Top"]
+margin_left = -67.0
+margin_top = -38.0
+margin_right = 67.0
+margin_bottom = 63.0
+custom_fonts/font = SubResource( 2 )
+text = "Description"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="costText" type="Label" parent="Top"]
+margin_left = -69.0
+margin_top = 61.0
+margin_right = 69.0
+margin_bottom = 100.0
+custom_fonts/font = SubResource( 2 )
+text = "Cost"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mods" type="Node2D" parent="."]
+position = Vector2( -512, -472 )
+
+[node name="mod_Burn" type="Sprite" parent="Mods"]
+visible = false
+position = Vector2( 470.906, 423 )
+scale = Vector2( 0.0737499, 0.0737499 )
+texture = ExtResource( 10 )
+
+[node name="mod_Flow" type="Sprite" parent="Mods"]
+visible = false
+position = Vector2( 490.906, 423 )
+scale = Vector2( 0.0591668, 0.0591668 )
+texture = ExtResource( 6 )
+
+[node name="mod_Stay" type="Sprite" parent="Mods"]
+visible = false
+position = Vector2( 571, 423 )
+scale = Vector2( 0.0649999, 0.0649999 )
+texture = ExtResource( 5 )
+
+[node name="StayText" type="Label" parent="Mods"]
+visible = false
+margin_left = 552.0
+margin_top = 412.0
+margin_right = 592.0
+margin_bottom = 432.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.184314, 0.854902, 0.109804, 1 )
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod_Void" type="Sprite" parent="Mods"]
+visible = false
+position = Vector2( 510, 424 )
+scale = Vector2( 0.0754166, 0.0754166 )
+texture = ExtResource( 7 )
+
+[node name="mod_Link" type="Sprite" parent="Mods"]
+visible = false
+position = Vector2( 451, 423 )
+scale = Vector2( 0.0716667, 0.0716667 )
+texture = ExtResource( 8 )
+
+[node name="LinkText" type="Label" parent="Mods"]
+visible = false
+margin_left = 424.0
+margin_top = 412.0
+margin_right = 478.0
+margin_bottom = 432.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mod_Push" type="Sprite" parent="Mods"]
+visible = false
+position = Vector2( 529.667, 423 )
+scale = Vector2( 0.0666667, 0.0666667 )
+texture = ExtResource( 9 )
+
+[node name="mod_Copy" type="Sprite" parent="Mods"]
+visible = false
+position = Vector2( 551.104, 423.437 )
+scale = Vector2( 0.0637498, 0.0637498 )
+texture = ExtResource( 11 )
+
+[node name="buttonCard" type="TextureButton" parent="."]
+margin_left = -79.0
+margin_top = -109.0
+margin_right = 79.0
+margin_bottom = 109.0
+disabled = true
+enabled_focus_mode = 0
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="glow" type="NinePatchRect" parent="."]
+visible = false
+modulate = Color( 0.862745, 0.772549, 0.662745, 0.117647 )
+margin_left = -89.0
+margin_top = -119.0
+margin_right = 1671.0
+margin_bottom = 2241.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 14 )
+patch_margin_left = 188
+patch_margin_top = 186
+patch_margin_right = 188
+patch_margin_bottom = 204
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cardArea" type="Area2D" parent="."]
+visible = false
+script = ExtResource( 15 )
+
+[node name="cardCollision" type="CollisionShape2D" parent="cardArea"]
+shape = SubResource( 5 )
+disabled = true
+[connection signal="area_entered" from="cardArea" to="cardArea" method="_on_cardArea_area_entered"]
+[connection signal="area_exited" from="cardArea" to="cardArea" method="_on_cardArea_area_exited"]

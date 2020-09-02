@@ -1,0 +1,229 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Bag/bagCard.gd" type="Script" id=1]
+[ext_resource path="res://Bag/UI Elements/bagCards/bagCard_Attack.png" type="Texture" id=2]
+[ext_resource path="res://TIMESS__.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Modifiers/mod_Push.png" type="Texture" id=4]
+[ext_resource path="res://Modifiers/mod_Void.png" type="Texture" id=5]
+[ext_resource path="res://Modifiers/mod_Link.png" type="Texture" id=6]
+[ext_resource path="res://Modifiers/mod_Stay.png" type="Texture" id=7]
+[ext_resource path="res://Modifiers/mod_Burn.png" type="Texture" id=8]
+[ext_resource path="res://Modifiers/mod_Flow.png" type="Texture" id=9]
+[ext_resource path="res://Modifiers/mod_Copy.png" type="Texture" id=10]
+[ext_resource path="res://Card/CardIcons/cardIcon_Smack.png" type="Texture" id=11]
+[ext_resource path="res://UI/Shapes/squareshadow.png" type="Texture" id=12]
+[ext_resource path="res://Bag/UI Elements/bagCards/bagCardCursor.png" type="Texture" id=13]
+[ext_resource path="res://Map/whitesquare.png" type="Texture" id=14]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 14
+font_data = ExtResource( 3 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 123, 20 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="squareshadow" type="NinePatchRect" parent="."]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -130.0
+margin_top = -26.0
+margin_right = 3120.0
+margin_bottom = 627.0
+rect_scale = Vector2( 0.08, 0.08 )
+texture = ExtResource( 12 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bagCardSprite" type="Sprite" parent="."]
+scale = Vector2( 0.245, 0.245 )
+texture = ExtResource( 2 )
+
+[node name="cardIcon" type="Sprite" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0.0980392 )
+position = Vector2( -12, -2.38419e-07 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 11 )
+region_enabled = true
+region_rect = Rect2( 3.754, 399.075, 934.562, 184.025 )
+region_filter_clip = true
+
+[node name="nameBack" type="Sprite" parent="."]
+visible = false
+modulate = Color( 0, 0, 0, 0.313726 )
+position = Vector2( -32, 0.624999 )
+scale = Vector2( 0.17, 0.02725 )
+texture = ExtResource( 14 )
+
+[node name="cardName" type="Label" parent="."]
+margin_left = -117.0
+margin_top = -12.0
+margin_right = 53.0
+margin_bottom = 13.0
+custom_fonts/font = SubResource( 1 )
+text = "Name"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="modBacks" type="Node2D" parent="."]
+
+[node name="BurnBack" type="Sprite" parent="modBacks"]
+visible = false
+modulate = Color( 0, 0, 0, 0.313726 )
+position = Vector2( 80, -7 )
+scale = Vector2( 0.012, 0.011625 )
+texture = ExtResource( 14 )
+
+[node name="FlowBack" type="Sprite" parent="modBacks"]
+visible = false
+modulate = Color( 0, 0, 0, 0.313726 )
+position = Vector2( 94.75, -7 )
+scale = Vector2( 0.012, 0.011625 )
+texture = ExtResource( 14 )
+
+[node name="StayBack" type="Sprite" parent="modBacks"]
+visible = false
+modulate = Color( 0, 0, 0, 0.313726 )
+position = Vector2( 95, 8 )
+scale = Vector2( 0.012, 0.011625 )
+texture = ExtResource( 14 )
+
+[node name="VoidBack" type="Sprite" parent="modBacks"]
+visible = false
+modulate = Color( 0, 0, 0, 0.313726 )
+position = Vector2( 110, -4.76837e-07 )
+scale = Vector2( 0.012, 0.011625 )
+texture = ExtResource( 14 )
+
+[node name="LinkBack" type="Sprite" parent="modBacks"]
+visible = false
+modulate = Color( 0, 0, 0, 0.313726 )
+position = Vector2( 66, -7.1875 )
+scale = Vector2( 0.012, 0.011625 )
+texture = ExtResource( 14 )
+
+[node name="PushBack" type="Sprite" parent="modBacks"]
+visible = false
+modulate = Color( 0, 0, 0, 0.313726 )
+position = Vector2( 65.1786, 7.8125 )
+scale = Vector2( 0.012, 0.011625 )
+texture = ExtResource( 14 )
+
+[node name="CopyBack" type="Sprite" parent="modBacks"]
+visible = false
+modulate = Color( 0, 0, 0, 0.313726 )
+position = Vector2( 80.1786, 7.8125 )
+scale = Vector2( 0.012, 0.011625 )
+texture = ExtResource( 14 )
+
+[node name="mods" type="Node2D" parent="."]
+
+[node name="Burn" type="Sprite" parent="mods"]
+visible = false
+position = Vector2( 80.75, -8 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 8 )
+
+[node name="Flow" type="Sprite" parent="mods"]
+visible = false
+position = Vector2( 95.3214, -8 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 9 )
+
+[node name="Stay" type="Sprite" parent="mods"]
+visible = false
+position = Vector2( 95.5714, 7 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 7 )
+
+[node name="StayText" type="Label" parent="mods"]
+visible = false
+margin_left = 79.0
+margin_top = -2.0
+margin_right = 112.0
+margin_bottom = 15.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.184314, 0.854902, 0.109804, 1 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Link" type="Sprite" parent="mods"]
+visible = false
+position = Vector2( 66, -6 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 6 )
+
+[node name="LinkText" type="Label" parent="mods"]
+visible = false
+margin_left = 51.0
+margin_top = -16.0
+margin_right = 81.0
+margin_bottom = 1.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Push" type="Sprite" parent="mods"]
+visible = false
+position = Vector2( 65.75, 7.57142 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 4 )
+
+[node name="Copy" type="Sprite" parent="mods"]
+visible = false
+position = Vector2( 80.75, 7.57142 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 10 )
+
+[node name="Void" type="Sprite" parent="mods"]
+visible = false
+position = Vector2( 110, -4.76837e-07 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 5 )
+
+[node name="bagCardCursor" type="Sprite" parent="."]
+visible = false
+scale = Vector2( 0.245, 0.245 )
+z_index = 30
+z_as_relative = false
+texture = ExtResource( 13 )
+
+[node name="bagCardButton" type="TextureButton" parent="."]
+margin_left = -123.0
+margin_top = -21.0
+margin_right = 123.0
+margin_bottom = 19.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bagCardArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bagCardArea"]
+visible = false
+position = Vector2( 0, -1 )
+shape = SubResource( 3 )
+[connection signal="pressed" from="bagCardButton" to="." method="_on_bagCardButton_pressed"]
+[connection signal="area_entered" from="bagCardArea" to="." method="_on_bagCardArea_area_entered"]
+[connection signal="area_exited" from="bagCardArea" to="." method="_on_bagCardArea_area_exited"]

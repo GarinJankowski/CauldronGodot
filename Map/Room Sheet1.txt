@@ -1,0 +1,7 @@
+Tier	Combat	Weapon	Armor	Headgear	Forge	Cauldron	Shop	Boss
+A	45	15	15	10	15	0	0	0
+B	40	15	15	10	10	10	0	0
+C	45	10	10	5	10	10	5	5
+D	50	5	5	5	10	10	5	10
+E	50	5	5	5	10	0	10	15
+F	50	0	0	0	0	0	10	40

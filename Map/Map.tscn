@@ -1,0 +1,225 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Map/Map.gd" type="Script" id=1]
+[ext_resource path="res://Map/icon_Character.png" type="Texture" id=2]
+[ext_resource path="res://Map/whitesquare.png" type="Texture" id=3]
+[ext_resource path="res://TIMESS__.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://UI/Shapes/squareshadow.png" type="Texture" id=5]
+[ext_resource path="res://Map/Room/Room Icons/icon_RoomGearHeadgear.png" type="Texture" id=6]
+[ext_resource path="res://Map/Terrain/Terrain Icons/terrain_Wasteland.png" type="Texture" id=7]
+[ext_resource path="res://Map/UI/scroll_indicator.png" type="Texture" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 17
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 4 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 160, 160 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 74, 11 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 80, 11 )
+
+[node name="Node2D" type="Node2D"]
+position = Vector2( -1, -8 )
+script = ExtResource( 1 )
+
+[node name="Room" type="Node2D" parent="."]
+position = Vector2( 7, 0 )
+
+[node name="back" type="Sprite" parent="Room"]
+modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
+position = Vector2( 86.5, 350.5 )
+scale = Vector2( 0.147, 0.025 )
+texture = ExtResource( 3 )
+
+[node name="Room" type="Label" parent="Room"]
+margin_left = 17.0
+margin_top = 341.0
+margin_right = 69.0
+margin_bottom = 366.0
+custom_fonts/font = SubResource( 1 )
+text = "Room:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="roomLabel" type="Label" parent="Room"]
+margin_left = 90.0
+margin_top = 341.0
+margin_right = 182.0
+margin_bottom = 366.0
+custom_fonts/font = SubResource( 1 )
+text = "Headgear"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="squareshadow3" type="NinePatchRect" parent="Room"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 64.0
+margin_top = 340.0
+margin_right = 1414.0
+margin_bottom = 1590.0
+rect_scale = Vector2( 0.02, 0.02 )
+texture = ExtResource( 5 )
+region_rect = Rect2( -137.678, -72.9058, 1236.02, 1158.27 )
+patch_margin_left = 388
+patch_margin_top = 328
+patch_margin_right = 365
+patch_margin_bottom = 326
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="roomIcon" type="Sprite" parent="Room"]
+position = Vector2( 77, 353 )
+scale = Vector2( 0.0775, 0.0775 )
+texture = ExtResource( 6 )
+
+[node name="Terrain" type="Node2D" parent="."]
+position = Vector2( 83, 338 )
+
+[node name="back2" type="Sprite" parent="Terrain"]
+modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
+position = Vector2( 172.75, 12.5 )
+scale = Vector2( 0.1595, 0.025 )
+texture = ExtResource( 3 )
+
+[node name="Terrain" type="Label" parent="Terrain"]
+margin_left = 97.0
+margin_top = 3.0
+margin_right = 157.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 1 )
+text = "Terrain:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="terrainLabel" type="Label" parent="Terrain"]
+margin_left = 177.0
+margin_top = 3.0
+margin_right = 265.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 1 )
+text = "Wasteland"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="squareshadow2" type="NinePatchRect" parent="Terrain"]
+modulate = Color( 1, 1, 1, 0.27451 )
+margin_left = 151.0
+margin_top = 2.0
+margin_right = 1501.0
+margin_bottom = 1252.0
+rect_scale = Vector2( 0.02, 0.02 )
+texture = ExtResource( 5 )
+region_rect = Rect2( -137.678, -72.9058, 1236.02, 1158.27 )
+patch_margin_left = 388
+patch_margin_top = 328
+patch_margin_right = 365
+patch_margin_bottom = 326
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="terrainIcon" type="Sprite" parent="Terrain"]
+position = Vector2( 165, 14 )
+scale = Vector2( 0.0533333, 0.0533333 )
+texture = ExtResource( 7 )
+
+[node name="squareshadow" type="NinePatchRect" parent="."]
+modulate = Color( 1, 1, 1, 0.431373 )
+margin_left = -12.0
+margin_top = -7.0
+margin_right = 3728.0
+margin_bottom = 3663.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 5 )
+region_rect = Rect2( -137.678, -72.9058, 1236.02, 1158.27 )
+patch_margin_left = 388
+patch_margin_top = 328
+patch_margin_right = 365
+patch_margin_bottom = 326
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="Sprite" parent="."]
+modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
+position = Vector2( 177, 176 )
+scale = Vector2( 0.328, 0.328 )
+texture = ExtResource( 3 )
+
+[node name="squareshadow2" type="NinePatchRect" parent="."]
+modulate = Color( 1, 1, 1, 0.431373 )
+margin_left = 7.0
+margin_top = 8.0
+margin_right = 8482.0
+margin_bottom = 8433.0
+rect_scale = Vector2( 0.04, 0.04 )
+texture = ExtResource( 5 )
+region_rect = Rect2( -137.678, -72.9058, 1236.02, 1158.27 )
+patch_margin_left = 388
+patch_margin_top = 328
+patch_margin_right = 365
+patch_margin_bottom = 326
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CharacterSprite" type="Node2D" parent="."]
+position = Vector2( 25, 328 )
+
+[node name="CharacterSprite" type="Sprite" parent="CharacterSprite"]
+scale = Vector2( 0.0533333, 0.0533333 )
+z_index = 14
+texture = ExtResource( 2 )
+
+[node name="scroll_indicator" type="Sprite" parent="CharacterSprite"]
+visible = false
+position = Vector2( 24.5563, -22.5564 )
+scale = Vector2( 0.184813, 0.184813 )
+z_index = 14
+texture = ExtResource( 8 )
+
+[node name="mapArea" type="Area2D" parent="."]
+position = Vector2( 177, 176 )
+collision_layer = 2
+collision_mask = 2
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mapArea"]
+shape = SubResource( 2 )
+
+[node name="roomArea" type="Area2D" parent="."]
+position = Vector2( 94, 354 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="roomArea"]
+shape = SubResource( 3 )
+
+[node name="terrainArea" type="Area2D" parent="."]
+position = Vector2( 257, 354 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="terrainArea"]
+shape = SubResource( 4 )
+[connection signal="area_entered" from="mapArea" to="." method="_on_mapArea_area_entered"]
+[connection signal="area_exited" from="mapArea" to="." method="_on_mapArea_area_exited"]
+[connection signal="area_entered" from="roomArea" to="." method="_on_roomArea_area_entered"]
+[connection signal="area_exited" from="roomArea" to="." method="_on_roomArea_area_exited"]
+[connection signal="area_entered" from="terrainArea" to="." method="_on_terrainArea_area_entered"]
+[connection signal="area_exited" from="terrainArea" to="." method="_on_terrainArea_area_exited"]
