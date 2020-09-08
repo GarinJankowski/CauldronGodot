@@ -48,13 +48,15 @@ func fixRetainedEffects():
 #otherwise, create a new effect
 func addEffect(effectName, value, turns, Card):
 	var effectProperties = Game.scriptgen.EffectScripts[effectName][0]
+	if myself.hasEffect("Shatter") && "Good" in effectProperties:
+		return
 	if effectName in effectList && "replaceable" in effectProperties:
 		effectList[effectName][0].updateVariables(value, turns, Card)
 	elif effectName in effectList && "stackable" in effectProperties:
 		effectList[effectName][0].add(value, Card)
 	elif effectName in effectList && "permanent" in effectProperties && !"active" in effectProperties && !"ally" in effectProperties:
 		tick(effectName)
-	elif (str(value).begins_with("-") || str(value) == "0") && !"stat" in effectProperties && !"Bad" in effectProperties:
+	elif (str(value).begins_with("-") || str(value) == "0") && !"zero" in effectProperties && !"stat" in effectProperties && !"Bad" in effectProperties:
 		return
 	else:
 		var effect = effectPreload.instance()
@@ -85,6 +87,11 @@ func addEffect(effectName, value, turns, Card):
 		updatePositions()
 		if !effect.shouldExist():
 			removeEffect(null, effect)
+			
+func increaseEffect(effectName, value):
+	if has(effectName):
+		for effect in effectList[effectName]:
+			effect.add(value)
 
 func removeEffect(effectName, effect = null):
 	if effectName == null:
@@ -138,8 +145,11 @@ func turn(goodbad = ""):
 #triggers all effects of the effectName
 func trigger(effectName):
 	if has(effectName):
-		for effect in effectList[effectName]:
+		var efflist = effectList[effectName].duplicate()
+		for effect in efflist:
 			effect.triggerFunction()
+		return true
+	return false
 
 #ticks all effects of the effectName
 func tick(effectName):
@@ -190,6 +200,13 @@ func getValue(effectName, effect = null):
 			return efflist[0].value
 	return 0
 	
+func getAllValues(effectName):
+	var val = 0
+	if effectName in effectList:
+		for eff in effectList[effectName]:
+			val += int(eff.value)
+	return val
+	
 func getEffect(effectName):
 	if effectName in effectList:
 		return effectList[effectName][0]
@@ -209,57 +226,51 @@ func allyBlock(damage):
 	return false
 
 func mostRecentCharacterRecording():
-	var recordings = []
-#	for effect in effectListGood:
-#		if effect.effectName == "Breakpoint":
-#			recordings.append(effect)
-	
-	if recordings.size() == 0:
-		return
-	var mostrecent = recordings[0]
-	for record in recordings:
-		if record.value < mostrecent.value && record.value > 1:
-			mostrecent = record
-		elif record.value <= 1 && record.value > mostrecent.value:
-			mostrecent = record
-	mostrecent.tick()
-	return mostrecent
+	if "Record" in effectList:
+		var record = effectList["Record"][0]
+		record.tick()
+		return record
+	return false
 
 func getRecording():
 	var goodarray = []
-#	for effect in effectListGood:
-#		goodarray.append(effect.getRecording())
-#	var badarray = []
-#	for effect in effectListBad:
-#		badarray.append(effect.getRecording())
-#	return [goodarray, badarray]
-	pass
+	var badarray = []
+	for effect in goodList:
+		goodarray.append(effect.getRecording())
+	for effect in badList:
+		badarray.append(effect.getRecording())
+	return [goodarray, badarray]
 
 func applyRecording(recording):
-#	for effect in effectListGood:
-#		effect.remove()
-#	effectListGood.clear()
-#	for effect in effectListBad:
-#		effect.remove()
-#	effectListBad.clear()
+	effectList.clear()
+	for effect in goodList:
+		effect.remove()
+	goodList.clear()
+	for effect in badList:
+		effect.remove()
+	badList.clear()
 	
 	var goodarray = recording[0]
 	var badarray = recording[1]
-#
-#	for i in goodarray.size():
-#		var effect = effectPreload.instance()
-#		add_child(effect)
-#		effectListGood.append(effect)
-#		effect.applyRecording(goodarray[i])
-#		effect.setPos(i)
-#	for i in badarray.size():
-#		var effect = effectPreload.instance()
-#		add_child(effect)
-#		effectListBad.append(effect)
-#		effect.applyRecording(badarray[i])
-#		effect.setPos(i)
-#
-#	updatePositions("Good")
-#	updatePositions("Bad")
-	pass
+	
+	for i in goodarray.size():
+		var effect = effectPreload.instance()
+		add_child(effect)
+		goodList.append(effect)
+		effect.applyRecording(goodarray[i])
+		var effname = effect.effectName
+		if !effname in effectList:
+			effectList[effname] = []
+		effectList[effname].append(effect)
+		effect.setPos(i)
+	for i in badarray.size():
+		var effect = effectPreload.instance()
+		add_child(effect)
+		badList.append(effect)
+		effect.applyRecording(badarray[i])
+		var effname = effect.effectName
+		if !effname in effectList:
+			effectList[effname] = []
+		effectList[effname].append(effect)
+		effect.setPos(i)
 

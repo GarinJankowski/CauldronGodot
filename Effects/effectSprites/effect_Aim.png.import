@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_RoomCombat_Wasp.png-3fc4e4a82b60f3bd1cf863a0c55022ad.stex"
+path="res://.import/effect_Aim.png-10007fa52c34bb8162dde10b0c3d4f3a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Map/Room/Room Icons/Combat Room Icons/icon_RoomCombat_Wasp.png"
-dest_files=[ "res://.import/icon_RoomCombat_Wasp.png-3fc4e4a82b60f3bd1cf863a0c55022ad.stex" ]
+source_file="res://Effects/effectSprites/effect_Aim.png"
+dest_files=[ "res://.import/effect_Aim.png-10007fa52c34bb8162dde10b0c3d4f3a.stex" ]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=true
+flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

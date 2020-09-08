@@ -22,7 +22,7 @@ var displayTurns
 
 var EffectsList
 
-var specialValue
+var specialValue = false
 
 var init = false
 var maxeffects = 6
@@ -65,15 +65,17 @@ func init(ename, v, t, c):
 	setDisplayName()
 	setDisplayTurns()
 	var newtxt = (str(value)).replace(" ", "")
+	if newtxt == "0" && !"zero" in effectProperties:
+		newtxt = ""
 	if effectName == "Trick":
 		newtxt = "x" + newtxt
 	get_node("tick/amount").text = newtxt
 	
 	if effectName == "Focus":
 		setValue(turns)
-	elif effectName == "Breakpoint":
+	elif effectName == "Record":
 		get_node("tick/amount").modulate = "000000"
-	elif effectName == "Go Back":
+	elif effectName == "You":
 		specialValue = []
 	
 	if !myself.isPlayer():
@@ -94,9 +96,6 @@ func init(ename, v, t, c):
 		stepx *= -1
 	tickdestx =  ticknode.position.x
 	get_node("tick/effectSprite").set_texture(load("res://Effects/effectSprites/effect_" + effectName + ".png"))
-	
-	if effectName == "Go Back":
-		get_node("tick/effectSprite").set_texture(load("res://Effects/effectSprites/effect_Spell.png"))
 
 func _process(delta):
 	if position.x != dest.x:
@@ -170,7 +169,7 @@ func has(prop):
 
 func setText(txt):
 	var newtxt = txt.replace(" ", "")
-	if newtxt != get_node("tick/amount").text && effectName != "Breakpoint":
+	if newtxt != get_node("tick/amount").text && effectName != "Record":
 		tick()
 	if effectName == "Trick":
 		newtxt = "x" + newtxt
@@ -203,7 +202,11 @@ func add(val, cd = null):
 		Card = cd
 		Combat = Card.Combat.duplicate()
 	setText(str(value))
-	
+
+func addTurns(val):
+	turns += val
+	setDisplayTurns()
+
 func setValue(val):
 	value = val
 	setText(str(value))
@@ -251,7 +254,7 @@ func balanceSteps():
 
 func shouldExist():
 	#rewrite this
-	if (value is int && value <= 0 && (effectName != "Stranglehold (Attacker)" && effectName != "Breakpoint" && (good || !has("stat")))) || turns == 0:
+	if (value is int && value <= 0 && (!"zero" in effectProperties && (good || !has("stat")))) || turns == 0:
 		return false
 	return true
 
@@ -280,18 +283,23 @@ func setBreakpoint():
 
 func getRecording():
 	var valarray = [
+		effectProperties,
+		Combat,
+		myself,
+		delay,
 		specialValue
 	]
-	var goodbad = "Good"
-	if !good:
-		goodbad = "Bad"
-	return [effectName, value, turns, goodbad, valarray]
+	return [effectName, value, turns, Card, valarray]
 	
 func applyRecording(recording):
 	init(recording[0], recording[1], recording[2], recording[3])
 	
 	var valarray = recording[4]
-	specialValue = valarray[0]
+	effectProperties = valarray[0]
+	Combat = valarray[1]
+	myself = valarray[2]
+	delay = valarray[3]
+	specialValue = valarray[4]
 
 func calculate(string):
 	var finalnum = 0

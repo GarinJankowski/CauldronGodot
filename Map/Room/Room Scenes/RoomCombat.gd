@@ -36,7 +36,7 @@ func generateEnemy(px, py):
 	var y = py
 	
 	if (x == 1 && y == 0) || (x == 0 && y == 1) || (x == 1 && y == 1):
-		enemyName = "Rat"
+		enemyName = "Dummy"
 		experience = 1
 		return
 	

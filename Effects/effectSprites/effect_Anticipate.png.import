@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/effect_Attack.png-0f15e5c02619e37b6294e5238013113d.stex"
+path="res://.import/effect_Anticipate.png-f47e6d7d1703118046769eb5f3105ae5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Effects/effectSprites/effect_Attack.png"
-dest_files=[ "res://.import/effect_Attack.png-0f15e5c02619e37b6294e5238013113d.stex" ]
+source_file="res://Effects/effectSprites/effect_Anticipate.png"
+dest_files=[ "res://.import/effect_Anticipate.png-f47e6d7d1703118046769eb5f3105ae5.stex" ]
 
 [params]
 

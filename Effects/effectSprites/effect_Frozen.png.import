@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/effect_Curse.png-d50f869f4a1a685e34924d3844b737ee.stex"
+path="res://.import/effect_Frozen.png-33240b55cbc612e4fd9114bca9855c5b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Effects/effectSprites/effect_Curse.png"
-dest_files=[ "res://.import/effect_Curse.png-d50f869f4a1a685e34924d3844b737ee.stex" ]
+source_file="res://Effects/effectSprites/effect_Frozen.png"
+dest_files=[ "res://.import/effect_Frozen.png-33240b55cbc612e4fd9114bca9855c5b.stex" ]
 
 [params]
 

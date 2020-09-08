@@ -65,13 +65,17 @@ func createCardFunctions(cardstring):
 	scriptString += "func init(c):\n\tCard = c"
 	
 	scriptString += "\n\nfunc initCombat():"
-	scriptString += "\n\tCombat = Card.Combat\n\tmyself = Card.myself\n\topponent = Card.opponent\n\topponentHealth = opponent.CurrentHealth\n\n"
+	scriptString += "\n\tCombat = Card.Combat\n\tmyself = Card.myself\n\topponent = Card.opponent\n\topponentHealth = opponent.CurrentHealth\n"
 	
-	functionString = "func useCard():"
+	functionString = "\nfunc useCard(copytimes = 0):"
+	var costString = ""
 	
 	for i in values.size():
 		var action = values[i]
-		if action == "UNIQUEFUNCTION":
+		if action == "CUSTOMCOPYFUNCTION":
+			scriptString += uniqueCopyFunction(cardName, actionValues)
+			cardProperties.append(action)
+		elif action == "UNIQUEFUNCTION":
 			functionString += uniqueCardFunction(cardName, actionValues)
 		elif action == "release":
 			var sname = "strangleCombat" + str(i)
@@ -87,10 +91,22 @@ func createCardFunctions(cardstring):
 			mods[action.capitalize()] = true
 		elif ": " in action:
 			var act = action.split(": ")
+			var tab = "\n\t"
+			
+			if act[0].begins_with("(times("):
+				actionValues["times"] = 0
+				var timesarr = act[0].split("))")
+				act[0] = timesarr[1]
+				var times = timesarr[0].replace("(times(", "")
+				functionString += tab + "var actualtimes" + str(i) + " = Card.calculate('" + times + "')"
+				functionString += tab + "actionValues['times'] = actualtimes" + str(i)
+				functionString += tab + "for times" + str(i) + " in actualtimes" + str(i) + ":"
+				tab += "\t"
+			
 			cardActions[act[0]] = act[1]
 			
 			if act[0] == "action":
-				functionString += "\n\tCombat." + act[1] + "(myself, opponent, Card)"
+				functionString += tab + "Combat." + act[1] + "(myself, opponent, Card)"
 			elif act[0] == "link" || act[0] == "stay":
 				mods[act[0].capitalize()] = int(act[1])
 			elif act[0].ends_with("ffect"):
@@ -99,12 +115,11 @@ func createCardFunctions(cardstring):
 					target = "myself"
 					
 				var parts = act[1].split(", ")
-				var tab = "\n\t"
 				if parts[0].begins_with("(") && parts[0].ends_with(")"):
 					var numtimes = parts[0].replace("(", "").replace(")", "")
 					parts.remove(0)
+					functionString += tab + "for i in Card.calculate('" + str(numtimes) + "'):"
 					tab += "\t"
-					functionString += "\n\tfor i in Card.calculate('" + str(numtimes) + "'):"
 					
 				actionValues[act[0] + "Value"] = 0
 				actionValues[act[0] + "Turns"] = 0
@@ -123,10 +138,9 @@ func createCardFunctions(cardstring):
 						functionString += tab + "actionValues['" + act[0] + "Turns'] += Card.addEffect(" + target + ", '" + effectName + "', 'N/A', '" + parts[0] + "')"
 			elif act[0].ends_with("amageOT"):
 				var target = "opponent"
-				var tab = "\n\t"
 				if act[0].begins_with("noDefenses"):
 					act[0] = act[0].replace("noDefenses", "")
-					functionString += "\n\tif opponent.CurrentHealth < opponentHealth:"
+					functionString += tab + "if opponent.CurrentHealth < opponentHealth:"
 					tab += "\t"
 				if act[0].begins_with("self"):
 					target = "myself"
@@ -153,21 +167,29 @@ func createCardFunctions(cardstring):
 				
 				var effname = lose + effstring.replace("OT", "").capitalize()
 				var vals = act[1].split(", ")
-				functionString += "\n\tactionValues['" + act[0] + "Value'] += Card.calculate('" + vals[0] + "')"
-				functionString += "\n\tactionValues['" + act[0] + "Turns'] += Card.addEffect(" + target + ", '" + effname + "', '" + vals[0] + "', '" + vals[1] + "')"
+				functionString += tab + "actionValues['" + act[0] + "Value'] += Card.calculate('" + vals[0] + "')"
+				functionString += tab + "actionValues['" + act[0] + "Turns'] += Card.addEffect(" + target + ", '" + effname + "', '" + vals[0] + "', '" + vals[1] + "')"
 				actionValues[act[0] + 'Value'] = 0
 				actionValues[act[0] + 'Turns'] = 0
+			elif act[0].ends_with("rigger"):
+				var target = "opponent"
+				if act[0].begins_with("self"):
+					target = "myself"
+				functionString += tab + target + ".trigger('" + act[1] + "')"
 			elif act[0] == "stranglehold":
-				functionString += "\n\topponent.addEffect('Stranglehold (Target)', '', -1, Card)"
-				functionString += "\n\tmyself.addEffect('Stranglehold (Attacker)', Card.calculate('" + act[1] + "'), -1, Card)"
+				functionString += tab + "Card.addEffect(opponent, 'Stranglehold (Target)', '', -1)"
+				functionString += tab + "Card.addEffect(myself, 'Stranglehold (Attacker)', Card.calculate('" + act[1] + "'), -1)"
 				cardProperties.append("stranglehold")
-			elif act[0] == "gainStat":
+			elif act[0].ends_with("gainStat"):
+				var target = "myself"
+				if act[0].begins_with("enemy"):
+					target = "opponent"
 				var parts = act[1].split(", ")
 				var updown = " Up"
 				if parts[1].begins_with("-"):
 					updown = " Down"
 				var effname = parts[0] + updown
-				functionString += "\n\tCard.addEffect(myself, '" + effname + "', Card.calculate('" + parts[1] + "'), Card.calculate('" + parts[2] + "'))"
+				functionString += tab + "Card.addEffect(" + target + ", '" + effname + "', Card.calculate('" + parts[1] + "'), Card.calculate('" + parts[2] + "'))"
 			elif act[0] == "insertEnemyDeck" || act[0] == "insertSelfDeck":
 				var parts = act[1].split(", ")
 				var cardstuff = parts[0].split(" (")
@@ -181,71 +203,100 @@ func createCardFunctions(cardstring):
 				if parts.size() > 1:
 					uniquevalue = parts[1]
 				
-				functionString += "\n\tif Card.CombatDeck != null:"
-				functionString += "\n\t\tfor i in Card.calculate('" + amount + "'):"
-				functionString += "\n\t\t\tCard.CombatDeck.get_ref()" + enemyDeck + ".addTempCard('" + cardstuff[0] + "', myself.convertStat('" + uniquevalue + "'))"
+				functionString += tab + "if Card.CombatDeck != null:"
+				functionString += tab + "\tfor i in Card.calculate('" + amount + "'):"
+				functionString += tab + "\t\tCard.CombatDeck.get_ref()" + enemyDeck + ".addTempCard('" + cardstuff[0] + "', myself.convertStat('" + uniquevalue + "'))"
 			elif act[0] == "burnDeck":
-				functionString += "\n\tCard.CombatDeck.get_ref().burnDeck('" + act[1] + "')"
+				functionString += tab + "Card.CombatDeck.get_ref().burnDeck('" + act[1] + "')"
 			elif act[0] == "UNIQUEFLAG":
 				uniqueFlags.append(act[1])
 			elif act[0] == "ALTERNATE":
+				#cardProperties.append("hasAlternate")
 				var parts = act[1].split(", ")
+				functionString += tab + "if !Card.has('noAlternate'):"
+				tab += "\t"
 				if parts[0] == "enemyDefenses":
-					functionString += "\n\tif opponent.Block() > 0 || opponent.Shield() > 0 || opponent.Allies():"
-					functionString += "\n\t\topponent.tickEffect('Block')"
-					functionString += "\n\t\topponent.tickEffect('Shield')"
-					functionString += "\n\t\topponent.tickAllies()"
+					functionString += tab + "if opponent.Block() > 0 || opponent.Shield() > 0 || opponent.Allies():"
+					functionString += tab + "\topponent.tickEffect('Block')"
+					functionString += tab + "\topponent.tickEffect('Shield')"
+					functionString += tab + "\topponent.tickAllies()"
+				elif parts[0] == "enemyBlockOrShield":
+					functionString += tab + "if opponent.Block() > 0 || opponent.Shield() > 0:"
+					functionString += tab + "\topponent.tickEffect('Block')"
+					functionString += tab + "\topponent.tickEffect('Shield')"
 				elif parts[0] == "enemyBlock":
-					functionString += "\n\tif opponent.Block() > 0:"
-					functionString += "\n\t\topponent.tickEffect('Block')"
+					functionString += tab + "if opponent.Block() > 0:"
+					functionString += tab + "\topponent.tickEffect('Block')"
 				elif parts[0] == "noEnemyDefenses":
-					functionString += "\n\tif opponent.Block() <= 0 && opponent.Shield() <= 0 && !opponent.Allies():"
+					functionString += tab + "if opponent.Block() <= 0 && opponent.Shield() <= 0 && !opponent.Allies():"
 				elif parts[0] == "selfDefenses":
-					functionString += "\n\tif myself.Block() > 0 || myself.Shield() > 0 || myself.Allies():"
-					functionString += "\n\t\tmyself.tickEffect('Block')"
-					functionString += "\n\t\tmyself.tickEffect('Shield')"
-					functionString += "\n\t\tmyself.tickAllies()"
+					functionString += tab + "if myself.Block() > 0 || myself.Shield() > 0 || myself.Allies():"
+					functionString += tab + "\tmyself.tickEffect('Block')"
+					functionString += tab + "\tmyself.tickEffect('Shield')"
+					functionString += tab + "\tmyself.tickAllies()"
 				elif parts[0] == "selfShield":
-					functionString += "\n\tif myself.Shield() > 0:"
-					functionString += "\n\t\tmyself.tickEffect('Shield')"
+					functionString += tab + "if myself.Shield() > 0:"
+					functionString += tab + "\tmyself.tickEffect('Shield')"
 				elif parts[0] == "selfBlock":
-					functionString += "\n\tif myself.Block() > 0:"
-					functionString += "\n\t\tmyself.tickEffect('Block')"
+					functionString += tab + "if myself.Block() > 0:"
+					functionString += tab + "\tmyself.tickEffect('Block')"
 				elif parts[0] == "extraTurn":
-					functionString += "\n\tif myself.onExtraTurn:"
-					functionString += "\n\t\tmyself.tickEffect('Extra Turns')"
-				functionString += "\n\t\tmyself.useGhostCard('" + parts[1] + "', Combat)"
-				functionString += "\n\t\treturn"
+					functionString += tab + "if myself.onExtraTurn:"
+					functionString += tab + "\tmyself.tickEffect('Extra Turns')"
+				functionString += tab + "\tCard.cardProperties.append('usedAlternate')"
+				functionString += tab + "\tmyself.useGhostCard('" + parts[1] + "', Combat, copytimes)"
+				functionString += tab + "\treturn"
+				functionString += tab + "elif copytimes > 0:"
+				functionString += tab + "\tCard.cardProperties.append('noAlternate')"
+			elif act[0].ends_with("Cost"):
+				var thing = act[0].replace("Cost", "")
+				var f = "gain" + thing.capitalize()
+				var mult = 1
+				if "Health" in f:
+					f = "takeIndirectDamage"
+					mult = -1
+				costDescription += "Costs " + cardActions[act[0]] + " " + thing + ". "
+				cardActions[act[0]] = str(-mult*int(cardActions[act[0]]))
+				uniqueFlags.append(act[0])
+				actionValues[act[0]] = 0
+				var line = ""
+				if act[0] == "manaCost":
+					line += tab + "if !myself.hasEffect('No Mana Cost'):"
+					tab += "\t"
+				line += tab + "actionValues['" + act[0] + "'] += Combat." + f + "(Card.calculate(cardActions['" + act[0] + "']), Card)"
+				costString += line
 			elif act[0] != "fill" && act[0] != "discard":
 				var f = act[0]
-				if f == "manaCost":
-					f = "gainMana"
-					costDescription += "Costs " + cardActions["manaCost"] + " mana. "
-					cardActions["manaCost"] = str(-int(cardActions["manaCost"]))
-					uniqueFlags.append("manaCost")
-				elif f == "energyCost":
-					f = "gainEnergy"
-					costDescription += "Costs " + cardActions["energyCost"] + " energy. "
-					cardActions["energyCost"] = str(-int(cardActions["energyCost"]))
-					uniqueFlags.append("energyCost")
+				var target = ""
+				if act[0].begins_with("enemy"):
+					target = "opponent.current"
+					f = f.replace("enemy", "")
 				
 				actionValues[act[0]] = 0
 				var line = ""
-				if act[0] == "takeIndirectDamage" || act[0] == "dealIndirectDamage":
-					line = "\n\tactionValues['" + act[0] + "'] += Combat." + f + "(Card.calculate(cardActions['" + act[0] + "']))"
-				else:
-					if act[0] == "manaCost":
-						line = "\n\tif !myself.hasEffect('No Mana Cost'):"
-						line += "\n\t\tactionValues['" + act[0] + "'] += Combat." + f + "(Card.calculate(cardActions['" + act[0] + "']), Card)"
-					else:
-						line = "\n\tactionValues['" + act[0] + "'] += Combat." + f + "(Card.calculate(cardActions['" + act[0] + "']), Card)"
+#				if act[0] == "takeIndirectDamage" || act[0] == "dealIndirectDamage":
+#					line = tab + "actionValues['" + act[0] + "'] += " + target + "Combat." + f + "(Card.calculate(cardActions['" + act[0] + "']), Card)"
+#				else:
+				line = tab + "actionValues['" + act[0] + "'] += " + target + "Combat." + f + "(Card.calculate(cardActions['" + act[0] + "']), Card)"
 				functionString += line
 		elif len(action) > 0:
 			cardProperties.append(action)
-		
 	
-	functionString += "\n\tif Card.logOutput != 'N/A':"
-	functionString += "\n\t\tCard.textlog.push(Card.cardLogOutput())"
+	if "dealDirectDamage" in actionValues:
+		var aimString = "\n\tmyself.trigger('Aim')"
+		functionString = functionString.replace("func useCard():", "func useCard():" + aimString)
+	
+	var logString = "\n\tif Card.logOutput != 'N/A':"
+	logString += "\n\t\tCard.textlog.push(Card.cardLogOutput())"
+	if "logFirst" in cardProperties:
+		functionString = functionString.replace("func useCard():", "func useCard():" + logString)
+	else:
+		functionString +=  logString
+	
+	if costString == "":
+		costString = "\n\tpass"
+	costString = "\nfunc useCost():" + costString
+	scriptString += costString
 	scriptString += functionString
 	
 	var usableString = "\n\nfunc isUsable():"
@@ -259,6 +310,8 @@ func createCardFunctions(cardstring):
 		usableString += " || (opponent.hasEffect('strangleholdBad') && myself.getEffect('strangleholdGood') > 0)"
 	if cardType == "Attack":
 		usableString += " || myself.hasEffect('Tornado')"
+	if hasOffensiveAction(cardActions, actionValues):
+		usableString += "|| myself.hasEffect('Frozen')"
 	if !"dealDirectDamage" in cardActions:
 		usableString += " || myself.hasEffect('Taunt') && Card.CombatDeck.get_ref().hasAction('dealDirectDamage')"
 	if "UNIQUECOST" in cardProperties:
@@ -307,12 +360,33 @@ func createCardFunctions(cardstring):
 	varString += liststring
 	
 	scriptString = varString + scriptString
-	
+#
+#	if cardName == "Return":
+#		print_debug(scriptString)
 	script.set_source_code(scriptString)
 	script.resource_name = "Card" + cardName
 	script.resource_path = "res://Card/" + script.resource_name + ".gd"
 	script.reload()
 	CardScripts[cardName] = script
+
+func hasOffensiveAction(cardActions, actionValues):
+	var list = [
+		"dealDirectDamage",
+		"dealIndirectDamage",
+		"damageOT",
+		"directDamageOT",
+		"stranglehold",
+		"effectValue",
+	]
+	for thing in list:
+		if thing in cardActions || thing in actionValues:
+			return true
+	for act in cardActions:
+		if act.begins_with("enemyLose"):
+			return true
+	if "action" in cardActions && cardActions["action"] == "pierce":
+		return true
+	return false
 
 func uniqueCardCost(cardName):
 	var coststr = " || "
@@ -330,16 +404,18 @@ func uniqueCardCost(cardName):
 
 func uniqueCardFunction(cardName, actionValues):
 	var functionstr = ""
+	var tab = "\n\t"
 	if cardName == "Stab" || cardName == "Lunge":
 		actionValues['dealDirectDamage'] = 0
 		functionstr += "\n\tvar strength = myself.Strength + myself.tempStrength"
 		functionstr += "\n\tif myself.isPlayer() && myself.onExtraTurn:"
 		functionstr += "\n\t\tstrength *= 2"
 		functionstr += "\n\tactionValues['dealDirectDamage'] += Combat.dealDirectDamage(strength, Card)"
-	elif cardName == "Backstab":
+	elif cardName == "Backstab" || cardName == "Transpierce":
 		actionValues['dealDirectDamage'] = 0
-		functionstr += "\n\tvar damage = myself.Strength + myself.tempStrength + myself.getEffect('Extra Turns')*(myself.Strength + myself.tempStrength)"
-		functionstr += "\n\tactionValues['dealDirectDamage'] += Combat.dealDirectDamage(damage, Card)"
+		functionstr += tab + "var damage = Card.calculate('effect(Extra_Turns) * Str')"
+		functionstr += tab + "actionValues['dealDirectDamage'] += Combat.dealDirectDamage(damage, Card)"
+		functionstr += tab + "myself.removeEffect('Extra Turns')"
 	elif cardName == "Stabilize":
 		functionstr += "\n\tCombat.change(myself, 'Energy', -myself.CurrentEnergy)"
 	elif cardName == "Punch":
@@ -359,7 +435,7 @@ func uniqueCardFunction(cardName, actionValues):
 		functionstr += "\n\tactionValues['dealDirectDamage'] += Combat.dealDirectDamage(damage, Card)"
 	elif cardName == "Execute":
 		actionValues['dealDirectDamage'] = 0
-		functionstr += "\n\tvar damage = int((opponent.MaxHealth-opponent.CurrentHealth)*(float(myself.Strength + myself.tempStrength)/50))"
+		functionstr += "\n\tvar damage = int((opponent.MaxHealth-opponent.CurrentHealth)*(float(myself.Strength + myself.tempStrength)*3/100))"
 		functionstr += "\n\tactionValues['dealDirectDamage'] += Combat.dealDirectDamage(damage, Card)"
 	elif cardName == "Pummel":
 		functionstr += "\n\tvar lastplayed = Card.CombatDeck.get_ref().lastPlayed"
@@ -396,6 +472,16 @@ func uniqueCardFunction(cardName, actionValues):
 		functionstr += "\n\t\tCard.logOutput = '{You} siphon{s} {enemyName}, dealing {dealDirectDamage} damage and gaining {gainHealth} health, {gainEnergy} energy, and {gainMana} mana.'"
 		functionstr += "\n\telse:"
 		functionstr += "\n\t\tCard.logOutput = '{You} stab{s} {enemyName} for {dealDirectDamage} damage.'"
+	elif cardName == "Hook":
+		actionValues['dealDirectDamage'] = 0
+		actionValues['gainEnergy'] = 0
+		functionstr += tab + "actionValues['dealDirectDamage'] += Combat.dealDirectDamage(1, Card)"
+		functionstr += tab + "if opponent.hasDefenses():"
+		functionstr += tab + "\tCard.logOutput = '{You} hook{s} {enemyName}, dealing {dealDirectDamage} damage.'"
+		functionstr += tab + "else:"
+		functionstr += tab + "\tactionValues['gainEnergy'] += Combat.gainEnergy(6, Card)"
+		functionstr += tab + "\tCard.addEffect(myself, 'Strength Up', 5, 2)"
+		functionstr += tab + "\tCard.logOutput = '{You} hook{s} {enemyName}, dealing {dealDirectDamage} damage and pulling {them} down.'"
 	elif cardName == "Lightning":
 		actionValues['dealDirectDamage'] = 0
 		actionValues['dealDirectDamageTimes'] = 0
@@ -414,6 +500,8 @@ func uniqueCardFunction(cardName, actionValues):
 		functionstr += "\n\tmyself.removeEffect('Extra Turns')"
 	elif cardName == "Compromise":
 		functionstr += "\n\tvar compromise = Card.calculate('Int / 3')"
+		functionstr += "\n\tfor effect in opponent.Effects.badList:"
+		functionstr += "\n\t\teffect.addTurns(compromise * 2)"
 		functionstr += "\n\tfor i in compromise:"
 		functionstr += "\n\t\topponent.Effects.turn('Bad')"
 	elif cardName == "Sunbeam":
@@ -430,18 +518,8 @@ func uniqueCardFunction(cardName, actionValues):
 		functionstr += "\n\t\tmyself.useGhostCard(enemylastplayed.cardName, Combat)"
 		functionstr += "\n\telse:"
 		functionstr += "\n\t\tCard.logOutput = '[enemy]There was nothing for {you} to mirror.'"
-	elif cardName == "Go Back":
-		functionstr += "\n\tvar breakpointeffect = myself.Effects.mostRecentCharacterRecording()"
-		functionstr += "\n\tvar gobackturns = breakpointeffect.value-1"
-		functionstr += "\n\tmyself.currentCombatEvent.applyRecording(breakpointeffect.specialValue[0])"
-		functionstr += "\n\tvar goback = myself.newEffect('Go Back', 'Breakpoint', gobackturns, 'Good')"
-		functionstr += "\n\tgoback.specialValue = breakpointeffect.specialValue[1].duplicate(false)"
-		#functionstr += "\n\tprint_debug(goback.specialValue)"
-		functionstr += "\n\tgoback.specialValue.pop_front()"
-		functionstr += "\n\tbreakpointeffect.setBreakpoint()"
-		#functionstr += "\n\tprint_debug(breakpointeffect.specialValue[1])"
 	elif cardName == "Soothing Tonic":
-		functionstr += "\n\tmyself.Effects.removeBadEffects()"
+		functionstr += "\n\tmyself.Effects.removeEffects('Bad')"
 	elif cardName == "Zap":
 		actionValues["dealDirectDamage"] = 0
 		functionstr += "\n\tvar zapdamage = Card.calculate('Int')"
@@ -451,21 +529,209 @@ func uniqueCardFunction(cardName, actionValues):
 	elif cardName == "Stand Firm":
 		actionValues["gainShield"] = 0
 		actionValues["gainEnergy"] = 0
-		functionstr += "\n\tmyself.tickEffect('Bide')"
-		functionstr += "\n\tvar bide = myself.getEffect('Bide')"
-		functionstr += "\n\tactionValues['gainShield'] += Combat.gainShield(bide, Card)"
-		functionstr += "\n\tactionValues['gainEnergy'] -= Combat.gainEnergy(-bide*10, Card)"
-		functionstr += "\n\tmyself.removeEffect('Bide')"
+		actionValues["times"] = 0
+		functionstr += tab + "myself.tickEffect('Bide')"
+		functionstr += tab + "var bide = myself.getEffect('Bide')"
+		functionstr += tab + "actionValues['times'] += bide"
+		functionstr += tab + "for b in bide:"
+		functionstr += tab + "\tactionValues['gainShield'] += Combat.gainShield(1, Card)"
+		functionstr += tab + "\tactionValues['gainEnergy'] -= Combat.gainEnergy(-10, Card)"
+		functionstr += tab + "myself.removeEffect('Bide')"
+	elif cardName == "Phase":
+		actionValues['gainHealth'] = 0
+		functionstr += tab + "actionValues['gainHealth'] += Combat.gainHealth(1-myself.CurrentHealth, Card)"
 	elif cardName == "Ossify":
 		actionValues["gainBlock"] = 0
 		functionstr += "\n\tvar ossifytimes = 0"
 		functionstr += "\n\tfor eff in myself.Effects.effectListGood:"
-		functionstr += "\n\t\tif eff.effectName == 'Arise':"
+		functionstr += "\n\t\tif eff.has('ally'):"
 		functionstr += "\n\t\t\tossifytimes += 1"
 		functionstr += "\n\tactionValues['gainBlock'] += Combat.gainBlock(Card.calculate('Int * ' + str(ossifytimes)), Card)"
+	elif cardName == "Return":
+		functionstr += tab + "var breakpointeffect = myself.Effects.mostRecentCharacterRecording()"
+		functionstr += tab + "myself.currentCombatEvent.applyRecording(breakpointeffect.specialValue[0])"
+		functionstr += tab + "Combat.takeIndirectDamage(myself.CurrentHealth*66/100, Card)"
+		functionstr += tab + "if breakpointeffect.value > 0:"
+		functionstr += tab + "\tCard.addEffect(myself, 'You', myself.CurrentHealth, -1)"
+		functionstr += tab + "\tvar goback = myself.Effects.effectList['You'][myself.Effects.effectList['You'].size()-1]"
+		functionstr += tab + "\tgoback.specialValue = breakpointeffect.specialValue[1].duplicate(false)"
+		functionstr += tab + "\tgoback.displayTurns = 'Next: ' + goback.specialValue[0][0]"
+		functionstr += tab + "\tgoback.get_node('tick/effectSprite').set_texture(load('res://Effects/effectSprites/effect_You ' + goback.specialValue[0][1] + '.png'))"
+		#functionstr += tab + "goback.setText(str(goback.value) + ' ' + goback.specialValue[0][0])"
+		#functionstr += "\n\tgoback.specialValue.pop_front()"
+	elif cardName == "Record":
+		functionstr += tab + "Card.CombatDeck.get_ref().forceBurn(Card)"
+		functionstr += tab + "myself.addEffect('Record', 0, -1, Card)"
+	elif cardName == "Skip":
+		actionValues["times"] = 0
+		functionstr += tab + "var skiptimes = Card.calculate('Int / 4')"
+		functionstr += tab + "actionValues['times'] += skiptimes"
+		functionstr += tab + "for j in skiptimes:"
+		functionstr += tab + "\tmyself.Effects.turn('Good')"
+		functionstr += tab + "\tmyself.Effects.turn('Bad')"
+	elif cardName == "Adjust":
+		actionValues["gainHealth"] = 0
+		actionValues["gainEnergy"] = 0
+		actionValues["gainMana"] = 0
+		functionstr += tab + "var lastplayed = Card.CombatDeck.get_ref().lastPlayed"
+		functionstr += tab + "if lastplayed == null:"
+		functionstr += tab + "\tCard.logOutput = '{You} fail{s} to adjust {your} vitals.'"
+		#lose mana
+		functionstr += tab + "elif lastplayed.cardType == 'Attack':"
+		functionstr += tab + "\tactionValues['gainHealth'] += Combat.gainHealth(Card.calculate('Int * 2'), Card)"
+		functionstr += tab + "\tactionValues['gainEnergy'] += Combat.gainEnergy(Card.calculate('Int * 2'), Card)"
+		functionstr += tab + "\tactionValues['gainMana'] += Combat.gainMana(-10, Card)"
+		functionstr += tab + "\tCard.logOutput = '{You} adjust{s} {your} vitals, gaining {gainHealth} health, {gainEnergy} energy, and losing {gainMana} mana.'"
+		#lose energy
+		functionstr += tab + "elif lastplayed.cardType == 'Defend':"
+		functionstr += tab + "\tactionValues['gainHealth'] += Combat.gainHealth(Card.calculate('Int * 2'), Card)"
+		functionstr += tab + "\tactionValues['gainMana'] += Combat.gainMana(Card.calculate('Int * 2'), Card)"
+		functionstr += tab + "\tactionValues['gainEnergy'] += Combat.gainEnergy(-10, Card)"
+		functionstr += tab + "\tCard.logOutput = '{You} adjust{s} {your} vitals, gaining {gainHealth} health, {gainMana} mana, and losing {gainEnergy} energy.'"
+		#lose health
+		functionstr += tab + "elif lastplayed.cardType == 'Spell':"
+		functionstr += tab + "\tactionValues['gainEnergy'] += Combat.gainEnergy(Card.calculate('Int * 2'), Card)"
+		functionstr += tab + "\tactionValues['gainMana'] += Combat.gainMana(Card.calculate('Int * 2'), Card)"
+		functionstr += tab + "\tactionValues['gainHealth'] += Combat.gainHealth(-10, Card)"
+		functionstr += tab + "\tCard.logOutput = '{You} adjust{s} {your} vitals, gaining {gainEnergy} energy, {gainMana} mana, and losing {gainHealth} health.'"
+		functionstr += tab + "else:"
+		functionstr += tab + "\tCard.logOutput = '{You} fail{s} to adjust {your} vitals.'"
 		
 	return functionstr
 
+#functions for cards that have a unique interaction with the Copy effect
+#usually, the case is that the original card function uses a resource to gain somehting, and that next copy has no resources to gain off of
+#so, things need to be done simultaneously
+func uniqueCopyFunction(cardName, actionValues):
+	var functionstr = "\nfunc useCustomCopy(times):"
+	var tab = "\n\t"
+	#lines of code for printing out the log and setting all the recorded back to zero so they don't add up to the next card play
+	var logString = tab + "\tif Card.logOutput != 'N/A':"
+	logString += tab + "\t\tCard.textlog.push(Card.cardLogOutput())"
+	logString += tab + "\tfor key in Card.actionValues:"
+	logString += tab + "\t\tCard.actionValues[key] = 0"
+	
+	if cardName == "Backstab":
+		functionstr += tab + "var damage = Card.calculate('effect(Extra_Turns) * Str')"
+		functionstr += tab + "for i in times:"
+		functionstr += tab + "\tactionValues['dealDirectDamage'] += Combat.dealDirectDamage(damage, Card)"
+		functionstr += logString
+		functionstr += tab + "myself.removeEffect('Extra Turns')"
+	elif cardName == "Transpierce":
+		actionValues['gainEnergy'] = 0
+		functionstr += tab + "var piercing = false"
+		functionstr += tab + "var damage = Card.calculate('effect(Extra_Turns) * Str')"
+		functionstr += tab + "if opponent.Block() > 0 || opponent.Shield() > 0:"
+		functionstr += tab + "\topponent.tickEffect('Block')"
+		functionstr += tab + "\topponent.tickEffect('Shield')"
+		functionstr += tab + "\tpiercing = true"
+		functionstr += tab + "\tdamage = Card.calculate('Str')"
+		functionstr += tab + "\tCard.logOutput = '{You} [you]pierce[n] {enemyName} and gain {gainEnergy} energy.'"
+		functionstr += tab + "for i in times:"
+		functionstr += tab + "\tif piercing:"
+		functionstr += tab + "\t\tCombat.pierce(myself, opponent, Card)"
+		functionstr += tab + "\t\tactionValues['gainEnergy'] += Combat.gainEnergy(damage, Card)"
+		functionstr += tab + "\telse:"
+		functionstr += tab + "\t\tactionValues['dealDirectDamage'] += Combat.dealDirectDamage(damage, Card)"
+		functionstr += logString
+		functionstr += tab + "if !piercing:"
+		functionstr += tab + "\tmyself.removeEffect('Extra Turns')"
+		functionstr += tab + "Card.logOutput = '{You} stab{s} {enemyName} for {dealDirectDamage} damage.'"
+	elif cardName == "Hook":
+		functionstr += tab + "var extra = true"
+		functionstr += tab + "actionValues['dealDirectDamage'] += Combat.dealDirectDamage(1, Card)"
+		functionstr += tab + "if opponent.hasDefenses():"
+		functionstr += tab + "\topponent.tickEffect('Block')"
+		functionstr += tab + "\topponent.tickEffect('Shield')"
+		functionstr += tab + "\topponent.tickAllies()"
+		functionstr += tab + "\textra = false"
+		functionstr += tab + "\tCard.logOutput = '{You} hook{s} {enemyName}, dealing {dealDirectDamage} damage.'"
+		functionstr += tab + "else:"
+		functionstr += tab + "\tCard.logOutput = '{You} hook{s} {enemyName}, dealing {dealDirectDamage} damage and pulling {them} down.'"
+		functionstr += tab + "\tactionValues['gainEnergy'] += Combat.gainEnergy(6, Card)"
+		functionstr += tab + "\tCard.addEffect(myself, 'Strength Up', 5, 2)"
+		functionstr += tab + "Card.textlog.push(Card.cardLogOutput())"
+		functionstr += tab + "for key in Card.actionValues:"
+		functionstr += tab + "\tCard.actionValues[key] = 0"
+		functionstr += tab + "for i in times-1:"
+		functionstr += tab + "\tactionValues['dealDirectDamage'] += Combat.dealDirectDamage(1, Card)"
+		functionstr += tab + "\tif extra:"
+		functionstr += tab + "\t\tactionValues['gainEnergy'] += Combat.gainEnergy(6, Card)"
+		functionstr += tab + "\t\tCard.addEffect(myself, 'Strength Up', 5, 2)"
+		functionstr += logString
+	elif cardName == "Stand Firm":
+		functionstr += tab + "myself.tickEffect('Bide')"
+		functionstr += tab + "var bide = myself.getEffect('Bide')"
+		functionstr += tab + "for i in times:"
+		functionstr += tab + "\tactionValues['times'] += bide"
+		functionstr += tab + "\tfor b in bide:"
+		functionstr += tab + "\t\tactionValues['gainShield'] += Combat.gainShield(1, Card)"
+		functionstr += tab + "\t\tactionValues['gainEnergy'] -= Combat.gainEnergy(-10, Card)"
+		functionstr += logString
+		functionstr += tab + "myself.removeEffect('Bide')"
+	elif cardName == "Lightning":
+		functionstr += tab + "var manatimes = myself.CurrentMana"
+		functionstr += tab + "for  i in times:"
+		functionstr += tab + "\tfor j in manatimes:"
+		functionstr += tab + "\t\tactionValues['dealDirectDamageTimes'] += 1"
+		functionstr += tab + "\t\tactionValues['dealDirectDamage'] += Combat.dealDirectDamage(Card.calculate('1 d 2'), Card)"
+		functionstr += logString
+		functionstr += tab + "Combat.gainMana(-manatimes, Card)"
+	elif cardName == "Demolish":
+		functionstr += tab + "var currentBlock = Card.calculate('block')"
+		functionstr += tab + "var currentInt = Card.calculate('Int')"
+		functionstr += tab + "for i in times:"
+		functionstr += tab + "\tactionValues['dealDirectDamage'] += Combat.dealDirectDamage(currentBlock, Card)"
+		functionstr += tab + "\tCombat.selfPierce(myself, opponent, Card)"
+		functionstr += tab + "\tactionValues['gainMana'] += Combat.gainMana(currentInt, Card)"
+		functionstr += logString
+	elif cardName == "Sunbeam":
+		functionstr += tab + "var lastplayed = Card.CombatDeck.get_ref().lastPlayed"
+		functionstr += tab + "var currentInt = Card.calculate('Int')"
+		functionstr += tab + "if lastplayed != null && lastplayed.cardName == 'Sunbeam':"
+		functionstr += tab + "\tfor i in times:"
+		functionstr += tab + "\t\tmyself.addEffect('Intelligence Up', currentInt, Card.calculate('4'), Card)"
+		functionstr += tab + "\tCard.logOutput = '{You} double {your} power and sear{s} {enemyName} for {dealDirectDamage} damage.'"
+		functionstr += tab + "else:"
+		functionstr += tab + "\tCard.logOutput = '{You} sear{s} {enemyName} for {dealDirectDamage} damage.'"
+		functionstr += tab + "var newInt = Card.calculate('Int')"
+		functionstr += tab + "for i in times:"
+		functionstr += tab + "\tactionValues['dealDirectDamage'] += Combat.dealDirectDamage(newInt, Card)"
+		functionstr += logString
+	elif cardName == "Nova":
+		functionstr += tab + "var numstars = 0"
+		functionstr += tab + "for proto in myself.Effects.effectList['Protostar']:"
+		#really dumb way of doing this, essentially removing the end function so that I can call it manually through here instead so the star doesn't get removed
+		functionstr += tab + "\tproto.effectProperties.erase('end function')"
+		functionstr += tab + "\tnumstars += 1"
+		functionstr += tab + "for i in times:"
+		functionstr += logString
+		functionstr += tab + "\tfor j in numstars:"
+		functionstr += tab + "\t\tmyself.useGhostCard('Protostar Nova', Combat)"
+		functionstr += tab + "myself.removeEffect('Protostar')"
+	elif cardName == "Coagulate":
+		functionstr += tab + "var missinghp = Card.calculate('MHP') - myself.CurrentHealth"
+		functionstr += tab + "var currentInt = Card.calculate('Int')"
+		functionstr += tab + "for i in times:"
+		functionstr += tab + "\tactionValues['gainBlock'] += Combat.gainBlock(missinghp, Card)"
+		functionstr += tab + "\tactionValues['gainHealth'] += Combat.gainHealth(Card.calculate(str(currentInt) + ' d 2'), Card)"
+		functionstr += tab + "\tactionValues['gainMana'] += Combat.gainMana(Card.calculate(str(currentInt) + ' d 2'), Card)"
+		functionstr += logString
+	elif cardName == "Return":
+		functionstr += tab + "var breakpointeffect = myself.Effects.mostRecentCharacterRecording()"
+		functionstr += tab + "myself.currentCombatEvent.applyRecording(breakpointeffect.specialValue[0])"
+		functionstr += tab + "Combat.takeIndirectDamage(myself.CurrentHealth*66/100, Card)"
+		functionstr += tab + "for i in times:"
+		functionstr += tab + "\tif breakpointeffect.value > 0:"
+		functionstr += tab + "\t\tCard.addEffect(myself, 'You', myself.CurrentHealth, -1)"
+		functionstr += tab + "\t\tvar goback = myself.Effects.effectList['You'][myself.Effects.effectList['You'].size()-1]"
+		functionstr += tab + "\t\tgoback.specialValue = breakpointeffect.specialValue[1].duplicate(false)"
+		functionstr += tab + "\t\tgoback.displayTurns = 'Next: ' + goback.specialValue[0][0]"
+		functionstr += tab + "\t\tgoback.get_node('tick/effectSprite').set_texture(load('res://Effects/effectSprites/effect_You ' + goback.specialValue[0][1] + '.png'))"
+		functionstr += logString
+
+	#functionstr += tab + ""
+	return functionstr
 
 func createEffectFunctions(effectstring):
 	var script = GDScript.new()
@@ -483,13 +749,18 @@ func createEffectFunctions(effectstring):
 	effectProperties.append(values[0])
 	values.remove(0)
 	
-	var scriptString = "\nvar Effect\nvar Card\nvar Combat\nvar myself\nvar opponent\n\n"
-	scriptString += "func init(e):\n\tEffect = e\n\tCard = e.Card\n\tCombat = e.Combat\n\tmyself = Combat.me\n\topponent = Combat.enemy"
+	var scriptString = "\nvar Effect\nvar Card\nvar Combat\nvar myself\nvar opponent\n"
+	if effectName == "You":
+		scriptString += "var iterator = 0\n"
+	scriptString += "\nfunc init(e):\n\tEffect = e\n\tCard = e.Card\n\tCombat = e.Combat\n\tmyself = Combat.me\n\topponent = Combat.enemy"
 	
 	var initString = ""
 	var turnString = ""
 	var triggerString = ""
 	var endString = ""
+	
+	if effectName == "Record":
+		initString += "\n\tEffect.setBreakpoint()"
 	
 	var actives = 0
 	for i in values.size():
@@ -536,8 +807,12 @@ func createEffectFunctions(effectstring):
 				actionstring += tab + "myself.currentCombatDeck.printHand()"
 			elif act[0] == "action":
 				actionstring += tab + "Combat." + act[1] + "(myself, opponent, Card)"
+			elif act[0] == "addTurns":
+				actionstring += tab + "Effect.turns += Effect.calculate('" + act[1] + "')"
 			elif act[0] == "trigger":
 				actionstring += tab + "opponent.trigger('" + act[1] + "')"
+				if !"counterpart" in effectProperties:
+					effectProperties.append("counterpart")
 			elif act[0] == "useCard":
 				var cardname = act[1]
 				if " (" in act[1]:
@@ -552,8 +827,8 @@ func createEffectFunctions(effectstring):
 				actionstring += tab + "Combat.gainMana(-Effect.calculate('" + act[1] + "'), Card)"
 			else:
 				actionstring += tab + "Combat." + act[0] + "(Effect.calculate('" + act[1] + "'), Card)"
-				if act[0] == "gainEnergy":
-					actionstring += tab + "Combat.checkEnergy()"
+				#if act[0] == "gainEnergy":
+					#actionstring += tab + "Combat.checkEnergy()"
 			
 			if whichstring == "turnString":
 				turnString += actionstring
@@ -563,7 +838,7 @@ func createEffectFunctions(effectstring):
 				endString += actionstring
 	
 	var replaceable = true
-	if "stackable" in effectProperties || "ally" in effectProperties || "replaceable" in effectProperties:
+	if "stackable" in effectProperties || "ally" in effectProperties || "replaceable" in effectProperties || "unreplaceable" in effectProperties:
 		replaceable = false
 	if turnString == "":
 		turnString = "\n\tpass"
@@ -583,7 +858,7 @@ func createEffectFunctions(effectstring):
 	if replaceable:
 		effectProperties.append("replaceable")
 	
-	scriptString += initString + "\n\nfunc turnFunction():" + turnString + "\n\nfunc triggerFunction():" + triggerString + "\n\nfunc endFunction():" + endString
+	scriptString += initString + "\n\nfunc turnFunction():" + turnString + "\n\nfunc triggerFunction():" + triggerString + "\n\nfunc endFunction():\n\tif (!myself.isAlive() || !opponent.isAlive()) && !'stat' in effectProperties:\n\t\treturn" + endString
 	var varString = "\nvar effectName = '" + effectName + "'"
 
 	if actives > 0:
@@ -616,4 +891,26 @@ func uniqueEffectFunction(effectName, whichstring):
 			functionstr += tab + "effectProperties.append('released')"
 	elif effectName == "Stranglehold (Attacker)":
 		functionstr += tab + "myself.useGhostCard(Card.cardName + ' (Attack)', Combat)"
+	elif effectName == "Protostar":
+		if whichstring == "endString":
+			functionstr += tab + "if Effect.specialValue:"
+			functionstr += tab + "\tmyself.useGhostCard('Protostar Nova', Combat)"
+			functionstr += tab + "else:"
+			functionstr += tab + "\tmyself.useGhostCard('Protostar Hit', Combat)"
+		elif whichstring == "triggerString":
+			functionstr += tab + "Effect.specialValue = true"
+	elif effectName == "Record":
+		functionstr += tab + "var lastcard = Card.CombatDeck.get_ref().lastClicked"
+		functionstr += tab + "if lastcard != null:"
+		functionstr += tab + "\tEffect.add(1)"
+		functionstr += tab + "\tEffect.specialValue[1].append([lastcard.cardName, lastcard.cardType])"
+		#functionstr += tab + "print_debug(specialValue[1])"
+	elif effectName == "You":
+		functionstr += tab + "myself.useGhostCard(Effect.specialValue[iterator][0], Combat)"
+		functionstr += tab + "iterator += 1"
+		functionstr += tab + "if iterator >= Effect.specialValue.size():"
+		functionstr += tab + "\titerator = 0"
+		functionstr += tab + "Effect.get_node('tick/effectSprite').set_texture(load('res://Effects/effectSprites/effect_You ' + Effect.specialValue[iterator][1] + '.png'))"
+		functionstr += tab + "Effect.displayTurns = 'Next: ' + Effect.specialValue[iterator][0]"
+		#functionstr += tab + "Effect.setText(str(Effect.value) + ' ' + Effect.specialValue[iterator][0])"
 	return functionstr

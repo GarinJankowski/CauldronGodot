@@ -135,8 +135,12 @@ func turn():
 	elif checkTurn("enemy") && !close:
 		enemyDeck.updateDeck1()
 		var ai = enemyDeck.enemyAI()
-		if ai > -1 && !enemy.hasEffect("Sleep"):
-			enemyDeck.useCard(ai)
+		if !enemy.hasEffect("Sleep"):
+			if ai > -1:
+				enemyDeck.useCard(ai)
+			else:
+				enemyDeck.shuffleDeck()
+				textlog.push("[B]The " + enemy.enemyName + " fails to take an action.")
 		enemyDeck.shuffleAddPrint()
 		if nextTurn():
 			return
@@ -226,15 +230,6 @@ func checkTurn(who):
 
 #effects that happen at the end of someone's turn
 func endTurnEffects():
-	if !guy.breakpointsToBeSet.empty():
-		for effect in guy.breakpointsToBeSet:
-			effect.setBreakpoint()
-		guy.breakpointsToBeSet.clear()
-	if !enemy.breakpointsToBeSet.empty():
-		for effect in enemy.breakpointsToBeSet:
-			effect.setBreakpoint()
-		enemy.breakpointsToBeSet.clear()
-
 	var me = guy
 	var opponent = enemy
 	if turn == "enemy":
@@ -248,7 +243,7 @@ func endTurnEffects():
 	for i in me.currentCombatDeck.countCard("Runed Amulet"):
 		me.currentCombat.gainMana(3, null)
 	
-	me.currentCombat.checkEnergy()
+	#me.currentCombat.checkEnergy()
 		
 
 #set the turn to someone
@@ -289,7 +284,7 @@ func nextTurn():
 		affected = enemy
 		affectedCombat = enemyCombat
 	
-	guyCombat.checkEnergy()
+	#guyCombat.checkEnergy()
 	var hasactive = false
 	if affected.hasActive("Good"):
 		hasactive = true
@@ -299,7 +294,7 @@ func nextTurn():
 	guyDeck.printHand()
 	if checkDeath():
 		return true
-	guyCombat.checkEnergy()
+	#guyCombat.checkEnergy()
 	if hasactive:
 		yield(get_tree().create_timer(timertime), "timeout")
 	
@@ -310,7 +305,7 @@ func nextTurn():
 	guyDeck.printHand()
 	if checkDeath():
 		return true
-	guyCombat.checkEnergy()
+	#guyCombat.checkEnergy()
 	if hasactive:
 		yield(get_tree().create_timer(timertime), "timeout")
 	affected.checkPhases()

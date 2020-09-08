@@ -96,6 +96,7 @@ func _process(delta):
 		
 func useCard(index):
 	var card = Hand[index]
+	lastClicked = card
 	card.glowOff()
 	
 	if card.hasOffensiveAction():
@@ -105,7 +106,6 @@ func useCard(index):
 	
 	checkProperties(index)
 	
-	lastClicked = card
 	
 	restoreJustStayed()
 	card.updateSprite()
@@ -156,8 +156,8 @@ func checkDiscard():
 func addTempCard(cardName, uniqueval = 0):
 	var card = load("res://Card/Card.tscn").instance()
 	add_child(card)
-	card.uniqueValue = uniqueval
 	card.init(cardName)
+	card.uniqueValue = uniqueval
 	card.initCombat(Combat, self)
 	card.position = draw.position
 	card.updateDescription()
@@ -204,6 +204,8 @@ func printHand():
 
 func checkProperties(index):
 	var card = Hand[index]
+	if !cardAt(index):
+		card = lastClicked
 	var cardnull = false
 	
 	#destroy the card if it is a Device
@@ -225,8 +227,9 @@ func checkProperties(index):
 					cardnull = true
 	
 	#burn/Burn modifier
-	if card.has("burn") || card.mods["Burn"] || card.cardType == "Item" || me.hasEffect("Forget"):
+	if card.has("burn") || card.mods["Burn"] || card.cardType == "Item" || card.has("ignite") || me.hasEffect("Forget"):
 		me.trigger("Forget")
+		card.cardProperties.erase("ignite")
 		#Stay modifier
 		if !cardnull && !checkStay(card):
 			burn(index)
@@ -312,18 +315,18 @@ func restoreJustStayed():
 	for card in Draw:
 		card.justStayed = false
 
-func shuffleDraw(cardused):
+func shuffleDraw(cardused = null):
 	for i in len(Hand):
-		if cardAt(i) && (Hand[i] != cardused || !cardused.justStayed):
+		if cardAt(i) && (cardused == null || Hand[i] != cardused || !cardused.justStayed):
 			handToDraw(i)
 	Draw.shuffle()
 	drawCards()
 	printHand()
 	clickableOn()
 	
-func shuffleDeck(cardused):
+func shuffleDeck(cardused = null):
 	for i in len(Hand):
-		if cardAt(i) && (Hand[i] != cardused || !cardused.justStayed):
+		if cardAt(i) && (cardused == null || Hand[i] != cardused || !cardused.justStayed):
 			handToDraw(i)
 	while len(Discard) > 0:
 		Discard[0].DiscardCD = 0
@@ -449,6 +452,16 @@ func burn(index):
 	
 func burnOutside(pile, index):
 	pile.remove(index)
+	
+func forceBurn(Card):
+	if !checkStay(Card):
+		Card.visible = false
+		for i in Hand.size():
+			if cardAt(i) && Hand[i] == Card:
+				Hand[i] = null
+				return
+		Draw.erase(Card)
+		Discard.erase(Card)
 
 func handUsable():
 	var usable = false

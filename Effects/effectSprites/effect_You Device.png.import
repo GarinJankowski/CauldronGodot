@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/effect_Defend.png-78eba7ad93e7f40837fe7683344ede8c.stex"
+path="res://.import/effect_You Device.png-1b665ddc875f8e72fa4301614bf013f7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Effects/effectSprites/effect_Defend.png"
-dest_files=[ "res://.import/effect_Defend.png-78eba7ad93e7f40837fe7683344ede8c.stex" ]
+source_file="res://Effects/effectSprites/effect_You Device.png"
+dest_files=[ "res://.import/effect_You Device.png-1b665ddc875f8e72fa4301614bf013f7.stex" ]
 
 [params]
 

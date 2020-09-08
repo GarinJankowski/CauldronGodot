@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/effect_Weightless.png-7e25967873771c80c33d3130cca7fcbe.stex"
+path="res://.import/effect_Protostar.png-15fc6765ceb723a2330c98c76af95263.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Effects/effectSprites/effect_Weightless.png"
-dest_files=[ "res://.import/effect_Weightless.png-7e25967873771c80c33d3130cca7fcbe.stex" ]
+source_file="res://Effects/effectSprites/effect_Protostar.png"
+dest_files=[ "res://.import/effect_Protostar.png-15fc6765ceb723a2330c98c76af95263.stex" ]
 
 [params]
 

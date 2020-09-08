@@ -63,6 +63,9 @@ func init():
 	MaxHealth = 10
 	CurrentHealth = MaxHealth
 	
+	MaxEnergy = 10
+	CurrentEnergy = 0
+	
 	MaxMana = 10
 	CurrentMana = MaxMana
 	
@@ -74,9 +77,6 @@ func init():
 	CurrentExperience = 0
 	MaxExperience = 10
 	Gold = 0
-	
-	MaxEnergy = 10
-	CurrentEnergy = 0
 	
 	inCombat = false
 	statsRestored = true
@@ -130,7 +130,10 @@ func init():
 	#Bag.addGear("Impenetrable Mail")
 	#Bag.addGear("")
 	#Bag.addCard("")
-	Bag.addGear("Iron Helmet")
+	Bag.addGear("Dusty Monocle")
+	Bag.addCard("Runed Glove")
+	Bag.addCard("Runed Glove")
+	Bag.addCard("Runed Glove")
 	
 func gainExperience(value):
 	CurrentExperience += value

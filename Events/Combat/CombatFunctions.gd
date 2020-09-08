@@ -34,8 +34,10 @@ func change(who, type, amount, Card = null):
 			who.CurrentHealth = 0
 		elif who.CurrentHealth > who.MaxHealth + who.tempMaxHealth:
 			who.CurrentHealth = who.MaxHealth + who.tempMaxHealth
-		if who.hasEffect("Stranglehold (Attacker)") && amount < 0:
-			who.addStranglehold(amount, Card)
+		if amount < 0:
+			who.trigger("Frozen")
+			if who.hasEffect("Stranglehold (Attacker)"):
+				who.addStranglehold(amount, Card)
 		who.updateHealth()
 		#if CombatEvent != null:
 			#CombatEvent.checkDeath()
@@ -53,6 +55,7 @@ func change(who, type, amount, Card = null):
 		who.addShield(amount, Card)
 	elif type == "Energy" && who.isPlayer():
 		who.CurrentEnergy += amount
+		checkEnergy()
 	elif type == "ExtraTurns" && who.isPlayer():
 		var player
 		if me.isPlayer():
@@ -123,20 +126,12 @@ func checkEnergy():
 
 #deal damage functions
 func calculateDirectDamage(damage, me, enemy, Card):
-	if me.hasEffect("Augment") && Card != null && Card.cardType == "Attack":
-		damage += me.getEffect("Augment")
-	if enemy.hasEffect("Persist"):
-		damage /= 2
-		me.tickEffect("Persist")
-	if me.hasEffect("Curse"):
-		damage = 0
-		me.tickEffect("Curse")
-	if enemy.hasEffect("Dodge") && enemy != me && Card != null:
-		damage = 0
-	if enemy.hasEffect("Elude") && enemy != me && Card != null:
-		damage = 0
-	if enemy.Shield() > 0:
-		damage = 0
+	if Card != null && Card.cardType == "Attack":
+		if me.hasEffect("Augment"):
+			damage += me.getEffect("Augment")
+		if me.hasEffect("Aim"):
+			damage *= 2
+	damage += me.Effects.getAllValues("Fuse")
 	return damage
 func dealDirectDamage(damage, Card):
 	var dmg
@@ -148,11 +143,20 @@ func directDamage(damage, myself, opponent, Card):
 	var calcdmg = calculateDirectDamage(damage, myself, opponent, Card)
 	var usedmg = calcdmg
 	
-	if me.hasEffect("Augment") && Card != null && Card.cardType == "Attack":
-		me.tickEffect("Augment")
-		me.removeEffect("Augment")
+	if myself.hasEffect("Augment") && Card != null && Card.cardType == "Attack":
+		myself.tickEffect("Augment")
+		myself.removeEffect("Augment")
+	if opponent.hasEffect("Phase"):
+		opponent.increaseEffect("Phase", usedmg)
+		usedmg = 0
+	if (opponent.hasEffect("Dodge") || opponent.hasEffect("Elude") || opponent.hasEffect("Sense")) && opponent != myself && Card != null:
+		usedmg = 0
 		
+	if opponent.hasEffect("Persist"):
+		usedmg /= 2
+		myself.tickEffect("Persist")
 	if opponent.Shield() > 0:
+		usedmg = 0
 		change(opponent, "Shield", -1)
 	elif(usedmg > opponent.Block()):
 		usedmg -= opponent.Block()
@@ -173,6 +177,8 @@ func directDamage(damage, myself, opponent, Card):
 	return calcdmg
 	
 func calculateIndirectDamage(damage, me, enemy, Card):
+	if (enemy.hasEffect("Dodge") || enemy.hasEffect("Elude") || enemy.hasEffect("Sense")) && enemy != me && Card != null:
+		damage = 0
 	return damage
 func dealIndirectDamage(damage, Card):
 	return indirectDamage(damage, me, enemy, Card)
@@ -186,18 +192,14 @@ func indirectDamage(damage, myself, opponent, Card):
 	return calcdmg
 
 func directDamageOverTime(value, turns, target, Card):
-	if target.hasEffect("Dodge") && target != me && Card != null:
-		turns = 0
-	if target.hasEffect("Elude") && target != me && Card != null:
+	if (enemy.hasEffect("Dodge") || enemy.hasEffect("Elude") || enemy.hasEffect("Sense")) && target != me && Card != null:
 		turns = 0
 	
 	Card.addEffect(target, "Take Damage", value, str(turns))
 	return turns
 	
 func indirectDamageOverTime(value, turns, target, Card):
-	if target.hasEffect("Dodge") && target != me && Card != null:
-		turns = 0
-	if target.hasEffect("Elude") && target != me && Card != null:
+	if (enemy.hasEffect("Dodge") || enemy.hasEffect("Elude") || enemy.hasEffect("Sense")) && target != me && Card != null:
 		turns = 0
 		
 	Card.addEffect(target, "Lose Health", value, str(turns))
@@ -210,6 +212,8 @@ func gainHealth(health, Card):
 	return health(health, me, enemy, Card)
 func health(health, myself, opponent, Card):
 	var calchp = calculateHealth(health, myself, opponent, Card)
+	if myself.hasEffect("Shatter"):
+		calchp = 0
 	
 	change(myself, "CurrentHealth", calchp)
 		
@@ -253,9 +257,6 @@ func shield(shield, myself, opponent, Card):
 
 #gain energy functions
 func calculateEnergy(energy, me, enemy, Card):
-	if me.hasEffect("Weightless") && Card != null:
-		energy *= 2
-		me.addEffect("Weightless", -1, "Good")
 	if me.hasEffect("Invisibility") && energy < 0:
 		energy = 0
 	if (me.hasEffect("Tireless") || me.hasEffect("Sneak")) && energy < 0:

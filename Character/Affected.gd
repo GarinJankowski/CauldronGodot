@@ -37,7 +37,6 @@ var selfCombat
 
 var Deck
 var ghostCards = []
-var breakpointsToBeSet = []
 
 var Game
 
@@ -48,14 +47,16 @@ func updateUI():
 	pass
 
 func trigger(effectName):
-	if Effects.has(effectName):
-		Effects.trigger(effectName)
+	return Effects.trigger(effectName)
 	
 func hasActive(goodbad):
 	return Effects.hasActive(goodbad)
 
 func addEffect(effectName, value, turns, Card):
 	Effects.addEffect(effectName, value, turns, Card)
+	
+func increaseEffect(effectName, value):
+	Effects.increaseEffect(effectName, value)
 
 func tickEffect(effectName):
 	Effects.tick(effectName)
@@ -67,7 +68,7 @@ func hasEffect(effectName):
 	return Effects.has(effectName)
 
 func getEffect(effectName):
-	return Effects.getValue(effectName)
+	return int(Effects.getValue(effectName))
 	
 func countEffectInstances(effectName):
 	var amount = 0
@@ -97,6 +98,14 @@ func addShield(value, Card = null):
 
 func Allies():
 	return Effects.hasAlly()
+
+func hasDefenses():
+	if Block() > 0 || Shield() > 0 || Allies():
+		tickEffect("Block")
+		tickEffect("Shield")
+		tickAllies()
+		return true
+	return false
 	
 func ExtraTurns():
 	return Effects.getValue("Extra Turns")
@@ -114,12 +123,19 @@ func addStranglehold(value, Card = null):
 		if getEffect("Stranglehold (Attacker)") <= 0:
 			Effects.getEffect("Stranglehold (Attacker)").Combat.enemy.trigger("Stranglehold (Target)")
 
-func useGhostCard(cardName, Combat):
+#attached is to check if this ghost card was used because of another card with a special case, like Hack or Pierce
+#if attached is false, this means the ghost card was used by other means, like from effects like Stranglehold
+func useGhostCard(cardName, Combat, times = 0):
 	if !getGhostCard(cardName, Combat):
 		addGhostCard(cardName, Combat)
 	
 	var card = getGhostCard(cardName, Combat)
-	card.cardFunction()
+	if times > 0:
+		card.cardProperties.append("isAlternate")
+		card.cardFunction(times)
+		card.cardProperties.erase("isAlternate")
+	else:
+		card.cardFunction()
 	currentCombatDeck.checkOtherActions(card)
 	return card
 
@@ -219,6 +235,10 @@ func convertStat(string, Card = null, Effect = null):
 		num = Intelligence + tempIntelligence
 	elif string == "Mut":
 		num = MutationLevel + tempMutationLevel
+	elif string == "MHP":
+		num = MaxHealth + tempMaxHealth
+	elif string == "MMP":
+		num = MaxMana + tempMaxMana
 	elif string == "block":
 		num = Block()
 	elif string == "Val" && Effect != null:

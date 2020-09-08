@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/effect_Breakpoint.png-1aa32cea477c52473d194202a5e8f74e.stex"
+path="res://.import/effect_You Attack.png-c5b32289b70ecfe867901873d09dff86.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Effects/effectSprites/effect_Breakpoint.png"
-dest_files=[ "res://.import/effect_Breakpoint.png-1aa32cea477c52473d194202a5e8f74e.stex" ]
+source_file="res://Effects/effectSprites/effect_You Attack.png"
+dest_files=[ "res://.import/effect_You Attack.png-c5b32289b70ecfe867901873d09dff86.stex" ]
 
 [params]
 

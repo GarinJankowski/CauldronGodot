@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/effect_Reshuffle.png-26459640d16bc5f34d7c69c6b78c6a98.stex"
+path="res://.import/effect_You Spell.png-1855a8fa5de86ccbc74d9ed127ef6929.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Effects/effectSprites/effect_Reshuffle.png"
-dest_files=[ "res://.import/effect_Reshuffle.png-26459640d16bc5f34d7c69c6b78c6a98.stex" ]
+source_file="res://Effects/effectSprites/effect_You Spell.png"
+dest_files=[ "res://.import/effect_You Spell.png-1855a8fa5de86ccbc74d9ed127ef6929.stex" ]
 
 [params]
 

@@ -17,6 +17,8 @@ var pink = "[color=#f800ff]"
 var darkhotpink = "[color=#dc00aa]"
 var scroll = "[color=#ccbf74]"
 var white = "[color=#ffffff]"
+#this ones a bit too dark maybe
+var brown = "[color=#786957]"
 
 func init():
 	pass
@@ -70,6 +72,8 @@ func translate(line):
 				finalline += scroll
 			elif color == "w":
 				finalline += white
+			elif color == "B":
+				finalline += brown
 			i += 2
 		else:
 			finalline += line[i]

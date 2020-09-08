@@ -35,8 +35,8 @@ var mods = {
 	"Copy": false,
 	"Void": false
 }
-var tempStay
-var justStayed
+var tempStay = 0
+var justStayed = false
 var copyOriginal = null
 
 var textlog
@@ -157,25 +157,11 @@ func _process(delta):
 		position += stepdistance
 		ticks -= 1
 
-#I want to separate the checks for the "Copy" effect (or any other effect that does this)
-#so, I made another function
-func cardFunction():
-	if myself.hasEffect("Copy") && !has("copied"):
-		var copies = int(myself.getEffect("Copy"))
-		myself.removeEffect("Copy")
-		cardProperties.append("copied")
-		for i in copies:
-			cardFunction2()
-		cardProperties.erase("copied")
-	cardFunction2()
-
-func cardFunction2():
+func cardFunction(copytimes = 0):
 	if myself.isAlive() && opponent.isAlive():
-		for key in actionValues:
-			actionValues[key] = 0
-		#all this garbage is for using a card on yourself from being confused/deflected
-		if myself.hasEffect("Confuse") || opponent.hasEffect("Deflect") && hasOffensiveAction():
-			if !myself.hasEffect("Confuse"):
+		#all this garbage is for using a card on yourself from being confused/jinxed/deflected
+		if myself.hasEffect("Confuse") || myself.hasEffect("Jinx")|| opponent.hasEffect("Deflect") && hasOffensiveAction():
+			if !myself.hasEffect("Confuse") && !myself.hasEffect("Jinx"):
 				opponent.trigger("Deflect")
 				if opponent.hasEffect("Charm"):
 					opponent.trigger("Charm")
@@ -185,32 +171,66 @@ func cardFunction2():
 			opponent = myself
 			scriptObject.Combat = myself.selfCombat
 			scriptObject.opponent = myself
-			scriptObject.useCard()
-			if !ghost:
-				checkCardTypeEffects()
-			else:
-				checkOtherEffects()
+			useCard(copytimes)
 			Combat = tempCombat
 			opponent = tempOpponent
 			scriptObject.Combat = tempCombat
 			scriptObject.opponent = tempOpponent
 		#actual thing that usually happens
 		else:
-			scriptObject.useCard()
-			if !ghost:
-				checkCardTypeEffects()
-			else:
-				checkOtherEffects()
-		Combat.checkEnergy()
+			useCard(copytimes)
+#		Combat.checkEnergy()
+
+#all of this Alternate, times, and copytimes stuff is for certain edge cases with the Copy effect
+#it exists to deal with copying ghost cards and other cards properly so when a card is copied and played, all the copies are play simultaneously
+func useCard(copytimes = 0):
+	for key in actionValues:
+		actionValues[key] = 0
+	scriptObject.useCost()
+	
+	if (myself.hasEffect("Copy") || myself.hasEffect("Heave") || copytimes > 0) && (!ghost || has("isAlternate")):
+		var times = 1
+		if myself.hasEffect("Copy"):
+			times += int(myself.getEffect("Copy"))
+			myself.removeEffect("Copy")
+		if myself.hasEffect("Heave") && opponent.hasDefenses():
+			times += 1
+		
+		if has("CUSTOMCOPYFUNCTION"):
+			scriptObject.useCustomCopy(times)
+		else:
+			if has("isAlternate"):
+				times = copytimes
+			for i in times:
+				for key in actionValues:
+					actionValues[key] = 0
+				scriptObject.useCard(times)
+				if has("noAlternate"):
+					cardProperties.erase("noAlternate")
+				if has("usedAlternate"):
+					cardProperties.erase("usedAlternate")
+					break
+	else:
+		scriptObject.useCard()
+	
+	if !ghost:
+		checkCardTypeEffects()
+	checkOtherEffects()
+	
 
 func checkCardTypeEffects():
+	myself.trigger("Record")
 	if cardType == "Attack":
 		myself.trigger("Transmute")
+		if "dealDirectDamage" in actionValues:
+			if myself.trigger("Ignite"):
+				cardProperties.append("ignite")
 		myself.trigger("Attack Trap")
 		myself.trigger("Salamander")
 	if cardType == "Defend":
 		if CombatDeck.get_ref():
 			CombatDeck.get_ref().fleecounter += 1
+		myself.trigger("Anticipate")
 		myself.trigger("Rat")
 		myself.trigger("Defend Trap")
 	elif CombatDeck.get_ref():
@@ -220,14 +240,13 @@ func checkCardTypeEffects():
 		myself.trigger("Crab")
 		myself.trigger("Spell Trap")
 	
-	checkOtherEffects()
 	CombatDeck.get_ref().lastPlayed = self
 
 func checkOtherEffects():
 	#effects that occur when you play an offensive card
 	if hasOffensiveAction():
-		myself.trigger("Sense")
-		myself.trigger("Dodge")
+		opponent.trigger("Sense")
+		opponent.trigger("Dodge")
 		myself.trigger("Wound")
 	
 	#effects that occur when you deal damage through a card
@@ -268,6 +287,8 @@ func addEffect(target, effectName, value, turns):
 				valueStr += value[k] + " "
 			valueStr = valueStr.substr(0, len(valueStr)-1)
 	turns = calculate(str(turns))
+	if (opponent.hasEffect("Dodge") || opponent.hasEffect("Elude") || opponent.hasEffect("Sense")) && (target == opponent || "counterpart" in Game.scriptgen.EffectScripts[effectName][0]):
+		turns = 0
 	if turns != 0:
 		target.addEffect(effectName, valueStr, turns, self)
 	if turns == -1 && "stackable" in Game.scriptgen.EffectScripts[effectName][0]:
@@ -301,6 +322,9 @@ func hasOffensiveAction():
 	]
 	for thing in list:
 		if thing in cardActions || thing in actionValues:
+			return true
+	for act in cardActions:
+		if act.begins_with("enemyLose"):
 			return true
 	if "action" in cardActions && cardActions["action"] == "pierce":
 		return true
@@ -489,11 +513,11 @@ func cardLogOutput():
 					addword = "y"
 			else:
 				var colorword = word
-				if opponent.isPlayer():
+				if (!myself.isPlayer() && actionValues[word] > 0) || (myself.isPlayer() && actionValues[word] < 0):
 					colorword = "enemy" + colorword
 				if colorword in colors:
 					addword += colors[colorword]
-				addword += str(actionValues[word]) + wholecolor
+				addword += str(abs(actionValues[word])) + wholecolor
 			output += addword
 			i += j
 		else:
@@ -600,13 +624,12 @@ func getPriority():
 	if has("stranglehold"):
 		priority += 100
 	
-	if cardType == "Spell":
-		if hasUniqueFlag("manaCost"):
-			priority += 99
-		elif hasAction("gainMana") && myself.CurrentMana < myself.MaxMana:
-			priority += 90
-		else:
-			priority += 91
+	if hasUniqueFlag("manaCost"):
+		priority += 99
+	elif hasAction("gainMana") && myself.CurrentMana < myself.MaxMana:
+		priority += 90
+	elif cardType == "Spell":
+		priority += 91
 	
 	if hasUniqueFlag("energyCost"):
 		priority += 99
@@ -806,6 +829,10 @@ func equals(card):
 #calculates a number using postfix notation with the values in csv format
 func calculate(string):
 	var finalnum = 0
+	var negative = false
+	if string.begins_with("-"):
+		string.erase(0, 1)
+		negative = true
 	var infix = string.split(" ")
 	var postfix = []
 	
@@ -841,6 +868,8 @@ func calculate(string):
 		else:
 			stack.push_back(postfix[i])
 	finalnum = int(myself.convertStat(stack.pop_back(), self))
+	if negative:
+		finalnum *= -1
 	return finalnum
 
 func calculateMax(string):

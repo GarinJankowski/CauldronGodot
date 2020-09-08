@@ -80,12 +80,12 @@ var scrollButtonTicks = 0
 
 var modList = {
 	"Burn": 0,
-	"Flow": 0,
+	"Flow": 10,
 	"Push": 0,
 	"Copy": 0,
 	"Stay": 0,
-	"Link": 0,
-	"Void": 0
+	"Link": 10,
+	"Void": 10
 }
 
 var Game
