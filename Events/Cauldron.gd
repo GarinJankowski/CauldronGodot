@@ -5,9 +5,6 @@ var Body
 var positiveMutations = []
 var negativeMutations = []
 
-var posMutationList = []
-var negMutationList = []
-
 var mutindex
 
 var mutationPreload = preload("res://Body/Mutation.tscn")
@@ -20,115 +17,93 @@ func init2(r):
 	Body = guy.Body
 	
 	gainMutationLevel()
-	generateMutations()
-	eventPositiveMutations()
+	positiveMutations = itemgen.PositiveMutations()
+	negativeMutations = itemgen.NegativeMutations()
+	mutationEvent("Positive")
 
 func _process(delta):
 	if !guy.inMenu && !close:
 		if Input.is_action_just_pressed("number_1") || Input.is_action_just_pressed("ui_left"):
 			if chosePositive:
-				chooseMutation(false, 0)
+				chooseMutation("Negative", 0)
 				end2()
 			else:
 				chosePositive = true
-				chooseMutation(true, 0)
-				eventNegativeMutations()
+				chooseMutation("Positive", 0)
+				mutationEvent("Negative")
 		elif Input.is_action_just_pressed("number_2") || Input.is_action_just_pressed("ui_up"):
 			if chosePositive:
-				chooseMutation(false, 1)
+				chooseMutation("Negative", 1)
 				end2()
 			else:
 				chosePositive = true
-				chooseMutation(true, 1)
-				eventNegativeMutations()
+				chooseMutation("Positive", 1)
+				mutationEvent("Negative")
 		elif Input.is_action_just_pressed("number_3") || Input.is_action_just_pressed("ui_right"):
 			if chosePositive:
-				chooseMutation(false, 2)
+				chooseMutation("Negative", 2)
 				end2()
 			else:
 				chosePositive = true
-				chooseMutation(true, 2)
-				eventNegativeMutations()
+				chooseMutation("Positive", 2)
+				mutationEvent("Negative")
 
 func gainMutationLevel():
 	guy.addStat("Mutation Level", 1)
-	textlog.push("[p]Your Mutation Level rises.")
+	textlog.push("[p]You gain 1 Mutation.")
+	textlog.push("[p]You feel your body changing...")
 
-func chooseMutation(positive, i):
-	var mut
-	mutindex = i
-	var line
-	if positive:
-		mut = positiveMutations[i]
-		for m in positiveMutations.size():
-			if m != i:
-				Body.positiveMutationGenerationBackup.append(positiveMutations[m])
-		line = "[P]"
-	else:
-		mut = negativeMutations[i]
-		for m in negativeMutations.size():
-			if m != i:
-				Body.negativeMutationGenerationBackup.append(negativeMutations[m])
-		line = "[h]"
+func chooseMutation(positive, index):
+	var mutlist
+	var color
+	if positive == "Positive":
+		mutlist = positiveMutations
+	elif positive == "Negative":
+		mutlist = negativeMutations
 	
-	Body.addMutation(positive, mut)
-	textlog.push("You recieve " + line + mut[0] + "[n].")
+	var mutname = mutlist[index].mutationName
+	#grants the mutation to the player
+	Body.addMutation(mutname)
+	mutlist[index].end(true)
+	#returns the leftover mutations to the itemgen to be generated later
+	mutlist.remove(index)
+	for i in mutlist.size():
+		mutlist[i].end(false)
+		mutlist[i] = mutlist[i].mutationName
+	itemgen.MutationLeftovers(mutlist, positive)
+	
+	var text = Game.scriptgen.MutationScripts[mutname][0]["mutationLog"]
+	var numchars = 1
+	if text.substr(0, 1) == "{":
+		numchars += 1
+	var firstchar = text.substr(0, numchars)
+	text.erase(0, numchars)
+	if positive == "Positive":
+		text = "[P]..." + firstchar.to_upper() + text + ".."
+	elif positive == "Negative":
+		text = "[h]...and " + firstchar.to_lower() + text
+	textlog.push(text)
 			
 func end2():
-	for i in negMutationList.size():
-		if i == mutindex:
-			negMutationList[i].end(true)
-		else:
-			negMutationList[i].end(false)
 	end()		
 
-func eventPositiveMutations():
-	for i in positiveMutations.size():
+func mutationEvent(positive):
+	var mutlist
+	if positive == "Positive":
+		mutlist = positiveMutations
+	else:
+		mutlist = negativeMutations
+	var newlist = []
+	for i in mutlist.size():
 		var mutation = mutationPreload.instance()
 		add_child(mutation)
-		posMutationList.append(mutation)
-		mutation.init(positiveMutations[i][0], positiveMutations[i][1], true, Body, i)
+		newlist.append(mutation)
+		mutation.init(mutlist[i], i)
 
-func eventNegativeMutations():
-	for i in posMutationList.size():
-		if i == mutindex:
-			posMutationList[i].end(true)
-		else:
-			posMutationList[i].end(false)
-	
-	for i in negativeMutations.size():
-		var mutation = mutationPreload.instance()
-		add_child(mutation)
-		negMutationList.append(mutation)
-		mutation.init(negativeMutations[i][0], negativeMutations[i][1], false, Body, i)
-
-
-func generateMutations():
-	for i in 3:
-		generateMutation()
-
-func generateMutation():
-	if Body.positiveMutationGeneration.size() == 0:
-		if Body.positiveMutationGenerationBackup.size() == 0:
-			Body.generationSetup("Positive")
-		else:
-			while Body.positiveMutationGenerationBackup.size() > 0:
-				Body.positiveMutationGeneration.append(Body.positiveMutationGenerationBackup.pop_back())
-	
-	var pindex = randi()%Body.positiveMutationGeneration.size()
-	positiveMutations.append(Body.positiveMutationGeneration[pindex])
-	Body.positiveMutationGeneration.remove(pindex)
-	
-	if Body.negativeMutationGeneration.size() == 0:
-		if Body.negativeMutationGenerationBackup.size() == 0:
-			Body.generationSetup("Negative")
-		else:
-			while Body.negativeMutationGenerationBackup.size() > 0:
-				Body.negativeMutationGeneration.append(Body.negativeMutationGenerationBackup.pop_back())
-	
-	var nindex = randi()%Body.negativeMutationGeneration.size()
-	negativeMutations.append(Body.negativeMutationGeneration[nindex])
-	Body.negativeMutationGeneration.remove(nindex)
+	if positive == "Positive":
+		positiveMutations = newlist
+	elif positive == "Negative":
+		negativeMutations = newlist
 	
 func disableButtons():
 	pass

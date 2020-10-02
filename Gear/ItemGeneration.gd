@@ -45,6 +45,19 @@ var itemTurnedDeviceGeneration = []
 
 var itemTurnedDevicePickupGeneration = []
 
+var positiveMutationGeneration = []
+var negativeMutationGeneration = []
+
+var positiveMutationLeftovers = []
+var negativeMutationLeftovers = []
+var mutationLeftovers = {
+	"Positive": positiveMutationLeftovers,
+	"Negative": negativeMutationLeftovers
+}
+
+var enemyPositiveMutationGeneration = []
+var enemyNegativeMutationGeneration = []
+
 var shopGearChances = {
 	"Weapon": 5,
 	"Armor": 5,
@@ -67,7 +80,9 @@ func init():
 	gearGenerationSetup("", 0)
 	deviceGenerationSetup(0)
 	itemGenerationSetup("")
-	
+	mutationGenerationSetup("", "")
+
+#functions for filling and refilling any pools
 func deviceGenerationSetup(tier):
 	var itemFile = File.new()
 	itemFile.open("res://Card/Card Sheet.txt", itemFile.READ)
@@ -125,6 +140,24 @@ func gearGenerationSetup(type, tier):
 				headgearGenerationTier3.append(values[0])
 	gearFile.close()
 
+func mutationGenerationSetup(positive, target):
+	var mutlist = Game.scriptgen.MutationScripts
+	if positive != "Negative":
+		for key in mutlist:
+			if mutlist[key][0]["positive"] == "Positive":
+				if target != "Player" && mutlist[key][0]["enemyAvailable"]:
+					enemyPositiveMutationGeneration.append(key)
+				if target != "Enemy":
+					positiveMutationGeneration.append(key)
+	if positive != "Positive":
+		for key in mutlist:
+			if mutlist[key][0]["positive"] == "Negative":
+				if target != "Player" && mutlist[key][0]["enemyAvailable"]:
+					enemyNegativeMutationGeneration.append(key)
+				if target != "Enemy":
+					negativeMutationGeneration.append(key)
+
+#functions for retreiving any sort of generated thing
 func ShopItem():
 	if itemGeneration.size() == 0:
 		itemGenerationSetup("Item")
@@ -317,3 +350,35 @@ func Rune(runes, numrunes):
 			
 func Gold(x, y):
 	return randi()%3 + 1 + (x + y)/8
+
+func Mutation(positive):
+	var mutlist
+	if positive == "Positive":
+		mutlist = positiveMutationGeneration
+	elif positive == "Negative":
+		mutlist = negativeMutationGeneration
+	if mutlist.size() == 0:
+		if mutationLeftovers[positive].size() == 0:
+			mutationGenerationSetup(positive, "Player")
+		else:
+			for mut in mutationLeftovers[positive]:
+				mutlist.append(mut)
+			mutationLeftovers[positive].clear()
+		
+	var index = randi()%mutlist.size()
+	var mutationName = mutlist[index]
+	mutlist.remove(index)
+	return mutationName
+
+func PositiveMutations():
+	return [Mutation("Positive"), Mutation("Positive"), Mutation("Positive")]
+
+func NegativeMutations():
+	return [Mutation("Negative"), Mutation("Negative"), Mutation("Negative")]
+
+func MutationLeftovers(leftlist, positive):
+	for mut in leftlist:
+		mutationLeftovers[positive].append(mut)
+
+func EnemyMutations():
+	return [enemyPositiveMutationGeneration[randi()%enemyPositiveMutationGeneration.size()], enemyNegativeMutationGeneration[randi()%enemyNegativeMutationGeneration.size()]]

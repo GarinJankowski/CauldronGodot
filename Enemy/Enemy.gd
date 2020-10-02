@@ -105,6 +105,7 @@ func mutate():
 	positiveMutationList.append(positiveMutationGeneration[randi()%positiveMutationGeneration.size()])
 	negativeMutationList.append(negativeMutationGeneration[randi()%negativeMutationGeneration.size()])
 	
+	updateMutScaling()
 	updateUI()
 
 func getMutation(mutationName):
@@ -138,9 +139,31 @@ func updateHealth():
 		
 	healthBar.get_node("Amount").text = str(CurrentHealth) + "/" + str(MaxHealth + tempMaxHealth)
 
+func addStat(statstr, amount):
+	if statstr == "Max Health":
+		MaxHealth += amount
+		CurrentHealth += amount
+	elif statstr == "Max Mana":
+		MaxMana += amount
+		CurrentMana += amount
+	elif statstr == "Max Energy":
+		MaxEnergy += amount
+	elif statstr == "Strength":
+		Strength += amount
+	elif statstr == "Dexterity":
+		Dexterity += amount
+	elif statstr == "Intelligence":
+		Intelligence += amount
+	elif statstr == "Mutation Level":
+		MutationLevel += amount
+		updateMutScaling()
+	updateUI()
+	
 func addTempStat(statstr, amount):
 	if statstr == "Max Health":
 		tempMaxHealth += amount
+	elif statstr == "Max Mana":
+		tempMaxMana += amount
 	elif statstr == "Strength":
 		tempStrength += amount
 	elif statstr == "Dexterity":
@@ -149,6 +172,7 @@ func addTempStat(statstr, amount):
 		tempIntelligence += amount
 	elif statstr == "Mutation Level":
 		tempMutationLevel += amount
+		updateMutScaling()
 
 func setValuesFromString(enemystring):
 	var values = enemystring.replace("\"", "").split("\t")

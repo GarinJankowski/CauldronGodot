@@ -1,7 +1,7 @@
 Name	Tier	Max Health	Strength	Dexterity	Intelligence	Mutation Level	Cards	Terrain		
 Dummy	N/A	1000	0	0	0	0	StartCard			
-Rat	A	5	3	3	3	0	Bite (1)	N/A		
-Hawk	A	8	3	8	4	0	"Scratch (3), Tear (1)"	"Forest, Hills, Desert"		
+Rat	A	5	3	3	3	0	"Bite (3), Defend (1)"	N/A		
+Hawk	A	8	3	8	4	0	"Scratch (3), Tear (1), Avoid (1)"	"Forest, Hills, Desert"		
 Vine Growth	A	8	2	2	0	0	"Slap (3), Constrict (1)"	"Forest, Caves, Hills"		
 Beetle	A	3	2	3	1	0	"Bite (2), Nip (1), Shell (1), StartCard"	"Forest, Caves, Hills, Desert"		
 										
@@ -12,7 +12,7 @@ Nest	B	6	2	1	2	0	"Call Wasp (2), Repair Nest (3), Do Nothing (1), StartCard"	"Fo
 										
 Caterpillar	C	25	2	4	0	0	"Urticate (2), Curl (3), Bite (1)"	"Forest, Caves, Desert"		
 Slime	C	20	4	2	-1	0	"Corrode (5), Rear (2), Hit (1), Bounce (2)"	"Forest, Caves, Hills"		
-Tortoise	C	20	4	2	1	0	"Snap (3), Carapace (1), StartCard"	"Forest, Hills, Desert"		
+Tortoise	C	20	4	2	1	0	"Snap (3), Carapace (1)"	"Forest, Hills, Desert"		
 Hound	C	20	4	6	8	0	"Dog Bite (4), Pant (2)"	"Forest, Hills, Desert"		
 										
 Buffalo	D	40	6	1	1	0	"Ram (4), Buffalo Charge (1), Paw the Ground (2)"	"Forest, Hills, Desert"		

@@ -159,27 +159,62 @@ func _process(delta):
 
 func cardFunction(copytimes = 0):
 	if myself.isAlive() && opponent.isAlive():
-		#all this garbage is for using a card on yourself from being confused/jinxed/deflected
-		if myself.hasEffect("Confuse") || myself.hasEffect("Jinx")|| opponent.hasEffect("Deflect") && hasOffensiveAction():
-			if !myself.hasEffect("Confuse") && !myself.hasEffect("Jinx"):
-				opponent.trigger("Deflect")
-				if opponent.hasEffect("Charm"):
-					opponent.trigger("Charm")
-			var tempCombat = Combat
-			var tempOpponent = opponent
-			Combat = myself.selfCombat
-			opponent = myself
-			scriptObject.Combat = myself.selfCombat
-			scriptObject.opponent = myself
-			useCard(copytimes)
-			Combat = tempCombat
-			opponent = tempOpponent
-			scriptObject.Combat = tempCombat
-			scriptObject.opponent = tempOpponent
-		#actual thing that usually happens
+		#Confuse/Jinx
+		if myself.hasEffect("Confuse") || myself.hasEffect("Jinx"):
+			deflectedCardFunction(copytimes)
+		#Distance
+		#check for distance:
+		#Attack, not a ghost card, has offensive action, projectile/reaching+distance<=2/throw, 
+		elif myself.Distance() > 0 && cardType == "Attack" && !ghost && hasOffensiveAction() && !(has("projectile") || (has("reaching") && myself.Distance() <= 2) || myself.hasEffect("Throw")):
+			#if your card has a distance cost, there are some rules:
+			#distance cost takes into account all distance on the field
+			#if there is exactly enough distance, congratulations, you use your card (another check for Deflection as well)
+			#if there is too much distance, you use the cost on top of the distance that is being lost
+			#if there isn't enough, well then you shouldn't be able to use it, but regardless, it just does the regular distance thing
+			if "distanceCost" in cardActions:
+				var cost = -int(cardActions["distanceCost"])
+				if myself.Distance() > cost:
+					scriptObject.useCost()
+				elif myself.Distance() == cost:
+					if opponent.hasEffect("Deflect"):
+						opponent.trigger("Deflect")
+						if opponent.hasEffect("Charm"):
+							opponent.trigger("Charm")
+						deflectedCardFunction(copytimes)
+					else:
+						useCard(copytimes)
+					return
+			Combat.gainDistance(-1, self)
+			if myself.hasEffect("Suspend"):
+				myself.useGhostCard("Suspend Anchor", myself.currentCombat)
+			else:
+				myself.useGhostCard("Close Distance", myself.currentCombat)
+			#note that Distance does NOT check for "other effects", only "card type effects"
+			checkCardTypeEffects()
+		#Deflect
+		elif opponent.hasEffect("Deflect") && hasOffensiveAction():
+			opponent.trigger("Deflect")
+			if opponent.hasEffect("Charm"):
+				opponent.trigger("Charm")
+			deflectedCardFunction(copytimes)
+		#thing that usually happens
 		else:
 			useCard(copytimes)
 #		Combat.checkEnergy()
+
+#all this garbage is for using a card on yourself from being confused/jinxed/deflected
+func deflectedCardFunction(copytimes):
+	var tempCombat = Combat
+	var tempOpponent = opponent
+	Combat = myself.selfCombat
+	opponent = myself
+	scriptObject.Combat = myself.selfCombat
+	scriptObject.opponent = myself
+	useCard(copytimes)
+	Combat = tempCombat
+	opponent = tempOpponent
+	scriptObject.Combat = tempCombat
+	scriptObject.opponent = tempOpponent
 
 #all of this Alternate, times, and copytimes stuff is for certain edge cases with the Copy effect
 #it exists to deal with copying ghost cards and other cards properly so when a card is copied and played, all the copies are play simultaneously
@@ -188,12 +223,14 @@ func useCard(copytimes = 0):
 		actionValues[key] = 0
 	scriptObject.useCost()
 	
-	if (myself.hasEffect("Copy") || myself.hasEffect("Heave") || copytimes > 0) && (!ghost || has("isAlternate")):
+	if (myself.hasEffect("Copy") || (((myself.hasEffect("Heave") && opponent.hasDefenses()) || myself.hasEffect("Throw")) && hasOffensiveAction() && cardType == "Attack") || copytimes > 0) && (!ghost || has("isAlternate")):
 		var times = 1
 		if myself.hasEffect("Copy"):
 			times += int(myself.getEffect("Copy"))
 			myself.removeEffect("Copy")
-		if myself.hasEffect("Heave") && opponent.hasDefenses():
+		if myself.hasEffect("Heave"):
+			times += 1
+		if myself.hasEffect("Throw"):
 			times += 1
 		
 		if has("CUSTOMCOPYFUNCTION"):
@@ -222,6 +259,9 @@ func checkCardTypeEffects():
 	myself.trigger("Record")
 	if cardType == "Attack":
 		myself.trigger("Transmute")
+		if has("projectile"):
+			myself.trigger("Swing")
+			myself.trigger("Parting Shot")
 		if "dealDirectDamage" in actionValues:
 			if myself.trigger("Ignite"):
 				cardProperties.append("ignite")
@@ -266,18 +306,20 @@ func checkOtherEffects():
 		
 		opponent.trigger("Spikes")
 		opponent.trigger("Sear")
+		opponent.trigger("Parry")
 		myself.trigger("Sneak")
 		myself.trigger("Stealth")
 		opponent.trigger("Sleep")
 
 func addEffect(target, effectName, value, turns):
 	var operators = "+-*/d"
+	var effectProperties = Game.scriptgen.EffectScripts[effectName][0]
 	
 	var valueStr = ""
 	if typeof(value) == 2:
 		valueStr = str(value)
 	elif value != "N/A":
-		if !" d " in value:
+		if !" d " in value || "stackable" in effectProperties:
 			valueStr = str(calculate(value))
 		else:
 			value = value.split(" ")
@@ -291,7 +333,7 @@ func addEffect(target, effectName, value, turns):
 		turns = 0
 	if turns != 0:
 		target.addEffect(effectName, valueStr, turns, self)
-	if turns == -1 && "stackable" in Game.scriptgen.EffectScripts[effectName][0]:
+	if turns == -1 && "stackable" in effectProperties:
 		return int(valueStr)
 	return turns
 		
@@ -379,7 +421,9 @@ func cardLogOutput():
 	
 	var colors = {
 		"gainEnergy": "[y]",
+		"energyOT": "[y]",
 		"enemyGainEnergy": "[o]",
+		"loseEnergyOT": "[y]",
 		"dealDirectDamage": "[b]",
 		"enemydealDirectDamage": "[r]",
 		"takeDirectDamage": "[r]",
@@ -399,7 +443,13 @@ func cardLogOutput():
 		"Spell": "[i]",
 		"Harmful": "[r]",
 		"Item": "[n]",
-		"Device": "[n]"
+		"Device": "[n]",
+		"enemyAttack": "[r]",
+		"enemyDefend": "[d]",
+		"enemySpell": "[r]",
+		"enemyHarmful": "[b]",
+		"enemyItem": "[r]",
+		"enemyDevice": "[r]"
 	}
 	var wholecolor = "[n]"
 	
@@ -511,13 +561,38 @@ func cardLogOutput():
 					addword = "ies"
 				else:
 					addword = "y"
+			elif word == "away":
+				addword = colors["Attack"]
+				if actionValues["gainDistance"] > 2:
+					addword += "far away"
+				else:
+					addword += "away"
+				addword += "[n]"
 			else:
 				var colorword = word
+				var valueword = str(abs(actionValues[word]))
+				var enemycard = false
 				if (!myself.isPlayer() && actionValues[word] > 0) || (myself.isPlayer() && actionValues[word] < 0):
 					colorword = "enemy" + colorword
-				if colorword in colors:
+					enemycard = true
+				if colorword.ends_with("Turns"):
+					colorword = colorword.replace("Turns", "")
+					if colorword in colors:
+						addword += colors[colorword]
+					elif enemycard:
+						addword += colors["enemy" + cardType]
+					else:
+						addword += colors[cardType]
+					valueword += " turn"
+					if valueword != "1 turn":
+						valueword += "s"
+				elif colorword in colors:
 					addword += colors[colorword]
-				addword += str(abs(actionValues[word])) + wholecolor
+				elif enemycard:
+					addword += colors["enemy" + cardType]
+				else:
+					addword += colors[cardType]
+				addword += valueword + wholecolor
 			output += addword
 			i += j
 		else:
@@ -534,14 +609,10 @@ func updateDescription():
 		if desc[i] == "(" && desc[i+4] == ")":
 			newdesc += "("
 			var stat = desc.substr(i+1, 3)
-			if stat == "Str":
-				newdesc += str(myself.Strength + myself.tempStrength)
-			elif stat == "Dex":
-				newdesc += str(myself.Dexterity + myself.tempDexterity)
-			elif stat == "Int":
-				newdesc += str(myself.Intelligence + myself.tempIntelligence)
-			elif stat == "VAL":
+			if stat == "VAL":
 				newdesc += str(uniqueValue)
+			else:
+				newdesc += str(myself.convertStat(stat))
 			newdesc += ")"
 			i += 5
 		else:
@@ -606,11 +677,11 @@ func getPriority():
 		
 		if mindamage > 0:
 			priority += 1
-			if mindamage >= opponent.CurrentHealth + opponent.Block():
-				priority += 500
-			elif maxdamage >= opponent.CurrentHealth + opponent.Block():
-				priority += 100 + maxdamage
-			elif "block" in cardActions["dealDirectDamage"]:
+			#if mindamage >= opponent.CurrentHealth + opponent.Block():
+				#priority += 500
+			#elif maxdamage >= opponent.CurrentHealth + opponent.Block():
+				#priority += 100 + maxdamage
+			if "block" in cardActions["dealDirectDamage"]:
 				priority += 90
 			
 		elif opponent.Shield() > 0:
@@ -805,6 +876,8 @@ func createCopy():
 	if has("itemTurnedDevice"):
 		copy.changeToDevice()
 	copy.initCombat(Combat, CombatDeck.get_ref())
+	if copy.mods["Void"]:
+		copy.DiscardCD = DiscardCD
 	return copy
 
 func getRecording():
@@ -864,7 +937,7 @@ func calculate(string):
 			elif op == '/':
 				stack.push_back(str(b / a))
 			elif op == 'd':
-				stack.push_back(str(rtd(b, a)))
+				stack.push_back(str(Game.rtd(b, a)))
 		else:
 			stack.push_back(postfix[i])
 	finalnum = int(myself.convertStat(stack.pop_back(), self))
@@ -949,15 +1022,6 @@ func calculateMin(string):
 			stack.push_back(postfix[i])
 	finalnum = int(myself.convertStat(stack.pop_back(), self))
 	return finalnum
-
-#roll the dice
-func rtd(amount, sides):
-	if sides == 0:
-		return 0
-	var value = 0
-	for i in range(int(amount)):
-		value += (randi()%int(sides))+1
-	return value
 
 func disableButton():
 	get_node("buttonCard").visible = false

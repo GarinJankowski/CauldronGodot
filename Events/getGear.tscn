@@ -116,6 +116,7 @@ __meta__ = {
 
 [node name="moveAreaAdd" type="Area2D" parent="add"]
 visible = false
+collision_mask = 0
 
 [node name="moveCollision" type="CollisionShape2D" parent="add/moveAreaAdd"]
 position = Vector2( 16, -1 )
@@ -201,6 +202,7 @@ __meta__ = {
 
 [node name="moveAreaLeave" type="Area2D" parent="leave"]
 visible = false
+collision_mask = 0
 
 [node name="moveCollision" type="CollisionShape2D" parent="leave/moveAreaLeave"]
 position = Vector2( -16, -6 )

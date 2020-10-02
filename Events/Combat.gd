@@ -11,7 +11,7 @@ var guyDeck
 var enemyDeck
 
 var waiting
-var timertime = 0.2
+var timertime = 0.1
 
 func init2(r):
 	init(r)
@@ -69,11 +69,12 @@ func init2(r):
 	if enemy.startCard:
 		enemy.useGhostCard(enemy.enemyName + "Start", enemyCombat)
 		
-	guyDeck.printHand()
 	if map.currentTerrainEquals("Desert"):
 		guy.Effects.fixRetainedEffects()
 		guy.Effects.turn("Good")
 		guy.Effects.turn("Bad")
+	guyDeck.printHand()
+	guyDeck.checkAllUsable()
 	
 	guy.Bag.buttondesty = guy.Bag.buttondesty-110
 	guy.Bag.buttonstepy = -22
@@ -155,8 +156,8 @@ func enemyDeath():
 	for i in lvls:
 		textlog.push("[g]Your level has increased.")
 		room.events.insert(1, "LevelUp")
-	guy.removeEffect("strangleholdBad")
 	guy.Effects.removeEffects("Good")
+	guy.Effects.removeEffects("Bad", "counterpart")
 	
 	guy.Bag.buttonstepy *= -1
 	guy.Bag.buttondesty = guy.Bag.buttonstarty
@@ -189,8 +190,8 @@ func enemyDeath():
 
 func fleeCombat():
 	textlog.push("[l]You flee from the fight.")
-	guy.removeEffect("strangleholdBad")
 	guy.Effects.removeEffects("Good")
+	guy.Effects.removeEffects("Bad", "counterpart")
 	
 	guy.Bag.buttonstepy *= -1
 	guy.Bag.buttondesty = guy.Bag.buttonstarty

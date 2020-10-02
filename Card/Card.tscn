@@ -160,9 +160,9 @@ __meta__ = {
 }
 
 [node name="costText" type="Label" parent="Top"]
-margin_left = -69.0
+margin_left = -68.0
 margin_top = 61.0
-margin_right = 69.0
+margin_right = 68.0
 margin_bottom = 100.0
 custom_fonts/font = SubResource( 2 )
 text = "Cost"
@@ -278,6 +278,8 @@ __meta__ = {
 
 [node name="cardArea" type="Area2D" parent="."]
 visible = false
+collision_layer = 8
+collision_mask = 0
 script = ExtResource( 15 )
 
 [node name="cardCollision" type="CollisionShape2D" parent="cardArea"]

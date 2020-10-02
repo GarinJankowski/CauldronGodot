@@ -22,6 +22,23 @@ var tempDexterity = 0
 var tempIntelligence = 0
 var tempMutationLevel = 0
 
+var mutationScaling = {
+	"Max Health": 0.0,
+	"Max Mana": 0.0,
+	"Max Energy": 0.0,
+	"Strength": 0.0,
+	"Dexterity": 0.0,
+	"Intelligence": 0.0,
+}
+var mutationStats = {
+	"Max Health": 0,
+	"Max Mana": 0,
+	"Max Energy": 0,
+	"Strength": 0,
+	"Dexterity": 0,
+	"Intelligence": 0,
+}
+
 var onExtraTurn = false
 
 #these are only used for enemies for now
@@ -88,16 +105,19 @@ func checkPhases():
 
 func Block():
 	return Effects.getValue("Block")
-func addBlock(value, Card = null):
-	addEffect("Block", value, -1, Card)
+func addBlock(value, Card, turns = 1):
+	addEffect("Block", value, turns, Card)
 	
 func Shield():
 	return Effects.getValue("Shield")
-func addShield(value, Card = null):
-	addEffect("Shield", value, -1, Card)
+func addShield(value, Card, turns = 1):
+	addEffect("Shield", value, turns, Card)
 
 func Allies():
 	return Effects.hasAlly()
+	
+func Distance():
+	return getEffect("Distance") + currentCombat.enemy.getEffect("Distance")
 
 func hasDefenses():
 	if Block() > 0 || Shield() > 0 || Allies():
@@ -155,6 +175,14 @@ func clearGhostCards():
 	for ghost in ghostCards:
 		ghost[2].queue_free()
 	ghostCards.clear()
+
+func addMutScaling(stat, amount):
+	mutationScaling[stat] += amount
+	updateMutScaling()
+
+func updateMutScaling():
+	for key in mutationScaling:
+		mutationStats[key] = int(mutationScaling[key]*(MutationLevel + tempMutationLevel))
 	
 func getRecording():
 	var topstats = [MaxHealth, CurrentHealth, MaxEnergy, CurrentEnergy, MaxMana, CurrentMana]
@@ -228,17 +256,17 @@ func convertStat(string, Card = null, Effect = null):
 	elif Card != null && string in Card.actionValues:
 		num = Card.actionValues[string]
 	elif string == "Str":
-		num = Strength + tempStrength
+		num = Strength + tempStrength + mutationStats["Strength"]
 	elif string == "Dex":
-		num = Dexterity + tempDexterity
+		num = Dexterity + tempDexterity + mutationStats["Dexterity"]
 	elif string == "Int":
-		num = Intelligence + tempIntelligence
+		num = Intelligence + tempIntelligence + mutationStats["Intelligence"]
 	elif string == "Mut":
 		num = MutationLevel + tempMutationLevel
 	elif string == "MHP":
-		num = MaxHealth + tempMaxHealth
+		num = MaxHealth + tempMaxHealth + mutationStats["Max Health"]
 	elif string == "MMP":
-		num = MaxMana + tempMaxMana
+		num = MaxMana + tempMaxMana + mutationStats["Max Mana"]
 	elif string == "block":
 		num = Block()
 	elif string == "Val" && Effect != null:
@@ -246,8 +274,54 @@ func convertStat(string, Card = null, Effect = null):
 	elif string.begins_with("effect("):
 		num = getEffect(string.replace("effect(", "").replace(")", "").replace("_", " "))
 	elif string.begins_with("missingHealth"):
-		num = MaxHealth + tempMaxHealth - CurrentHealth
+		num = MaxHealth + tempMaxHealth + mutationStats["Max Health"] - CurrentHealth
 	else:
 		num = float(string)
 		
 	return float(num)
+	
+#you really gotta put these all in one place (there's one in Effect and THREE in Card)
+func calculate(string):
+	var finalnum = 0
+	var negative = false
+	if string.begins_with("-"):
+		string.erase(0, 1)
+		negative = true
+	var infix = string.split(" ")
+	var postfix = []
+	
+	var second = false
+	while !infix.empty():
+		if second:
+			postfix.append(infix[1])
+			infix.remove(1)
+			second = false
+		else:
+			postfix.append(infix[0])
+			infix.remove(0)
+			second = true
+	
+	var stack = []
+	var operators = "+-*/d"
+	
+	for i in range(len(postfix)):
+		if postfix[i] in operators:
+			var a = convertStat(stack.pop_back(), self)
+			var b = convertStat(stack.pop_back(), self)
+			var op = postfix[i]
+			if op == '+':
+				stack.push_back(str(a + b))
+			elif op == '-':
+				stack.push_back(str(b - a))
+			elif op == '*':
+				stack.push_back(str(a * b))
+			elif op == '/':
+				stack.push_back(str(b / a))
+			elif op == 'd':
+				stack.push_back(str(Game.rtd(b, a)))
+		else:
+			stack.push_back(postfix[i])
+	finalnum = int(convertStat(stack.pop_back()))
+	if negative:
+		finalnum *= -1
+	return finalnum

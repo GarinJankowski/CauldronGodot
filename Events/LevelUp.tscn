@@ -120,6 +120,7 @@ __meta__ = {
 }
 
 [node name="statAreaHP" type="Area2D" parent="maxhealth"]
+collision_mask = 0
 
 [node name="statCollision" type="CollisionShape2D" parent="maxhealth/statAreaHP"]
 visible = false
@@ -220,6 +221,7 @@ __meta__ = {
 
 [node name="statAreaEP" type="Area2D" parent="maxenergy"]
 position = Vector2( 6, -11 )
+collision_mask = 0
 
 [node name="statCollision" type="CollisionShape2D" parent="maxenergy/statAreaEP"]
 visible = false
@@ -320,6 +322,7 @@ __meta__ = {
 
 [node name="statAreaMP" type="Area2D" parent="maxmana"]
 position = Vector2( -3, -6 )
+collision_mask = 0
 
 [node name="statCollision" type="CollisionShape2D" parent="maxmana/statAreaMP"]
 visible = false

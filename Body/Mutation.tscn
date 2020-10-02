@@ -107,6 +107,7 @@ __meta__ = {
 }
 
 [node name="mutationArea" type="Area2D" parent="."]
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="mutationArea"]
 position = Vector2( 0, -21 )

@@ -6,36 +6,38 @@ No Weapon	Weapon	Smack (3)	0	Bare hands are better than no hands.
 				
 Club	Weapon	"Bludgeon (2), Lift (1)"	1	N/A
 Pitchfork	Weapon	"Pierce (2), Poke (1)"	1	N/A
-Hand Axe	Weapon	Hack (3)	1	N/A
+Hand Axe	Weapon	"Hack (2), Chop (1)"	1	N/A
 Shiv	Weapon	"Swipe (3), Stab (1)"	1	N/A
 Rocks	Weapon	"Rock (2), Retrieve (2)"	1	N/A
 Leather Gauntlets	Weapon	"Punch (2), Counter (1)"	1	N/A
 				
 Long Sword	Weapon	"Slash (3), Thrust (1)"	2	N/A
 Quarterstaff	Weapon	"Poke (1), Strike (2)"	2	N/A
-Battle Axe	Weapon	"Cleave (3), Lift (1)"	2	N/A
-Short Bow	Weapon	"Arrow (2), Steady (3)"	2	N/A
+Battle Axe	Weapon	"Cleave (2), Heft (1), Sever (1)"	2	N/A
+Short Bow	Weapon	"Arrow (2), Steady (2), Part (1)"	2	N/A
 Dagger	Weapon	"Slice (2), Stab (1)"	2	N/A
-Spear	Weapon	"Poke (2), Penetrate (2)"	2	N/A
+Spear	Weapon	"Penetrate (2), Poke (1), Reach (1)"	2	N/A
 Mace	Weapon	"Crush (2), Heft (2)"	2	N/A
 Serrated Shiv	Weapon	"Puncture (1), Cut (2)"	2	N/A
-Crossbow	Weapon	"Bolt (1), Reload (4)"	2	N/A
+Crossbow	Weapon	"Bolt (1), Reload (3), Pull Back (1)"	2	N/A
 Javelin	Weapon	"Lance (1), Poke (1), Retrieve (2)"	2	N/A
+Sling	Weapon	"Rock (1), Swing (2), Part (1)"	2	N/A
 				
 Greatsword	Weapon	"Rend (2), Slash (2), Execute (1)"	3	N/A
 Heavy Gauntlets	Weapon	"Pummel (2), Knock Out (2)"	3	N/A
-Rapier	Weapon	"Lunge (3), Parry (1)"	3	N/A
+Rapier	Weapon	"Parry (1), Lunge (1), Poke (1), Swipe (1)"	3	N/A
 Steel Stiletto	Weapon	"Anticipate (2), Calculate (1), Backstab (1)"	3	N/A
 Spiked Flail	Weapon	"Flail (3), Thrash (1)"	3	N/A
-Hand Cannon	Weapon	Load (3)	3	N/A
-Arbalest	Weapon	"Quarrel (1), Crank (3)"	3	N/A
-Obsidian Spear	Weapon	"Impale (2), Jab (3)"	3	N/A
+Hand Cannon	Weapon	"Load (3), Pull Back (1)"	3	N/A
+Arbalest	Weapon	"Quarrel (1), Crank (3), Pull Back (1)"	3	N/A
+Obsidian Spear	Weapon	"Impale (2), Jab (1), Reach (1), Pierce (1)"	3	N/A
+Pike	Weapon	"Press (1), Jab (1), Reach (2)"	3	N/A
 War Hammer	Weapon	"Raise (5), Crush (1), Shatter (1)"	3	N/A
 Ghost Needle	Weapon	"Transpierce (1), Phase (1), Startle (1)"	3	N/A
-Steam Rifle	Weapon	"Bullet (2), Aim (2)"	3	N/A
-Tomahawks	Weapon	"Axe (2), Retrieve (1)"	3	N/A
-Halberd	Weapon	"Jab (2), Cleave (1), Hook (1), Execute (1)"	3	N/A
-Longbow	Weapon	"Heavy Arrow (1), Draw (1), Ignite (1), Steady (2)"	3	N/A
+Steam Rifle	Weapon	"Bullet (2), Aim (2), Parting Shot (1)"	3	N/A
+Tomahawks	Weapon	"Throw (1), Hack (1), Chop (1), Retrieve (1)"	3	N/A
+Halberd	Weapon	"Jab (1), Reach (1), Cleave (1), Hook (1), Execute (1)"	3	N/A
+Longbow	Weapon	"Heavy Arrow (1), Draw (1), Ignite (1), Steady (2), Parting Shot (1)"	3	N/A
 Chain Whip	Weapon	"Sweep (1), Gash (1), Poke (1)"	3	N/A
 Engraved Sword	Weapon	"Surge (1), Channel (3)"	3	N/A
 Athame	Weapon	"Prick (1), Siphon (2)"	3	N/A
@@ -43,30 +45,31 @@ Double Axe	Weapon	"Heave (3), Hew (2), Sunder (1)"	3	N/A
 				
 No Armor	Armor	Endure (1)	0	Your tough form can take a hit or two.
 				
-Cloak	Armor	Disrupt (2)	1	N/A
+Cloak	Armor	Disrupt (1)	1	N/A
 Training Robes	Armor	Boost (1)	1	N/A
-Leather Armor	Armor	Soften (2)	1	N/A
-Breastplate	Armor	Armor (1)	1	N/A
+Leather Armor	Armor	Soften (1)	1	N/A
+Breastplate	Armor	Armor (2)	1	N/A
 Buckler	Armor	Shield (1)	1	N/A
-Shoes	Armor	Dodge (1)	1	N/A
+Shoes	Armor	"Dodge (1), Step Back (1)"	1	N/A
 				
 Half Plates	Armor	"Armor (1), Fortify (1)"	2	N/A
-Padded Tunic	Armor	Stabilize (2)	2	N/A
+Padded Tunic	Armor	Stabilize (1)	2	N/A
 Reinforced Mail	Armor	Reinforce (1)	2	N/A
-Grass Armor	Armor	Mend (1)	2	N/A
+Grass Armor	Armor	Regrow (1)	2	N/A
 Feathered Cape	Armor	Divert (1)	2	N/A
-Heater Shield	Armor	Block (2)	2	N/A
+Heater Shield	Armor	Block (1)	2	N/A
 Kite Shield	Armor	Protect (2)	2	N/A
 Inscribed Robes	Armor	Invigorate (2)	2	N/A
 Silver Shield	Armor	Gleam (2)	2	N/A
+Leather Boots	Armor	"Dodge (1), Withdraw (1)"		
 				
 Flesh Suit	Armor	"Tumefy (2), Rupture (1)"	3	N/A
-Turtle Shell	Armor	"Safeguard (1), Obstruct (1)"	3	N/A
+Turtle Shell	Armor	"Safeguard (1), Obstruct (2)"	3	N/A
 Buffalo Skin	Armor	"Assault (2), Retreat (1)"	3	N/A
 Midnight Cloak	Armor	"Stealth (1), Elude (1)"	3	N/A
-Auto Boots	Armor	"Accelerate (1), Vent (1)"	3	N/A
-Pavise Shield	Armor	"Blockade (1), Obstruct (1)"	3	N/A
-Full Plate Armor	Armor	"Unbreakable (1), Fortify (2)"	3	N/A
+Auto Boots	Armor	"Accelerate (1), Propel (1), Zoom (1), Vent (1)"	3	N/A
+Pavise Shield	Armor	"Blockade (1), Protect (2)"	3	N/A
+Full Plate Armor	Armor	"Full Armor (1), Fortify (1), Stronghold (1)"	3	N/A
 Riveted Mail	Armor	Mail (2)	3	N/A
 Dragon Scales	Armor	"Scales (1), Sear (1)"	3	N/A
 Spiked Plates	Armor	"Spikes (2), Taunt (1)"	3	N/A
@@ -74,7 +77,7 @@ Gilded Robes	Armor	Inspire (1)	3	N/A
 Mage Armor	Armor	"Repulse (1), Regain (1)"	3	N/A
 Tree Trunk	Armor	"Root (2), Shed (1)"		
 				
-No Headgear	Headgear	"Heal (1), Calm (1)"	0	Your head is cold.
+No Headgear	Headgear	"Mend (1), Calm (1)"	0	Your head is cold.
 				
 Warp Goggles	Headgear	"Blink (1), Suspend (1)"	2	N/A
 Vampire Fangs	Headgear	"Leech (2), Transfuse (1)"	2	N/A
@@ -90,7 +93,7 @@ Prototype Lens	Headgear	"Laser (1), Magnify (3)"	2	N/A
 Ear Plugs	Headgear	"Screech (2), Echo (1)"	2	N/A
 Black Cowl	Headgear	"Jinx (1), Emphasize (2)"	2	N/A
 Laurel Wreath	Headgear	"Regenerate (1), Sap (2)"	2	N/A
-Mail Coif	Headgear	"Augment (2), Steel (1)"	2	N/A
+Mail Coif	Headgear	"Sharpen (2), Steel (1)"	2	N/A
 Dragonskin Hood	Headgear	"Fireball (1), Fuel (2)"	2	N/A
 Elastic Cap	Headgear	"Rubberize (2), Melt (1)"	2	N/A
 Wispy Blindfold	Headgear	"Kinesis (2), Sense (1)"	3	N/A

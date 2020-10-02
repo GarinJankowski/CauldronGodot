@@ -25,7 +25,7 @@ func rtd(amount, sides):
 	return value
 
 #functions to edit the numbers
-func change(who, type, amount, Card = null):
+func change(who, type, amount, Card = null, turns = 1):
 	if who.hasEffect("Nullify") && (type == "CurrentHealth" || type == "Mana" || type == "Energy"):
 		return
 	if type == "CurrentHealth":
@@ -50,9 +50,19 @@ func change(who, type, amount, Card = null):
 		if who.isPlayer():
 			who.updateMana()
 	elif type == "Block":
-		who.addBlock(amount, Card)
+		who.addBlock(amount, Card, turns)
 	elif type == "Shield":
-		who.addShield(amount, Card)
+		who.addShield(amount, Card, turns)
+	elif type == "Distance":
+		if amount < 0 && -amount > who.getEffect("Distance"):
+			var enemyamount = amount + who.getEffect("Distance")
+			who.addEffect("Distance", amount, -1, Card)
+			var tempenemy = me
+			if who == me:
+				tempenemy = enemy
+			tempenemy.addEffect("Distance", enemyamount, -1, Card)
+		else:
+			who.addEffect("Distance", amount, -1, Card)
 	elif type == "Energy" && who.isPlayer():
 		who.CurrentEnergy += amount
 		checkEnergy()
@@ -124,14 +134,38 @@ func checkEnergy():
 			textlog.push("[o]" + str(-amount) + " TURN LOSSES")
 	player.updateEnergy()
 
+func addEffect(target, effectName, value, turns):
+	var operators = "+-*/d"
+	
+	var valueStr = ""
+	if typeof(value) == 2:
+		valueStr = str(value)
+	elif value != "N/A":
+		if !" d " in value:
+			valueStr = str(me.calculate(value))
+		else:
+			value = value.split(" ")
+			for k in value.size():
+				if !(value[k] in operators):
+					value[k] = str(me.convertStat(value[k]))
+				valueStr += value[k] + " "
+			valueStr = valueStr.substr(0, len(valueStr)-1)
+	turns = me.calculate(str(turns))
+	if turns != 0:
+		target.addEffect(effectName, valueStr, turns, null)
+	if turns == -1 && "stackable" in Game.scriptgen.EffectScripts[effectName][0]:
+		return int(valueStr)
+	return turns
+
 #deal damage functions
 func calculateDirectDamage(damage, me, enemy, Card):
 	if Card != null && Card.cardType == "Attack":
-		if me.hasEffect("Augment"):
-			damage += me.getEffect("Augment")
+		damage += me.Effects.getAllValues("Sharpen")
+		if Card.has("projectile"):
+			damage += me.Effects.getAllValues("Swing")
+			damage += me.Effects.getAllValues("Fuse")
 		if me.hasEffect("Aim"):
 			damage *= 2
-	damage += me.Effects.getAllValues("Fuse")
 	return damage
 func dealDirectDamage(damage, Card):
 	var dmg
@@ -143,9 +177,11 @@ func directDamage(damage, myself, opponent, Card):
 	var calcdmg = calculateDirectDamage(damage, myself, opponent, Card)
 	var usedmg = calcdmg
 	
-	if myself.hasEffect("Augment") && Card != null && Card.cardType == "Attack":
-		myself.tickEffect("Augment")
-		myself.removeEffect("Augment")
+	if Card != null && Card.cardType == "Attack":
+		myself.tickEffect("Sharpen")
+		if Card.has("projectile"):
+			myself.tickEffect("Fuse")
+		myself.tickEffect("Aim")
 	if opponent.hasEffect("Phase"):
 		opponent.increaseEffect("Phase", usedmg)
 		usedmg = 0
@@ -155,15 +191,28 @@ func directDamage(damage, myself, opponent, Card):
 	if opponent.hasEffect("Persist"):
 		usedmg /= 2
 		myself.tickEffect("Persist")
+	if opponent.hasEffect("Parry"):
+		usedmg /= 2
 	if opponent.Shield() > 0:
 		usedmg = 0
 		change(opponent, "Shield", -1)
-	elif(usedmg > opponent.Block()):
+	elif usedmg > opponent.Block():
 		usedmg -= opponent.Block()
 		change(opponent, "Block", -opponent.Block())
 	else:
 		change(opponent, "Block", -usedmg)
 		usedmg = 0
+		
+	if opponent.hasEffect("Permashield") && usedmg > 0:
+		usedmg = 0
+		opponent.addEffect("Permashield", -1, -1, Card)
+	elif opponent.hasEffect("Permablock"):
+		if usedmg > opponent.getEffect("Permablock"):
+			usedmg -= opponent.getEffect("Permablock")
+			opponent.removeEffect("Permablock")
+		else:
+			opponent.addEffect("Permablock", -usedmg, -1, Card)
+			usedmg = 0
 	
 	if opponent.Effects.allyBlock(usedmg):
 		usedmg = 0
@@ -234,26 +283,39 @@ func mana(mana, myself, opponent, Card):
 #block functions
 func calculateBlock(block, me, enemy, Card):
 	return block
-func gainBlock(block, Card):
-	return block(block, me, enemy, Card)
-func block(block, myself, opponent, Card):
+func gainBlock(block, Card, turns = 1):
+	return block(block, me, enemy, Card, turns)
+func block(block, myself, opponent, Card, turns = 1):
 	var calcblock = calculateBlock(block, myself, opponent, Card)
 	
-	change(myself, "Block", calcblock, Card)
+	change(myself, "Block", calcblock, Card, turns)
 		
 	return calcblock
 
 #shield functions
 func calculateShield(shield, me, enemy, Card):
 	return shield
-func gainShield(shield, Card):
-	return shield(shield, me, enemy, Card)
-func shield(shield, myself, opponent, Card):
+func gainShield(shield, Card, turns = 1):
+	return shield(shield, me, enemy, Card, turns)
+func shield(shield, myself, opponent, Card, turns = 1):
 	var calcshield = calculateShield(shield, myself, opponent, Card)
 	
-	change(myself, "Shield", calcshield, Card)
+	change(myself, "Shield", calcshield, Card, turns)
 		
 	return calcshield
+	
+#distance functions
+func gainDistance(distance, Card):
+	return distance(distance, me, enemy, Card)
+func distance(distance, myself, opponent, Card):
+	var calcdistance = distance
+	if myself.hasEffect("Suspend"):
+		calcdistance = 0
+	
+	change(myself, "Distance", calcdistance, Card)
+	
+	return calcdistance
+
 
 #gain energy functions
 func calculateEnergy(energy, me, enemy, Card):
@@ -288,10 +350,12 @@ func pierce(myself, opponent, Card):
 	if !opponent.hasEffect("Unbreakable"):
 		loseAllBlock(opponent, myself, Card)
 		change(opponent, "Shield", -opponent.Shield())
+		opponent.removeEffect("Permashield")
 func selfPierce(myself, opponent, Card):
 	if !myself.hasEffect("Unbreakable"):
 		loseAllBlock(myself, opponent, Card)
 		change(myself, "Shield", -myself.Shield())
+		myself.removeEffect("Permashield")
 
 #shuffle
 func shuffle(myself, opponent, Card):
@@ -304,3 +368,4 @@ func fill(cardValue, myself, opponent, Card):
 #loseBlock
 func loseAllBlock(myself, opponent, Card):
 	change(myself, "Block", -myself.Block())
+	myself.removeEffect("Permablock")

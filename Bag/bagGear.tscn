@@ -63,12 +63,16 @@ __meta__ = {
 }
 
 [node name="dropArea" type="Area2D" parent="dropbutton"]
+collision_layer = 16
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="dropbutton/dropArea"]
 visible = false
 shape = SubResource( 2 )
 
 [node name="bagGearArea" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bagGearArea"]
 visible = false

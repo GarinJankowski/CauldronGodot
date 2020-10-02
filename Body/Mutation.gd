@@ -1,6 +1,6 @@
 extends Node2D
 
-var body
+var Body
 
 var mutationName
 var mutationDescription
@@ -13,14 +13,14 @@ var stepy = 38
 
 var Game
 
-func init(n, d, p, b, i):
+func init(n, i):
 	Game = get_parent().Game
+	Body = get_parent()
 	mutationName = n
-	mutationDescription = d
-	positive = p
+	var mutVariables = Game.scriptgen.MutationScripts[mutationName][0]
+	mutationDescription = mutVariables["mutationDescription"]
+	positive = mutVariables["positive"]
 	index = i
-	
-	body = b
 	
 	makeSprite()
 	position = Vector2(180 + 332*index, 780)
@@ -36,16 +36,14 @@ func makeSprite():
 	get_node("Name").text = mutationName
 	get_node("Description").text = mutationDescription
 	
-	var pos = "Positive"
-	if !positive:
-		pos = "Negative"
+	if positive == "Negative":
 		get_node("glow/glow").modulate = "3ccb1bd0"
 		get_node("glow/glowback").modulate = "3ccb1bd0"
 	
-	get_node("backSprite").set_texture(load("res://Body/mutation_back" + pos + ".png"))
-	get_node("mutationSprite").set_texture(load("res://Body/" + pos + " Mutations/mutation_" + mutationName + ".png"))
+	get_node("backSprite").set_texture(load("res://Body/mutation_back" + positive + ".png"))
+	get_node("mutationSprite").set_texture(load("res://Body/" + positive + " Mutations/mutation_" + mutationName + ".png"))
 	if get_node("mutationSprite").texture == null:
-		get_node("mutationSprite").set_texture(load("res://Body/" + pos + " Mutations/mutation_" + pos + ".png"))
+		get_node("mutationSprite").set_texture(load("res://Body/" + positive + " Mutations/mutation_" + positive + ".png"))
 
 func end(chosen):
 	if chosen:
@@ -55,8 +53,14 @@ func end(chosen):
 		desty = starty
 		stepy *= -1
 
-func apply():
-	body.addMutation(self)
+func removeSprite():
+	get_node("backSprite").queue_free()
+	get_node("mutationSprite").queue_free()
+	get_node("glow").queue_free()
+	get_node("Name").queue_free()
+	get_node("Description").queue_free()
+	get_node("mutationButton").queue_free()
+	get_node("mutationArea").queue_free()
 
 func _on_mutationArea_area_entered(area):
 	if area.get_name() == "cursorArea":

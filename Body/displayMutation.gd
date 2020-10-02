@@ -65,6 +65,6 @@ func makeSprite():
 	updateMultiplier()
 
 func updateMultiplier():
-	if bodyMutation.multiplier > 1:
-		get_node("multiplier").text = "x" + str(bodyMutation.multiplier)
+	if bodyMutation.scriptObject.multiplier > 1:
+		get_node("multiplier").text = "x" + str(bodyMutation.scriptObject.multiplier)
 

@@ -779,6 +779,8 @@ __meta__ = {
 
 [node name="modArea" type="Area2D" parent="mods/modForgeAreas/Burn"]
 position = Vector2( 330, 668 )
+collision_layer = 16
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="mods/modForgeAreas/Burn/modArea"]
 shape = SubResource( 3 )
@@ -791,6 +793,8 @@ __meta__ = {
 
 [node name="modArea" type="Area2D" parent="mods/modForgeAreas/Flow"]
 position = Vector2( 330, 720 )
+collision_layer = 16
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="mods/modForgeAreas/Flow/modArea"]
 shape = SubResource( 3 )
@@ -803,6 +807,8 @@ __meta__ = {
 
 [node name="modArea" type="Area2D" parent="mods/modForgeAreas/Stay"]
 position = Vector2( 330, 772 )
+collision_layer = 16
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="mods/modForgeAreas/Stay/modArea"]
 shape = SubResource( 3 )
@@ -814,6 +820,8 @@ __meta__ = {
 
 [node name="modArea" type="Area2D" parent="mods/modForgeAreas/Void"]
 position = Vector2( 330, 824 )
+collision_layer = 16
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="mods/modForgeAreas/Void/modArea"]
 shape = SubResource( 3 )
@@ -826,6 +834,8 @@ __meta__ = {
 
 [node name="modArea" type="Area2D" parent="mods/modForgeAreas/Link"]
 position = Vector2( 330, 876 )
+collision_layer = 16
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="mods/modForgeAreas/Link/modArea"]
 shape = SubResource( 3 )
@@ -838,6 +848,8 @@ __meta__ = {
 
 [node name="modArea" type="Area2D" parent="mods/modForgeAreas/Push"]
 position = Vector2( 330, 928 )
+collision_layer = 16
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="mods/modForgeAreas/Push/modArea"]
 shape = SubResource( 3 )
@@ -850,11 +862,15 @@ __meta__ = {
 
 [node name="modArea" type="Area2D" parent="mods/modForgeAreas/Copy"]
 position = Vector2( 330, 980 )
+collision_layer = 16
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="mods/modForgeAreas/Copy/modArea"]
 shape = SubResource( 3 )
 
 [node name="runesArea" type="Area2D" parent="mods"]
+collision_layer = 16
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="mods/runesArea"]
 position = Vector2( 91, -576 )
@@ -940,6 +956,8 @@ __meta__ = {
 }
 
 [node name="scrollArea" type="Area2D" parent="deck"]
+collision_layer = 16
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="deck/scrollArea"]
 position = Vector2( 218, -313 )

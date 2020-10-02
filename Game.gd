@@ -72,7 +72,7 @@ func _ready():
 		"Burn": "When played, this card will be removed for the rest of combat.",
 		"Flow": "If this card is in your hand at the end of your turn, discard it for 1 turn.",
 		"Link": "Playing this card will draw a card with this Link value plus one. This rune can be stacked.",
-		"Void": "This card cannot be drawn by any means.",
+		"Void": "This card starts combat discarded for 3 turns. Discard is thrice as effective on this card.",
 		"Push": "Playing this card discards all cards in hand for 3 turns.",
 		"Copy": "There will be an additional copy of this card in your deck during combat.",
 		"Stay": "Burning or discarding this card will instead pay one Stay for the rest of combat. This rune can be stacked."
@@ -84,6 +84,15 @@ func setGlobals(scene):
 	scene.guy = guy
 	scene.itemgen = itemgen
 	scene.map = map
+	
+#roll the dice
+func rtd(amount, sides):
+	if sides == 0:
+		return 0
+	var value = 0
+	for i in range(int(amount)):
+		value += (randi()%int(sides))+1
+	return value
 
 func tileTooltip(truefalse, room = null, terrain = null, mapbottom = false):
 	if !map.mapHover || guy.Bag.open || guy.Body.open:

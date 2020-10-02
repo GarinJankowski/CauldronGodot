@@ -32,7 +32,7 @@ use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 8 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 134, 187 )
 
 [node name="Node2D" type="Node2D"]
@@ -135,6 +135,8 @@ texture = ExtResource( 11 )
 
 [node name="modAreaDisplay" type="Area2D" parent="Mods/forgeButtonsCard/Burn"]
 position = Vector2( 96, -532 )
+collision_layer = 32
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mods/forgeButtonsCard/Burn/modAreaDisplay"]
 position = Vector2( -8, 7 )
@@ -168,6 +170,8 @@ texture = ExtResource( 12 )
 
 [node name="modAreaDisplay" type="Area2D" parent="Mods/forgeButtonsCard/Flow"]
 position = Vector2( 96, -532 )
+collision_layer = 32
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mods/forgeButtonsCard/Flow/modAreaDisplay"]
 position = Vector2( -45, 4 )
@@ -215,6 +219,8 @@ __meta__ = {
 
 [node name="modAreaDisplay" type="Area2D" parent="Mods/forgeButtonsCard/Stay"]
 position = Vector2( 96, -532 )
+collision_layer = 32
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mods/forgeButtonsCard/Stay/modAreaDisplay"]
 position = Vector2( -8, 7 )
@@ -248,6 +254,8 @@ texture = ExtResource( 7 )
 
 [node name="modAreaDisplay" type="Area2D" parent="Mods/forgeButtonsCard/Void"]
 position = Vector2( 96, -532 )
+collision_layer = 32
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mods/forgeButtonsCard/Void/modAreaDisplay"]
 position = Vector2( -8, 7 )
@@ -295,6 +303,8 @@ __meta__ = {
 
 [node name="modAreaDisplay" type="Area2D" parent="Mods/forgeButtonsCard/Link"]
 position = Vector2( 96, -532 )
+collision_layer = 32
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mods/forgeButtonsCard/Link/modAreaDisplay"]
 position = Vector2( -8, 7 )
@@ -328,6 +338,8 @@ texture = ExtResource( 6 )
 
 [node name="modAreaDisplay" type="Area2D" parent="Mods/forgeButtonsCard/Push"]
 position = Vector2( 96, -532 )
+collision_layer = 32
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mods/forgeButtonsCard/Push/modAreaDisplay"]
 position = Vector2( -8, 7 )
@@ -361,16 +373,20 @@ texture = ExtResource( 13 )
 
 [node name="modAreaDisplay" type="Area2D" parent="Mods/forgeButtonsCard/Copy"]
 position = Vector2( 96, -532 )
+collision_layer = 32
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mods/forgeButtonsCard/Copy/modAreaDisplay"]
 position = Vector2( -8, 7 )
 shape = SubResource( 3 )
 
 [node name="displayArea" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="displayArea"]
 visible = false
-shape = SubResource( 6 )
+shape = SubResource( 5 )
 [connection signal="pressed" from="Mods/forgeButtonsCard/Burn/modButtonCard" to="Mods/forgeButtonsCard/Burn/modButtonCard" method="_on_modButtonCard_pressed"]
 [connection signal="area_entered" from="Mods/forgeButtonsCard/Burn/modAreaDisplay" to="Mods/forgeButtonsCard/Burn/modButtonCard" method="_on_modAreaDisplay_area_entered"]
 [connection signal="area_exited" from="Mods/forgeButtonsCard/Burn/modAreaDisplay" to="Mods/forgeButtonsCard/Burn/modButtonCard" method="_on_modAreaDisplay_area_exited"]

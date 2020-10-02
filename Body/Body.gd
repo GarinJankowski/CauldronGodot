@@ -3,18 +3,19 @@ extends Node2D
 var guy
 var map
 var textlog
+var scriptgen
 
 var bodyMutationPreload = preload("res://Body/bodyMutation.tscn")
 
 var ticks = 8
 
-var positiveMutationGeneration = []
-var positiveMutationGenerationBackup = []
-var negativeMutationGeneration = []
-var negativeMutationGenerationBackup = []
-
-var positiveMutationList = []
-var negativeMutationList = []
+var mutationList = {}
+var positiveList = []
+var negativeList = []
+var singleList = {
+	"Positive": positiveList,
+	"Negative": negativeList
+}
 var open = false
 
 var selectedBodyMutation
@@ -59,27 +60,9 @@ func init():
 	guy = Game.guy
 	map = Game.map
 	textlog = Game.textlog
-	
-	generationSetup("")
+	scriptgen = Game.scriptgen
 	
 	nodeSetup()
-
-func generationSetup(type):
-	if type == "Positive" || type == "":
-		var posmutfile = File.new()
-		posmutfile.open("res://Body/Positive Mutation Sheet.txt", posmutfile.READ)
-		while not posmutfile.eof_reached():
-			var values = str(posmutfile.get_line()).replace("\"", "").split("\t")
-			positiveMutationGeneration.append(values)
-		posmutfile.close()
-	
-	if type == "Negative" || type == "":
-		var negmutfile = File.new()
-		negmutfile.open("res://Body/Negative Mutation Sheet.txt", negmutfile.READ)
-		while not negmutfile.eof_reached():
-			var values = str(negmutfile.get_line()).replace("\"", "").split("\t")
-			negativeMutationGeneration.append(values)
-		negmutfile.close()
 
 func nodeSetup():
 	guynode = guy.get_node("Control")
@@ -166,50 +149,28 @@ func _input(event):
 			bodyScrollUp(true, 1, 1)
 			bodyScrollUp(false, 1, 1)
 
-func addMutation(positive, values):
-	var mutationList
-	if positive:
-		mutationList = positiveMutationList
+func addMutation(mutationName):
+	if mutationName in mutationList:
+		mutationList[mutationName].incrementMutation()
 	else:
-		mutationList = negativeMutationList
-	if getMutation(values[0]) > 0:
-		for bodyMut in mutationList:
-			if bodyMut.nameEquals(values[0]):
-				bodyMut.incrementMutation()
-				return
-	else:
+		var positive = scriptgen.MutationScripts[mutationName][0]["positive"]
 		var bodyMut = bodyMutationPreload.instance()
-		if positive:
-			get_node("positive/bodyMutations").add_child(bodyMut)
-		else:
-			get_node("negative/bodyMutations").add_child(bodyMut)
-		bodyMut.init(values, positive, mutationList.size(), self)
-		mutationList.append(bodyMut)
+		bodyMut.Body = self
+		get_node(positive.to_lower() + "/bodyMutations").add_child(bodyMut)
+		bodyMut.init(mutationName, singleList[positive].size())
+		singleList[positive].append(bodyMut)
+		mutationList[mutationName] = bodyMut
 		updateBodyMutationNode(positive)
-		if positive && mutationList.size() == 1:
-			selectMutation(bodyMut)
+		#if positive && mutationList.size() == 1:
+		selectMutation(bodyMut)
+	guy.updateUI()
 
 func updateBodyMutationNode(positive):
-	if positive:
-		if positiveMutationList.size() > 6:
-			get_node("positive/bodyMutations").position.y = 0
-		else:
-			get_node("positive/bodyMutations").position.y = 265 - positiveMutationList.size()*40
+	if singleList[positive].size() > 6:
+		get_node(positive.to_lower() + "/bodyMutations").positive.y = 0
 	else:
-		if negativeMutationList.size() > 6:
-			get_node("negative/bodyMutations").position.y = 0
-		else:
-			get_node("negative/bodyMutations").position.y = 265 - negativeMutationList.size()*40
-			
-func getMutation(mutationName):
-	for bodyMut in positiveMutationList:
-		if bodyMut.nameEquals(mutationName):
-			return bodyMut.multiplier
-	for bodyMut in negativeMutationList:
-		if bodyMut.nameEquals(mutationName):
-			return bodyMut.multiplier
-	return 0
-	
+		get_node(positive.to_lower() + "/bodyMutations").position.y = 265 - singleList[positive].size()*40
+
 func selectMutation(bodyMut):
 	if selectedBodyMutation != null:
 		selectedBodyMutation.deselect()
@@ -262,12 +223,12 @@ func close():
 	map.currentEvent.enableButtons()
 
 func bodyScrollUp(positive, updown, amount):
-	if positive && amount > 0 && ((updown == 1 && positiveBodyScrollValue <= positiveMutationList.size() && positiveMutationList.size() > bodyMutationsOnScreen) || (updown == -1 && positiveBodyScrollValue > bodyMutationsOnScreen)):
+	if positive == "Positive" && amount > 0 && ((updown == 1 && positiveBodyScrollValue <= positiveList.size() && positiveList.size() > bodyMutationsOnScreen) || (updown == -1 && positiveBodyScrollValue > bodyMutationsOnScreen)):
 		var scroll = bodyMutationHeight*updown
 		get_node("positive/bodyMutations").position.y -= scroll
 		positiveBodyScrollValue += scroll/bodyMutationHeight
 		bodyScrollUp(positive, updown, amount-1)
-	elif !positive && amount > 0 && ((updown == 1 && negativeBodyScrollValue <= negativeMutationList.size() && negativeMutationList.size() > bodyMutationsOnScreen) || (updown == -1 && negativeBodyScrollValue > bodyMutationsOnScreen)):
+	elif positive == "Negative" && amount > 0 && ((updown == 1 && negativeBodyScrollValue <= negativeList.size() && negativeList.size() > bodyMutationsOnScreen) || (updown == -1 && negativeBodyScrollValue > bodyMutationsOnScreen)):
 		var scroll = bodyMutationHeight*updown
 		get_node("negative/bodyMutations").position.y -= scroll
 		negativeBodyScrollValue += scroll/bodyMutationHeight
@@ -276,9 +237,9 @@ func bodyScrollUp(positive, updown, amount):
 		
 #Interaction Things
 func enableAreaCollisions(truefalse):
-	for bodyMut in positiveMutationList:
+	for bodyMut in positiveList:
 		bodyMut.enableAreaCollisions(truefalse)
-	for bodyMut in negativeMutationList:
+	for bodyMut in negativeList:
 		bodyMut.enableAreaCollisions(truefalse)
 
 func _on_buttonBodyMenu_button_down():
@@ -305,7 +266,7 @@ func _on_buttonBagMenu_pressed():
 	Input.action_release("bag")
 
 func _on_leftScrollArea_area_entered(area):
-	if area.get_name() == "cursorArea" && positiveMutationList.size() > 6:
+	if area.get_name() == "cursorArea" && positiveList.size() > 6:
 		leftCanScroll = true
 		get_node("positive/pageUpButton").visible = true
 		get_node("positive/pageDownButton").visible = true
@@ -313,13 +274,13 @@ func _on_leftScrollArea_area_entered(area):
 		leftScrollButtonStepx = 10
 
 func _on_leftScrollArea_area_exited(area):
-	if area.get_name() == "cursorArea" && positiveMutationList.size() > 6:
+	if area.get_name() == "cursorArea" && positiveList.size() > 6:
 		leftCanScroll = false
 		leftScrollButtonTicks = 4
 		leftScrollButtonStepx = -10
 		
 func _on_rightScrollArea_area_entered(area):
-	if area.get_name() == "cursorArea" && negativeMutationList.size() > 6:
+	if area.get_name() == "cursorArea" && negativeList.size() > 6:
 		rightCanScroll = true
 		get_node("negative/pageUpButton").visible = true
 		get_node("negative/pageDownButton").visible = true
@@ -327,7 +288,7 @@ func _on_rightScrollArea_area_entered(area):
 		rightScrollButtonStepx = -10
 
 func _on_rightScrollArea_area_exited(area):
-	if area.get_name() == "cursorArea" && negativeMutationList.size() > 6:
+	if area.get_name() == "cursorArea" && negativeList.size() > 6:
 		rightCanScroll = false
 		rightScrollButtonTicks = 4
 		rightScrollButtonStepx = 10

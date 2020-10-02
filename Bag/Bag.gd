@@ -80,12 +80,12 @@ var scrollButtonTicks = 0
 
 var modList = {
 	"Burn": 0,
-	"Flow": 10,
+	"Flow": 0,
 	"Push": 0,
 	"Copy": 0,
 	"Stay": 0,
-	"Link": 10,
-	"Void": 10
+	"Link": 0,
+	"Void": 0
 }
 
 var Game
@@ -261,8 +261,8 @@ func close():
 	
 	map.currentEvent.enableButtons()
 
-func addMod(mod):
-	modList[mod] += 1;
+func addMod(mod, amount = 1):
+	modList[mod] += amount;
 	get_node("mods/forgeButtonsBag/" + mod + "/Label").text = "x" + str(modList[mod])
 	get_node("mods/content/" + mod).visible = false
 	get_node("mods/forgeButtonsBag/" + mod + "/mod").scale = Vector2(1.5, 1.5)

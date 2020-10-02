@@ -17,48 +17,48 @@
 [ext_resource path="res://Card/CardSprites/cardShadow.png" type="Texture" id=15]
 [ext_resource path="res://Map/whitesquare.png" type="Texture" id=16]
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=1]
 size = 24
 outline_color = Color( 0, 0, 0, 1 )
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=2]
 size = 14
 outline_color = Color( 0, 0, 0, 1 )
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=2]
-size = 36
-use_mipmaps = true
-use_filter = true
-font_data = ExtResource( 5 )
-
-[sub_resource type="DynamicFont" id=1]
-size = 31
-use_mipmaps = true
-use_filter = true
-font_data = ExtResource( 5 )
-
 [sub_resource type="DynamicFont" id=3]
-size = 45
+size = 36
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 5 )
 
 [sub_resource type="DynamicFont" id=4]
+size = 31
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 45
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=6]
 size = 36
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 5 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 61, 34 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=8]
 size = 40
 use_mipmaps = true
 use_filter = true
@@ -112,7 +112,7 @@ margin_left = -70.0
 margin_top = -100.0
 margin_right = 69.0
 margin_bottom = -60.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 1 )
 text = "Name"
 align = 1
 valign = 1
@@ -125,7 +125,7 @@ margin_left = -67.0
 margin_top = -38.0
 margin_right = 67.0
 margin_bottom = 63.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 2 )
 text = "Description"
 autowrap = true
 __meta__ = {
@@ -137,7 +137,7 @@ margin_left = -69.0
 margin_top = 61.0
 margin_right = 69.0
 margin_bottom = 100.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 2 )
 text = "Cost"
 align = 1
 valign = 1
@@ -163,7 +163,7 @@ margin_left = -151.0
 margin_top = -120.0
 margin_right = 50.0
 margin_bottom = 37.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.247059, 0.156863, 0.0588235, 1 )
 text = "Scroll of Teleportation"
 align = 1
@@ -189,7 +189,7 @@ margin_left = -145.0
 margin_top = -80.0
 margin_right = 45.0
 margin_bottom = -5.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 4 )
 text = "Gear"
 align = 1
 valign = 1
@@ -228,7 +228,7 @@ margin_left = -42.75
 margin_top = -27.75
 margin_right = 44.25
 margin_bottom = 23.25
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 0.435294, 0.376471, 0.117647, 1 )
 text = "2"
 align = 1
@@ -375,7 +375,7 @@ margin_left = -57.0
 margin_top = -32.0
 margin_right = 89.0
 margin_bottom = 26.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "Next"
 align = 1
 valign = 1
@@ -413,10 +413,11 @@ __meta__ = {
 
 [node name="moveAreaAdd" type="Area2D" parent="add"]
 visible = false
+collision_mask = 0
 
 [node name="moveCollision" type="CollisionShape2D" parent="add/moveAreaAdd"]
 position = Vector2( 19, -3 )
-shape = SubResource( 5 )
+shape = SubResource( 7 )
 
 [node name="what" type="Node2D" parent="."]
 position = Vector2( 319, 670 )
@@ -462,7 +463,7 @@ margin_left = -184.0
 margin_top = -36.0
 margin_right = 212.0
 margin_bottom = 26.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 8 )
 custom_colors/font_color = Color( 1, 1, 1, 0.843137 )
 text = "You found some things"
 align = 1

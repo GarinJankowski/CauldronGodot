@@ -24,6 +24,7 @@ var EffectsList
 
 var specialValue = false
 
+var index = 0
 var init = false
 var maxeffects = 6
 var startpos = Vector2(-92, -55)
@@ -138,7 +139,6 @@ func updateVariables(val, trn, cd):
 	tick()
 
 func turnFunction():
-	tick()
 	scriptObject.turnFunction()
 
 func triggerFunction():
@@ -230,6 +230,7 @@ func movePos(pos):
 		stepy *= -1
 
 func setDestination(pos):
+	index = pos
 	var column = 0
 	var row = pos
 	
@@ -338,23 +339,13 @@ func calculate(string):
 			elif op == '/':
 				stack.push_back(str(b / a))
 			elif op == 'd':
-				stack.push_back(str(rtd(b, a)))
+				stack.push_back(str(Game.rtd(b, a)))
 		else:
 			stack.push_back(postfix[i])
 	finalnum = int(myself.convertStat(stack.pop_back(), Card, self))
 	if negative:
 		finalnum *= -1
 	return finalnum
-	
-#roll the dice
-func rtd(amount, sides):
-	if sides == 0:
-		return 0
-	var value = 0
-	for i in range(int(amount)):
-		value += (randi()%int(sides))+1
-	return value
-
 
 func _on_effectArea_area_entered(area):
 	if area.get_name() == "cursorArea":

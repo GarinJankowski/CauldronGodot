@@ -219,6 +219,8 @@ __meta__ = {
 }
 
 [node name="bagCardArea" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bagCardArea"]
 visible = false

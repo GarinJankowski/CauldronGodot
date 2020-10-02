@@ -130,10 +130,13 @@ func init():
 	#Bag.addGear("Impenetrable Mail")
 	#Bag.addGear("")
 	#Bag.addCard("")
-	Bag.addGear("Dusty Monocle")
-	Bag.addCard("Runed Glove")
-	Bag.addCard("Runed Glove")
-	Bag.addCard("Runed Glove")
+	#Bag.addMod("", 0)
+	Bag.addGear("Tomahawks")
+	Bag.addGear("Rapier")
+	Bag.addGear("Crossbow")
+	Bag.addGear("Steam Rifle")
+	Bag.addGear("Auto Boots")
+	Bag.addGear("Warp Goggles")
 	
 func gainExperience(value):
 	CurrentExperience += value
@@ -165,7 +168,7 @@ func updateStats():
 		text += "[r]"
 	else:
 		text += "[w]"
-	text += str(Strength + tempStrength)
+	text += str(Strength + tempStrength + mutationStats["Strength"])
 	strBar.get_node("Amount").bbcode_text = textlog.translate(text)
 	
 	text = "[center]"
@@ -175,7 +178,7 @@ func updateStats():
 		text += "[r]"
 	else:
 		text += "[w]"
-	text += str(Dexterity + tempDexterity)
+	text += str(Dexterity + tempDexterity + mutationStats["Dexterity"])
 	dexBar.get_node("Amount").bbcode_text = textlog.translate(text)
 	
 	text = "[center]"
@@ -185,7 +188,7 @@ func updateStats():
 		text += "[r]"
 	else:
 		text += "[w]"
-	text += str(Intelligence + tempIntelligence)
+	text += str(Intelligence + tempIntelligence + mutationStats["Intelligence"])
 	intBar.get_node("Amount").bbcode_text = textlog.translate(text)
 	
 	text = "[center]"
@@ -212,32 +215,32 @@ func updateExperience():
 	xpBar.get_node("Amount").text = str(CurrentExperience) + "/" + str(MaxExperience)
 
 func updateHealth():
-	if CurrentHealth > MaxHealth + tempMaxHealth:
-		CurrentHealth = MaxHealth + tempMaxHealth
+	if CurrentHealth > MaxHealth + tempMaxHealth + mutationStats["Max Health"]:
+		CurrentHealth = MaxHealth + tempMaxHealth + mutationStats["Max Health"]
 
-	if MaxHealth + tempMaxHealth != 0:
-		updateBar(healthBar.get_node("HealthIn"), healthBarSizeX*float(CurrentHealth)/float(MaxHealth + tempMaxHealth))
+	if MaxHealth + tempMaxHealth + mutationStats["Max Health"] != 0:
+		updateBar(healthBar.get_node("HealthIn"), healthBarSizeX*float(CurrentHealth)/float(MaxHealth + tempMaxHealth + mutationStats["Max Health"]))
 		#healthBar.get_node("HealthIn").rect_size.x = healthBarSizeX*float(CurrentHealth)/float(MaxHealth + tempMaxHealth)
 	if CurrentHealth == 0:
 		healthBar.get_node("HealthIn").visible = false
 	else:
 		healthBar.get_node("HealthIn").visible = true
 		
-	healthBar.get_node("Amount").text = str(CurrentHealth) + "/" + str(MaxHealth + tempMaxHealth)
+	healthBar.get_node("Amount").text = str(CurrentHealth) + "/" + str(MaxHealth + tempMaxHealth + mutationStats["Max Health"])
 
 func updateMana():
-	if CurrentMana > MaxMana + tempMaxMana:
-		CurrentMana = MaxMana + tempMaxMana
+	if CurrentMana > MaxMana + tempMaxMana + mutationStats["Max Mana"]:
+		CurrentMana = MaxMana + tempMaxMana + mutationStats["Max Mana"]
 	
-	if MaxMana + tempMaxMana != 0:
-		updateBar(manaBar.get_node("ManaIn"), manaBarSizeX*float(CurrentMana)/float(MaxMana + tempMaxMana))
+	if MaxMana + tempMaxMana + mutationStats["Max Mana"]!= 0:
+		updateBar(manaBar.get_node("ManaIn"), manaBarSizeX*float(CurrentMana)/float(MaxMana + tempMaxMana + mutationStats["Max Mana"]))
 		#manaBar.get_node("ManaIn").rect_size.x = manaBarSizeX*float(CurrentMana)/float(MaxMana + tempMaxMana)
 	if CurrentMana == 0:
 		manaBar.get_node("ManaIn").visible = false
 	else:
 		manaBar.get_node("ManaIn").visible = true
 		
-	manaBar.get_node("Amount").text = str(CurrentMana) + "/" + str(MaxMana + tempMaxMana)
+	manaBar.get_node("Amount").text = str(CurrentMana) + "/" + str(MaxMana + tempMaxMana + mutationStats["Max Mana"])
 	
 
 func updateEnergy():
@@ -303,6 +306,7 @@ func addStat(statstr, amount):
 		Intelligence += amount
 	elif statstr == "Mutation Level":
 		MutationLevel += amount
+		updateMutScaling()
 	updateUI()
 	
 func addTempStat(statstr, amount):
@@ -318,6 +322,7 @@ func addTempStat(statstr, amount):
 		tempIntelligence += amount
 	elif statstr == "Mutation Level":
 		tempMutationLevel += amount
+		updateMutScaling()
 	updateUI()
 
 func gainGold(amount):

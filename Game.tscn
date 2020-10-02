@@ -812,8 +812,8 @@ texture = ExtResource( 5 )
 offset = Vector2( -170.079, 18.8976 )
 
 [node name="cursorArea" type="Area2D" parent="Game/CursorLayer/cursor"]
-collision_layer = 31
-collision_mask = 31
+collision_layer = 0
+collision_mask = 63
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Game/CursorLayer/cursor/cursorArea"]
 position = Vector2( -5.96046e-08, -5.96046e-08 )

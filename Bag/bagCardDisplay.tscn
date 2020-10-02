@@ -49,6 +49,8 @@ scale = Vector2( 0.193, 0.193 )
 texture = ExtResource( 6 )
 
 [node name="tabArea" type="Area2D" parent="noWeaponTab"]
+collision_layer = 16
+collision_mask = 0
 script = ExtResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="noWeaponTab/tabArea"]
@@ -65,6 +67,8 @@ scale = Vector2( 0.193, 0.193 )
 texture = ExtResource( 4 )
 
 [node name="tabArea" type="Area2D" parent="noArmorTab"]
+collision_layer = 16
+collision_mask = 0
 script = ExtResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="noArmorTab/tabArea"]
@@ -81,6 +85,8 @@ scale = Vector2( 0.193, 0.193 )
 texture = ExtResource( 5 )
 
 [node name="tabArea" type="Area2D" parent="noHeadgearTab"]
+collision_layer = 16
+collision_mask = 0
 script = ExtResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="noHeadgearTab/tabArea"]

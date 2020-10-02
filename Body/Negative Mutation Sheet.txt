@@ -1,6 +1,16 @@
-Frenzy	Take and deal double damage.	enemyMutation
-Sensitive	Every-turn effects on you occur twice.	enemyMutation
-Volatile	Take and deal 5x(Mut) damage every 4 turns.	enemyMutation
-Shrinkage	"+3x(Mut) Dex, -4x(Mut) Max Health"	enemyMutation
-Asthma	+(Mut) Max Energy	N/A
-Brain Worm	"+2x(Mut) Max Mana, -3x(Mut) Max Health"	enemyMutation
+Name	Description	Text Log	Enemy Usable	Enemy Text	Flags	
+Absorption	"Every 5-(Mut) turns, all block is converted into health."	hello	1	hello	"(start)selfEffect: Absorption, 5 - Mut"	
+Charred Skin	Burn the first (Mut) Defends you play during combat.	hello	1	hello	"(start)selfEffect: Charred Skin, Mut"	
+Frenzy	Take and deal double damage.	hello	1	hello	value: multiplier	
+Volatile	"Every 4 turns, take and deal 5d(Mut) damage."	hello	1	hello	"(start)selfEffect: Volatile, 5 d Mut, 4"	
+Brain Worm	"""+2x(Mut) Max Mana, -(Mut) Max Health."""	hello	1	hello	"scale: Max Mana, 2"	"scale: Max Health, -1"
+Shrinkage	"""+3x(Mut) Dexterity, -3x(Mut) Max Health."""	hello	1	hello	"scale: Dexterity, 3"	"scale: Max Health, -3"
+Berserk	Fill your hand with Attacks for the first (Mut) turns of every combat.	hello	1	hello	"(start)selfEffect: Berserk, Mut"	
+Psychosis	Spells with a cost are played twice and cost twice as much mana.	hello	1	hello	value: multipler	
+Hollow Bones	Taking at least 10-(Mut) damage pierces you afterwards. +(Mut) Dexterity.	hello	1	hello	UNIQUECHECK(trigger)action: selfPierce	"scale: Dexterity, 1
+Muscle Mass	Damage dealt is instead stored and dealt every (Mut) turns. +(Mut) Strength.	hello	1	hello	"(start)selfEffect: Muscle Mass, 0"	
+Ethereal	"Every 8-(Mut) turns, pierce yourself and gain 5 mana and energy."	hello	1	hello	"(start)selfEffect: Ethereal, 5, 8 - Mut"	
+Brittle	"At the start of combat, gain 2 shield and lose (Mut)x3 health."	hello	1	hello	(start)gainShield: 2	(start)takeIndirectDamage: Mut * 3
+Sensitive	Your effects trigger twice each turn and expire twice as quickly.	hello	1	hello	value: multiplier	
+Tumors	"""+5 Max Health. Healing reduces your Max Health by (Mut)x2 for 5 turns."""	hello	1	hello	"statUp: Max Health, 5"	"(trigger)gainStat: Max Health, -Mut * 2, 5"
+Acid Mucus	Add a Sneeze to your deck.	hello	1	hello	addCard: Sneeze	

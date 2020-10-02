@@ -15,6 +15,7 @@ var pastHand2 = []
 
 var lastPlayed
 var lastClicked
+var temporaryCards = []
 
 var Combat
 var enemyCombatDeck
@@ -71,16 +72,22 @@ func initCombat(outsideDeck, combatFunctions):
 	init(outsideDeck.holder)
 	for i in range(Deck.size()):
 		#Void modifier
-		if !Deck.at(i).mods["Void"]:
-			Deck.at(i).initCombat(Combat, self)
-			Deck.at(i).position = draw.position
-			Draw.append(Deck.at(i))
-			#Copy modifier
-			if Deck.at(i).mods["Copy"]:
-				var copy = Deck.at(i).createCopy()
-				copy.position = draw.position
-				listOfCopies.append(copy)
-				Draw.append(copy)
+		Deck.at(i).initCombat(Combat, self)
+		var cardList = Draw
+		var cardPos = draw.position
+		if Deck.at(i).mods["Void"]:
+			cardPos = discard.position
+			cardList = Discard
+			Deck.at(i).DiscardCD = 3
+			
+		Deck.at(i).position = cardPos
+		cardList.append(Deck.at(i))
+		#Copy modifier
+		if Deck.at(i).mods["Copy"]:
+			var copy = Deck.at(i).createCopy()
+			copy.position = cardPos
+			cardList.append(copy)
+			listOfCopies.append(copy)
 	Draw.shuffle()
 	shuffleAddPrint()
 	
@@ -162,6 +169,7 @@ func addTempCard(cardName, uniqueval = 0):
 	card.position = draw.position
 	card.updateDescription()
 	Draw.insert(randi()%(Draw.size()+1), card)
+	temporaryCards.append(card)
 
 func drawCards():
 		for i in len(Hand):
@@ -207,6 +215,7 @@ func checkProperties(index):
 	if !cardAt(index):
 		card = lastClicked
 	var cardnull = false
+	var discard = 0
 	
 	#destroy the card if it is a Device
 	if card.cardType == "Device":
@@ -242,14 +251,18 @@ func checkProperties(index):
 				#Stay modifier
 				if !checkStay(Hand[i]):
 					if i == index:
-						cardnull = true
-					discard(i, 3)
-	#discard card
-	elif !cardnull && card.discard() > 0:
-		#Stay modifier
-		if !checkStay(card):
-			discard(index, card.discard())
-			cardnull = true
+						discard += 3
+					else:
+						discard(i, 3)
+	#natural discard
+	if !cardnull && card.discard() > 0:
+		discard += card.discard()
+	#Throw effect
+	if me.hasEffect("Throw") && card.hasOffensiveAction() && card.cardType == "Attack":
+		discard += 10
+	#total discard
+	if discard > 0 && !cardnull && !checkStay(card):
+		discard(index, discard)
 			
 	if !cardnull:
 		handToDraw(index)
@@ -403,6 +416,8 @@ func discard(index, turns):
 	Hand[index] = null
 	card.changeIndex(-1)
 	card.moveTo(discard.position)
+	if card.mods["Void"]:
+		turns *= 3
 	card.DiscardCD += turns
 	Discard.append(card)
 
@@ -462,6 +477,15 @@ func forceBurn(Card):
 				return
 		Draw.erase(Card)
 		Discard.erase(Card)
+		
+func checkAllUsable():
+	for card in Hand:
+		if card != null:
+			card.isUsable()
+	for card in Draw:
+		card.isUsable()
+	for card in Discard:
+		card.isUsable()
 
 func handUsable():
 	var usable = false
@@ -487,6 +511,13 @@ func hasAction(action):
 		if card != null && card.hasAction(action) && card.scriptObject.isUsable():
 			return true
 	return false
+	
+func countCardType(cardType):
+	var amount = 0
+	for card in Hand:
+		if card != null && card.cardType == cardType:
+			amount += 1
+	return amount
 	
 #returns the amount of cards in hand that have the same name as the parameter
 func countCard(cardName):
@@ -568,6 +599,8 @@ func enemyAI():
 func removeDeck():
 	while listOfCopies.size() > 0:
 		listOfCopies.pop_back().queue_free()
+	while temporaryCards.size() > 0:
+		temporaryCards.pop_back().queue_free()
 	Deck.leaveCombat()
 	queue_free()
 

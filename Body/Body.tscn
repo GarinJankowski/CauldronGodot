@@ -160,6 +160,8 @@ __meta__ = {
 }
 
 [node name="leftScrollArea" type="Area2D" parent="positive"]
+collision_layer = 16
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="positive/leftScrollArea"]
 position = Vector2( 218, -313 )
@@ -285,6 +287,8 @@ __meta__ = {
 }
 
 [node name="rightScrollArea" type="Area2D" parent="negative"]
+collision_layer = 16
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="negative/rightScrollArea"]
 position = Vector2( 239, -313 )
