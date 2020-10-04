@@ -15,6 +15,8 @@ var timertime = 0.1
 
 func init2(r):
 	init(r)
+	guy.Bag.buttondesty = guy.Bag.buttondesty-110
+	guy.Bag.buttonstepy = -22
 	
 	waiting = false
 	
@@ -30,7 +32,6 @@ func init2(r):
 		a = "an"
 	textlog.push("[r]You encounter " + a + " " + r.enemyName + ".")
 	pushMutationText()
-	turn = "guy"
 	
 	guy.currentCombatEvent = self
 	enemy.currentCombatEvent = self
@@ -66,18 +67,24 @@ func init2(r):
 	enemyCombat.setCombatEvent(self)
 	enemy.selfCombat.setCombatEvent(self)
 	
-	if enemy.startCard:
-		enemy.useGhostCard(enemy.enemyName + "Start", enemyCombat)
-		
 	if map.currentTerrainEquals("Desert"):
 		guy.Effects.fixRetainedEffects()
-		guy.Effects.turn("Good")
-		guy.Effects.turn("Bad")
+
+	guy.startMutation("Positive")
+	enemy.startMutation("Positive")
+	if enemy.startCard:
+		enemy.useGhostCard(enemy.enemyName + "Start", enemyCombat)
+	guy.startMutation("Negative")
+	enemy.startMutation("Negative")
+	
+	guy.Effects.turn("Good")
+	guy.Effects.turn("Bad")
+		
 	guyDeck.printHand()
 	guyDeck.checkAllUsable()
 	
-	guy.Bag.buttondesty = guy.Bag.buttondesty-110
-	guy.Bag.buttonstepy = -22
+	checkDeath()
+	turn = "guy"
 	
 func _process(delta):
 	if !waiting:
@@ -315,9 +322,9 @@ func nextTurn():
 	return false
 
 func pushMutationText():
-	if !enemy.positiveMutationList.empty() && !enemy.negativeMutationList.empty():
-		var posmut = enemy.positiveMutationList[0]
-		var negmut = enemy.negativeMutationList[0]
+	if !enemy.positiveList.empty() && !enemy.negativeList.empty():
+		var posmut = enemy.positiveList[0].mutationName
+		var negmut = enemy.negativeList[0].mutationName
 		textlog.push("[r]It seems to have [P]" + posmut + " [r]and [h]" + negmut + "[r]")
 
 func getRecording():

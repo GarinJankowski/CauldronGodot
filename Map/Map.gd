@@ -148,10 +148,10 @@ func updateCharacterPosition():
 	guySprite.position = Rooms[x][y].position
 	updateFog()
 	Terrain[x][y].Enter()
-	Rooms[x][y].Enter()
-	
 	if !currentTerrainEquals("Desert"):
 		guy.restoreStats()
+	Rooms[x][y].Enter()
+	
 	if currentTerrainEquals("Forest"):
 		if lastMoved == "up" && canMoveRight:
 			canMoveUp = false

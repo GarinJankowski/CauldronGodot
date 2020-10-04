@@ -131,12 +131,7 @@ func init():
 	#Bag.addGear("")
 	#Bag.addCard("")
 	#Bag.addMod("", 0)
-	Bag.addGear("Tomahawks")
-	Bag.addGear("Rapier")
-	Bag.addGear("Crossbow")
-	Bag.addGear("Steam Rifle")
-	Bag.addGear("Auto Boots")
-	Bag.addGear("Warp Goggles")
+	#Body.addMutation("")
 	
 func gainExperience(value):
 	CurrentExperience += value
@@ -308,6 +303,7 @@ func addStat(statstr, amount):
 		MutationLevel += amount
 		updateMutScaling()
 	updateUI()
+	return amount
 	
 func addTempStat(statstr, amount):
 	if statstr == "Max Health":
@@ -324,6 +320,7 @@ func addTempStat(statstr, amount):
 		tempMutationLevel += amount
 		updateMutScaling()
 	updateUI()
+	return amount
 
 func gainGold(amount):
 	Gold += amount
@@ -347,6 +344,19 @@ func restoreStats():
 	
 	statsRestored = true
 	updateUI()
+		
+func startMutation(positive):
+	Body.start(positive)
+	#updateUI()
+	
+func triggerMutation(mutationName, Card = null, amount = 0):
+	return Body.trigger(mutationName, Card, amount)
+	
+func valueMutation(mutationName, amount = 0):
+	return Body.value(mutationName, amount)
+
+func hasMutation(mutationName):
+	return Body.has()
 	
 func isPlayer():
 	return true

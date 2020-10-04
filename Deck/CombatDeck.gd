@@ -209,6 +209,7 @@ func printHand():
 			fleeOn(false)
 			
 	handUsable()
+	
 
 func checkProperties(index):
 	var card = Hand[index]

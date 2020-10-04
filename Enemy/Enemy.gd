@@ -4,8 +4,13 @@ var enemyName
 var Tier
 var room
 
-var positiveMutationList = []
-var negativeMutationList = []
+var mutationList = {}
+var positiveList = []
+var negativeList = []
+var singleList = {
+	"Positive": positiveList,
+	"Negative": negativeList
+}
 
 var healthBar
 var healthBarSizeX
@@ -83,39 +88,49 @@ func mutate():
 		
 	CurrentHealth = MaxHealth
 	
-	var positiveMutationGeneration = []
-	var negativeMutationGeneration = []
-	
-	var posmutfile = File.new()
-	posmutfile.open("res://Body/Positive Mutation Sheet.txt", posmutfile.READ)
-	while not posmutfile.eof_reached():
-		var values = str(posmutfile.get_line()).replace("\"", "").split("\t")
-		if values[2] == "enemyMutation":
-			positiveMutationGeneration.append(values[0])
-	posmutfile.close()
-	
-	var negmutfile = File.new()
-	negmutfile.open("res://Body/Negative Mutation Sheet.txt", negmutfile.READ)
-	while not negmutfile.eof_reached():
-		var values = str(negmutfile.get_line()).replace("\"", "").split("\t")
-		if values[2] == "enemyMutation":
-			negativeMutationGeneration.append(values[0])
-	negmutfile.close()
-	
-	positiveMutationList.append(positiveMutationGeneration[randi()%positiveMutationGeneration.size()])
-	negativeMutationList.append(negativeMutationGeneration[randi()%negativeMutationGeneration.size()])
+	var mutations = itemgen.EnemyMutations()
+	addMutation(mutations[0])
+	addMutation(mutations[1])
 	
 	updateMutScaling()
 	updateUI()
+	
+func addMutation(mutationName):
+	if mutationName in mutationList:
+		mutationList[mutationName].multiplier += 1
+		mutationList[mutationName].init()
+	else:
+		var positive = scriptgen.MutationScripts[mutationName][0]["positive"]
+		var scriptObject = Reference.new()
+		scriptObject.set_script(scriptgen.MutationScripts[mutationName][1])
+		scriptObject.init(guy)
+		
+		singleList[positive].append(scriptObject)
+		mutationList[mutationName] = scriptObject
 
-func getMutation(mutationName):
-	for mut in positiveMutationList:
-		if mut == mutationName:
-			return 1
-	for mut in negativeMutationList:
-		if mut == mutationName:
-			return 1
+func startMutation(positive):
+	for mut in singleList[positive]:
+		mut.startFunction()
+	#updateUI()
+	
+func triggerMutation(mutationName, Card = null, amount = 0):
+	if hasMutation(mutationName):
+		var Combat
+		if Card != null:
+			Combat = Card.Combat
+		mutationList[mutationName].triggerFunction(Combat, amount)
+		return true
+	return false
+	
+func valueMutation(mutationName, amount = 0):
+	if hasMutation(mutationName):
+		return mutationList[mutationName].valueFunction(amount)
 	return 0
+
+func hasMutation(mutationName):
+	if mutationName in mutationList:
+		return true
+	return false
 
 func updateUI():
 	updateHealth()
@@ -158,6 +173,7 @@ func addStat(statstr, amount):
 		MutationLevel += amount
 		updateMutScaling()
 	updateUI()
+	return amount
 	
 func addTempStat(statstr, amount):
 	if statstr == "Max Health":
@@ -173,6 +189,7 @@ func addTempStat(statstr, amount):
 	elif statstr == "Mutation Level":
 		tempMutationLevel += amount
 		updateMutScaling()
+	return amount
 
 func setValuesFromString(enemystring):
 	var values = enemystring.replace("\"", "").split("\t")

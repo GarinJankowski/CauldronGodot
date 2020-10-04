@@ -40,6 +40,40 @@ var justStayed = false
 var copyOriginal = null
 
 var textlog
+var colors = {
+		"gainEnergy": "[y]",
+		"energyOT": "[y]",
+		"enemyGainEnergy": "[o]",
+		"loseEnergyOT": "[y]",
+		"dealDirectDamage": "[b]",
+		"enemydealDirectDamage": "[r]",
+		"takeDirectDamage": "[r]",
+		"dealIndirectDamage": "[b]",
+		"takeIndirectDamage": "[r]",
+		"enemytakeIndirectDamage": "[b]",
+		"gainHealth": "[l]",
+		"enemygainHealth": "[d]",
+		"gainBlock": "[l]",
+		"enemygainBlock": "[d]",
+		"gainShield": "[l]",
+		"enemygainShield": "[d]",
+		"gainMana": "[i]",
+		"n": "[n]",
+		"Attack": "[b]",
+		"Defend": "[l]",
+		"Spell": "[i]",
+		"Harmful": "[r]",
+		"Item": "[n]",
+		"Device": "[n]",
+		"Positive": "[P]",
+		"Negative": "[h]",
+		"enemyAttack": "[r]",
+		"enemyDefend": "[d]",
+		"enemySpell": "[r]",
+		"enemyHarmful": "[b]",
+		"enemyItem": "[r]",
+		"enemyDevice": "[r]"
+	}
 
 var dynamicFont
 var ticks = 0
@@ -419,38 +453,6 @@ func cardLogOutput():
 	var i = 0
 	var start = 0
 	
-	var colors = {
-		"gainEnergy": "[y]",
-		"energyOT": "[y]",
-		"enemyGainEnergy": "[o]",
-		"loseEnergyOT": "[y]",
-		"dealDirectDamage": "[b]",
-		"enemydealDirectDamage": "[r]",
-		"takeDirectDamage": "[r]",
-		"dealIndirectDamage": "[b]",
-		"takeIndirectDamage": "[r]",
-		"enemytakeIndirectDamage": "[b]",
-		"gainHealth": "[l]",
-		"enemygainHealth": "[d]",
-		"gainBlock": "[l]",
-		"enemygainBlock": "[d]",
-		"gainShield": "[l]",
-		"enemygainShield": "[d]",
-		"gainMana": "[i]",
-		"n": "[n]",
-		"Attack": "[b]",
-		"Defend": "[l]",
-		"Spell": "[i]",
-		"Harmful": "[r]",
-		"Item": "[n]",
-		"Device": "[n]",
-		"enemyAttack": "[r]",
-		"enemyDefend": "[d]",
-		"enemySpell": "[r]",
-		"enemyHarmful": "[b]",
-		"enemyItem": "[r]",
-		"enemyDevice": "[r]"
-	}
 	var wholecolor = "[n]"
 	
 	while i < len(logOutput):
@@ -563,7 +565,12 @@ func cardLogOutput():
 					addword = "y"
 			elif word == "away":
 				addword = colors["Attack"]
-				if actionValues["gainDistance"] > 2:
+				var distance
+				if "enemyGainDistance" in actionValues:
+					distance = actionValues["enemyGainDistance"]
+				else:
+					distance = actionValues["gainDistance"]
+				if distance > 2:
 					addword += "far away"
 				else:
 					addword += "away"
@@ -674,7 +681,9 @@ func getPriority():
 	if hasAction("dealDirectDamage"):
 		var maxdamage = Combat.calculateDirectDamage(calculateMax(cardActions["dealDirectDamage"]), myself, opponent, self)
 		var mindamage = Combat.calculateDirectDamage(calculateMin(cardActions["dealDirectDamage"]), myself, opponent, self)
-		
+		if myself.Distance() > 0:
+			if has("projectile") || (has("reaching") && myself.Distance() <= 2) || ("distanceCost" in cardActions && -int(cardActions["distanceCost"]) == myself.Distance()):
+				priority += 101
 		if mindamage > 0:
 			priority += 1
 			#if mindamage >= opponent.CurrentHealth + opponent.Block():
@@ -683,7 +692,6 @@ func getPriority():
 				#priority += 100 + maxdamage
 			if "block" in cardActions["dealDirectDamage"]:
 				priority += 90
-			
 		elif opponent.Shield() > 0:
 			priority += 10
 			if hasActions("dealDirectDamage", 2):
@@ -722,6 +730,8 @@ func getPriority():
 	if hasAction("insertEnemyDeck"):
 		priority += 50
 
+	if hasAction("gainDistance"):
+		priority += 50
 	if hasAction("gainHealth") && myself.MaxHealth - myself.CurrentHealth >= Combat.calculateHealth(calculateMin(cardActions["gainHealth"]), myself, opponent, self):
 		priority += 45
 	if hasAction("gainShield"):

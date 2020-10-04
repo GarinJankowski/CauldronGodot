@@ -306,8 +306,8 @@ func calculate(string):
 	
 	for i in range(len(postfix)):
 		if postfix[i] in operators:
-			var a = convertStat(stack.pop_back(), self)
-			var b = convertStat(stack.pop_back(), self)
+			var a = convertStat(stack.pop_back())
+			var b = convertStat(stack.pop_back())
 			var op = postfix[i]
 			if op == '+':
 				stack.push_back(str(a + b))

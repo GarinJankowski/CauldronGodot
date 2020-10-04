@@ -60,7 +60,7 @@ Spell Shield	0	Good	(trigger)useCard: Repulse Shield	(trigger)self: remove
 Tireless	0	Good	N/A				
 Tornado	0	Good	gainEnergy: 6				
 Invisibility	0	Good	N/A				
-Sandstorm	0	Good	takeDirectDamage: 1 d Int	dealDirectDamage: 1 d Int			
+Sandstorm	0	Good	takeDirectDamage: Val	dealDirectDamage: Val			
 Protostar	0	Good	gainEnergy: 2	(end)self: UNIQUEFUNCTION	(trigger)self: UNIQUEFUNCTION	(trigger)self: remove	
 Fuse	0	Good	unreplaceable				
 Heave	0	Good	replaceable	(trigger)self: remove			
@@ -86,6 +86,7 @@ Taunt	0	Bad	N/A
 Sleep	0	Bad	replaceable	(trigger)self: remove	(end)useCard: Wake Up		
 Shatter	0	Bad	N/A				
 Suspend	0	Bad	N/A				
+Strong Winds	0	Bad	gainDistance: 1				
 							
 Bide	-1	Good	N/A				
 Forget	-1	Good	delay	(trigger)gainMana: Int	(trigger)self: decrement		
@@ -108,10 +109,9 @@ Frozen	-1	Bad	(trigger)self: remove
 Record	-1	Good	zero	delay	(trigger)self: UNIQUEFUNCTION		
 You	-1	Good	ally	self: UNIQUEFUNCTION			
 							
-Mending Growth	0	Good	ally				
-Absorption	0	Bad	cycle: 5 - Mut				
+Mending Growth	0	Good	ally	gainHealth: Mut			
 Charred Skin	-1	Bad	N/A				
-Volatile	0	Bad	cycle: 4				
+Volatile	-1	Bad	cycle: 4	unstackable	takeDirectDamage: Val	dealDirectDamage: Val	
 Berserk	0	Bad	fill: Attack				
-Muscle Mass	0	Bad	cycle: Mut				
-Ethereal	0	Bad	cycle: 8 - Mut				
+Muscle Mass	-1	Bad	cycle: Mut	useCard: Muscle Mass	self: zero	zero	
+Scrambled	-1	Bad	cycle: 8 - Mut	action: shuffle			

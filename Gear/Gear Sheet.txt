@@ -110,7 +110,7 @@ Swirly Glasses	Headgear	"Sleep (1), Trick (1), Confuse (1)"	3	N/A
 Dusty Monocle	Headgear	"Record (1), Skip (1), Nullify (1), Adjust (1)"	3	N/A
 Wild Headdress	Headgear	"Call Rat (1), Call Crab (1), Call Salamander (1)"	3	N/A
 				
-Twin Axes	Weapon	Dual Hack (3)	A	N/A
+Twin Axes	Weapon	"Twin Hack (2), Twin Chop (1)"	A	N/A
 Light Boots	Armor	"Sneak (1), Dodge (1)"	A	N/A
 Training Hat	Headgear	"Zap (2), Muster (1)"	A	N/A
 				

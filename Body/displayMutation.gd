@@ -53,10 +53,7 @@ func makeSprite():
 	get_node("Name").text = bodyMutation.mutationName
 	get_node("Description").text = bodyMutation.mutationDescription
 	
-	var pos = "Positive"
-	if !bodyMutation.positive:
-		pos = "Negative"
-	
+	var pos = bodyMutation.positive
 	get_node("backSprite").set_texture(load("res://Body/mutation_back" + pos + ".png"))
 	get_node("mutationSprite").set_texture(load("res://Body/" + pos + " Mutations/mutation_" + bodyMutation.mutationName + ".png"))
 	if get_node("mutationSprite").texture == null:
@@ -65,6 +62,6 @@ func makeSprite():
 	updateMultiplier()
 
 func updateMultiplier():
-	if bodyMutation.scriptObject.multiplier > 1:
-		get_node("multiplier").text = "x" + str(bodyMutation.scriptObject.multiplier)
+	if bodyMutation.multiplier > 1:
+		get_node("multiplier").text = "x" + str(bodyMutation.multiplier)
 

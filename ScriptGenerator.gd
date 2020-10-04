@@ -219,6 +219,9 @@ func createCardFunctions(cardstring):
 				functionString += tab + "actionValues['" + act[0] + "Value'] += " + valuename
 				functionString += tab + "actionValues['" + act[0] + "Turns'] += " + turnsname
 				functionString += tab + "Card.addEffect(" + target + ", '" + effname + "', " + valuename + ", " + turnsname + ")"
+			elif act[0] == "statUp":
+				var vals = act[1].split(", ")
+				functionString += tab + "actionValues['" + act[0] + "'] += myself.addStat('" + vals[0] + "', myself.calculate('" + vals[1] + "'))"
 			elif act[0] == "insertEnemyDeck" || act[0] == "insertSelfDeck":
 				var parts = act[1].split(", ")
 				var cardstuff = parts[0].split(" (")
@@ -581,7 +584,7 @@ func uniqueCardFunction(cardName, actionValues):
 		functionstr += tab + "var bide = myself.getEffect('Bide')"
 		functionstr += tab + "actionValues['times'] += bide"
 		functionstr += tab + "for b in bide:"
-		functionstr += tab + "\tactionValues['gainShield'] += Combat.gainShield(1, Card)"
+		functionstr += tab + "\tactionValues['gainShield'] += Combat.gainShield(1, Card, 5)"
 		functionstr += tab + "\tactionValues['gainEnergy'] -= Combat.gainEnergy(-10, Card)"
 		functionstr += tab + "myself.removeEffect('Bide')"
 	elif cardName == "Phase":
@@ -717,7 +720,7 @@ func uniqueCopyFunction(cardName, actionValues):
 		functionstr += tab + "for i in times:"
 		functionstr += tab + "\tactionValues['times'] += bide"
 		functionstr += tab + "\tfor b in bide:"
-		functionstr += tab + "\t\tactionValues['gainShield'] += Combat.gainShield(1, Card)"
+		functionstr += tab + "\t\tactionValues['gainShield'] += Combat.gainShield(1, Card, 5)"
 		functionstr += tab + "\t\tactionValues['gainEnergy'] -= Combat.gainEnergy(-10, Card)"
 		functionstr += logString
 		functionstr += tab + "myself.removeEffect('Bide')"
@@ -765,7 +768,7 @@ func uniqueCopyFunction(cardName, actionValues):
 		functionstr += tab + "var missinghp = Card.calculate('MHP') - myself.CurrentHealth"
 		functionstr += tab + "var currentInt = Card.calculate('Int')"
 		functionstr += tab + "for i in times:"
-		functionstr += tab + "\tactionValues['gainBlock'] += Combat.gainBlock(missinghp, Card)"
+		functionstr += tab + "\tactionValues['gainBlock'] += Combat.gainBlock(missinghp, Card, 3)"
 		functionstr += tab + "\tactionValues['gainHealth'] += Combat.gainHealth(Card.calculate(str(currentInt) + ' d 2'), Card)"
 		functionstr += tab + "\tactionValues['gainMana'] += Combat.gainMana(Card.calculate(str(currentInt) + ' d 2'), Card)"
 		functionstr += logString
@@ -865,6 +868,8 @@ func createEffectFunctions(effectstring):
 					actionstring += tab + "Effect.get_parent().removeEffect('" + effectName + "', Effect)"
 				elif act[1] == "decrement":
 					actionstring += tab + "Effect.add(-1)"
+				elif act[1] == "zero":
+					actionstring += tab + "Effect.add(-Effect.value)"
 				elif act[1] == "UNIQUEFUNCTION":
 					actionstring += uniqueEffectFunction(effectName, whichstring)
 			elif act[0] == "fill":
@@ -1009,17 +1014,21 @@ func createMutationFunctions(mutstring, positive):
 	
 	var initString = "\nfunc init(m):\n\tmyself = m\n\tCombat = myself.currentCombat"
 	var valueString = ""
-	var triggerString = ""
+	var triggerString = "\n\tif CardCombat != null:"
+	triggerString += "\n\t\tCombat = CardCombat"
+	triggerString += "\n\t\topponent = Combat.enemy"
 	var startString = "\n\tCombat = myself.currentCombat"
 	startString += "\n\topponent = Combat.enemy"
-	var turnString = ""
 	
 	for i in values.size():
 		if values[i] == "\t" || values[i] == "":
 			continue
 		var act = values[i].split(": ")
 		var tab = "\n\t"
-		if act[0] == "value":
+		if act[0] == "value" || act[0] == "UNIQUECHECKvalue":
+			if act[0].begins_with("UNIQUECHECK"):
+				valueString += uniqueMutationCheck(mutationName, tab)
+				tab += "\t"
 			#by default the variable is named 'value' and starts at 0
 			var num = act[1]
 			if num != "multiplier":
@@ -1032,7 +1041,7 @@ func createMutationFunctions(mutstring, positive):
 			initString += tab + "myself.addMutScaling('" + vals[0] + "', " + vals[1] + ")"
 		elif act[0] == "addCard":
 			initString += tab + "if myself.isPlayer():"
-			initString += tab + "\tmyself.Bad.addCard('" + act[1] + "')"
+			initString += tab + "\tmyself.Bag.addCard('" + act[1] + "')"
 			initString += tab + "else:"
 			initString += tab + "\tmyself.Deck.addCard('" + act[1] + "')"
 		else:
@@ -1050,9 +1059,6 @@ func createMutationFunctions(mutstring, positive):
 			elif act[0].begins_with("(trigger)"):
 				act[0] = act[0].replace("(trigger)", "")
 				whichstring = "triggerString"
-			elif act[0].begins_with("(turn)"):
-				act[0] = act[0].replace("(turn)", "")
-				whichstring = "turnString"
 			
 			if whichstring != "":
 				actionString += tab + "for i in multiplier:"
@@ -1107,26 +1113,38 @@ func createMutationFunctions(mutstring, positive):
 				actionString += tab + "myself.useGhostCard('" + cardname + "', Combat)"
 			elif act[0] == "action":
 				actionString += tab + "Combat." + act[1] + "(myself, opponent, null)"
-			else:
-				actionString += tab + "Combat." + act[0] + "(myself.calculate('" + act[1] + "'), null)"
+			elif act[0] != "N/A":
+				var f = act[0]
+				var target = ""
+				if act[0].begins_with("enemy"):
+					target = "opponent.current"
+					f = f.replace("enemy", "")
+				if f == "gainBlock" || f == "gainShield":
+					var varname = "turns" + str(i)
+					var vals = act[1].split(", ")
+					if vals.size() > 1:
+						actionString += tab + "var " + varname + " = myself.calculate('" + vals[1] + "')"
+					else:
+						actionString += tab + "var " + varname + " = 1"
+					actionString += tab + target + "Combat." + f + "(myself.calculate('" + vals[0] + "'), null, " + varname + ")"
+				else:
+					actionString += tab + target + "Combat." + f + "(myself.calculate('" + act[1] + "'), null)"
 			
 			if whichstring == "triggerString":
 				triggerString += actionString
 			elif whichstring == "startString":
 				startString += actionString
-			elif whichstring == "turnString":
-				turnString += actionString
 			else:
 				initString += actionString
 	
 	valueString += "\n\treturn value*multiplier"
 	if triggerString == "":
 		triggerString = "\n\tpass"
-	if turnString == "":
-		turnString = "\n\tpass"
 		
-	scriptString += initString + "\n\nfunc getValue():\n\tvar value = 0" + valueString + "\n\nfunc startFunction():" + startString + "\n\nfunc triggerFunction(amount = 0):" + triggerString + "\n\nfunc turnFunction(amount = 0):" + turnString
-	
+	scriptString += initString + "\n\nfunc startFunction():" + startString + "\n\nfunc getValue(amount = 0):\n\tvar value = 0" + valueString + "\n\nfunc triggerFunction(CardCombat = null, amount = 0):" + triggerString
+
+#	if mutationName == "Berserk":
+#		print_debug(scriptString)
 	script.set_source_code(scriptString)
 	script.resource_name = "Mutation" + mutationName
 	script.resource_path = "res://Body/" + script.resource_name + ".gd"
@@ -1143,15 +1161,16 @@ func createMutationFunctions(mutstring, positive):
 func uniqueMutationCheck(mutName, tab):
 	# the variable to compare to is called 'amount'
 	var checkString = tab + "if "
-	if mutName == "Exoskeleton":
-		checkString += "!myself.hasDefenses()"
-	elif mutName == "Hollow Bones":
-		checkString += "amount > myself.calculate('10 - Mut')"
+	if mutName == "Focused Rage":
+		checkString += "amount >= myself.calculate('Mut * 5')"
+	elif mutName == "Knockback":
+		checkString += "amount >= myself.calculate('Mut * 6')"
 	checkString += ":"
 	return checkString
 	
 func uniqueMutationFunction(mutName, tab):
 	var actionString = ""
 	if mutName == "Reconstruction":
-		actionString += tab + "pass"
+		actionString += tab + "myself.CurrentHealth = myself.convertStat('MHP')"
+		actionString += tab + "myself.updateUI()"
 	return actionString

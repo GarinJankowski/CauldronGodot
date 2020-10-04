@@ -1,16 +1,16 @@
 Name	Description	Text Log	Enemy Usable	Enemy Text	Flags		
-Sharp Claws	Attacks deal 1d(Mut) extra damage.	hello	1	hello	value: 1 d Mut
+Sharp Claws	Attacks deal 1d(Mut) extra damage.	hello	1	hello	value: 1 d Mut		
 Spiny Skin	"Every time the opponent damages you, deal (Mut) damage."	hello	1	hello	(trigger)dealDirectDamage: Mut		
-Exoskeleton	"Each turn, having no defenses grants (Mut) block."	hello	1	hello	UNIQUECHECK(turn)gainBlock: Mut		
-Carnivore	Gain (Mut)/2 Max Health after defeating an enemy.	hello	0	N/A	"(trigger)statUp: Max Health, Mut / 2"		
+Gorger	Gain (Mut)/2 Max Health after every combat.	hello	0	N/A	(trigger)useCard: Gorger		
 Camouflage	"At the start of combat, retain excess energy for 2 turns and gain (Mut) energy."	hello	0	N/A	"(start)selfEffect: Energized, 2"	(start)gainEnergy: Mut	
 Hemoglobin	All healing received is increased by (Mut).	hello	1	hello	value: Mut		
 Tough Hide	Health loss is reduced by (Mut).	hello	1	hello	value: Mut		
 Weight Lifter	Energy costs are reduced by (Mut)	hello	0	N/A	value: Mut		
-Ramming Horns	Losing shield Attacks the opponent for 2d(Mut) damage.	hello	1	hello	(trigger)useCard: Horn Ram		
-Reconstruction	Dying revives you with (Mut)x3 block and 5 less Max Health permanently.	hello	1	hello	(trigger)UNIQUEFUNCTION	(trigger)gainBlock: Mut * 3	"(trigger)statUp: Max Health, -5"
+Reconstruction	Dying revives you with (Mut)x3 permablock and 5 less Max Health permanently.	hello	1	hello	"(trigger)statUp: Max Health, -5"	(trigger)UNIQUEFUNCTION	(trigger)gainBlock: Mut * 3
 Quick Thinker	Getting an extra turn gives you (Mut)+3 mana.	hello	1	hello	(trigger)gainMana: Mut + 3		
-Focused Rage	Dealing at least (Mut)x5 damage in one hit adds (Mut)x3 damage.	hello	1	hello	value: Mut * 3		
-Mending Flesh	Going below 70% health grants an ally with 1 health that grants (Mut) health each turn.	hello	1	hello	"(trigger)selfEffect: Mending Growth, 1"		
+Focused Rage	Dealing at least (Mut)x5 damage in one hit adds (Mut)x3 damage.	hello	1	hello	UNIQUECHECKvalue: Mut * 3		
+Mending Flesh	Going below 70% health grants an ally with 1 health that grants (Mut) health each turn.	hello	1	hello	"(trigger)selfEffect: Mending Growth, 1, 5"		
 Growth Spurt	"""+(Mut)/4 Strength, Intelligence, and Dexterity."""	hello	1	hello	"scale: Strength, 0.25"	"scale: Dexterity, 0.25"	"scale: Intelligence, 0.25"
 Gelatinous	"At the start of combat, gain (Mut) deflect for 3 turns."	hello	1	hello	"(start)selfEffect: Deflect, Mut, 3"		
+Knockback	Deal at least (Mut)x6 damage in one hit gives the opponent (Mut)/2 distance.	hello	1	hello	UNIQUECHECK(trigger)useCard: Knockback		
+Shock Absorbers	Taking a hit greater than your max health proactively grants (Mut)/5+1 shield for 2 turns.	hello	1	hello	(trigger)useCard: Shock Absorbers		

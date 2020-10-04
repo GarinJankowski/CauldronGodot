@@ -16,6 +16,14 @@ var singleList = {
 	"Positive": positiveList,
 	"Negative": negativeList
 }
+
+var bodyMutationList = {}
+var bodyPositiveList = []
+var bodyNegativeList = []
+var bodySingleList = {
+	"Positive": bodyPositiveList,
+	"Negative": bodyNegativeList
+}
 var open = false
 
 var selectedBodyMutation
@@ -151,25 +159,57 @@ func _input(event):
 
 func addMutation(mutationName):
 	if mutationName in mutationList:
-		mutationList[mutationName].incrementMutation()
+		bodyMutationList[mutationName].incrementMutation()
+		mutationList[mutationName].multiplier += 1
+		mutationList[mutationName].init()
 	else:
 		var positive = scriptgen.MutationScripts[mutationName][0]["positive"]
+		var scriptObject = Reference.new()
+		scriptObject.set_script(scriptgen.MutationScripts[mutationName][1])
+		scriptObject.init(guy)
+		
 		var bodyMut = bodyMutationPreload.instance()
 		bodyMut.Body = self
 		get_node(positive.to_lower() + "/bodyMutations").add_child(bodyMut)
-		bodyMut.init(mutationName, singleList[positive].size())
-		singleList[positive].append(bodyMut)
-		mutationList[mutationName] = bodyMut
+		bodyMut.init(mutationName, bodySingleList[positive].size())
+		
+		singleList[positive].append(scriptObject)
+		bodySingleList[positive].append(bodyMut)
+		mutationList[mutationName] = scriptObject
+		bodyMutationList[mutationName] = bodyMut
 		updateBodyMutationNode(positive)
 		#if positive && mutationList.size() == 1:
 		selectMutation(bodyMut)
 	guy.updateUI()
+	
+func start(positive):
+	for mut in singleList[positive]:
+		mut.startFunction()
+	
+func trigger(mutationName, Card = null, amount = 0):
+	if has(mutationName):
+		var Combat
+		if Card != null:
+			Combat = Card.Combat
+		mutationList[mutationName].triggerFunction(Combat, amount)
+		return true
+	return false
+	
+func value(mutationName, amount = 0):
+	if has(mutationName):
+		return mutationList[mutationName].valueFunction(amount)
+	return 0
+
+func has(mutationName):
+	if mutationName in mutationList:
+		return true
+	return false
 
 func updateBodyMutationNode(positive):
-	if singleList[positive].size() > 6:
+	if bodySingleList[positive].size() > 6:
 		get_node(positive.to_lower() + "/bodyMutations").positive.y = 0
 	else:
-		get_node(positive.to_lower() + "/bodyMutations").position.y = 265 - singleList[positive].size()*40
+		get_node(positive.to_lower() + "/bodyMutations").position.y = 265 - bodySingleList[positive].size()*40
 
 func selectMutation(bodyMut):
 	if selectedBodyMutation != null:
@@ -223,12 +263,12 @@ func close():
 	map.currentEvent.enableButtons()
 
 func bodyScrollUp(positive, updown, amount):
-	if positive == "Positive" && amount > 0 && ((updown == 1 && positiveBodyScrollValue <= positiveList.size() && positiveList.size() > bodyMutationsOnScreen) || (updown == -1 && positiveBodyScrollValue > bodyMutationsOnScreen)):
+	if positive == "Positive" && amount > 0 && ((updown == 1 && positiveBodyScrollValue <= bodyPositiveList.size() && bodyPositiveList.size() > bodyMutationsOnScreen) || (updown == -1 && positiveBodyScrollValue > bodyMutationsOnScreen)):
 		var scroll = bodyMutationHeight*updown
 		get_node("positive/bodyMutations").position.y -= scroll
 		positiveBodyScrollValue += scroll/bodyMutationHeight
 		bodyScrollUp(positive, updown, amount-1)
-	elif positive == "Negative" && amount > 0 && ((updown == 1 && negativeBodyScrollValue <= negativeList.size() && negativeList.size() > bodyMutationsOnScreen) || (updown == -1 && negativeBodyScrollValue > bodyMutationsOnScreen)):
+	elif positive == "Negative" && amount > 0 && ((updown == 1 && negativeBodyScrollValue <= bodyNegativeList.size() && bodyNegativeList.size() > bodyMutationsOnScreen) || (updown == -1 && negativeBodyScrollValue > bodyMutationsOnScreen)):
 		var scroll = bodyMutationHeight*updown
 		get_node("negative/bodyMutations").position.y -= scroll
 		negativeBodyScrollValue += scroll/bodyMutationHeight
@@ -237,9 +277,9 @@ func bodyScrollUp(positive, updown, amount):
 		
 #Interaction Things
 func enableAreaCollisions(truefalse):
-	for bodyMut in positiveList:
+	for bodyMut in bodyPositiveList:
 		bodyMut.enableAreaCollisions(truefalse)
-	for bodyMut in negativeList:
+	for bodyMut in bodyNegativeList:
 		bodyMut.enableAreaCollisions(truefalse)
 
 func _on_buttonBodyMenu_button_down():
@@ -266,7 +306,7 @@ func _on_buttonBagMenu_pressed():
 	Input.action_release("bag")
 
 func _on_leftScrollArea_area_entered(area):
-	if area.get_name() == "cursorArea" && positiveList.size() > 6:
+	if area.get_name() == "cursorArea" && bodyPositiveList.size() > 6:
 		leftCanScroll = true
 		get_node("positive/pageUpButton").visible = true
 		get_node("positive/pageDownButton").visible = true
@@ -274,13 +314,13 @@ func _on_leftScrollArea_area_entered(area):
 		leftScrollButtonStepx = 10
 
 func _on_leftScrollArea_area_exited(area):
-	if area.get_name() == "cursorArea" && positiveList.size() > 6:
+	if area.get_name() == "cursorArea" && bodyPositiveList.size() > 6:
 		leftCanScroll = false
 		leftScrollButtonTicks = 4
 		leftScrollButtonStepx = -10
 		
 func _on_rightScrollArea_area_entered(area):
-	if area.get_name() == "cursorArea" && negativeList.size() > 6:
+	if area.get_name() == "cursorArea" && bodyNegativeList.size() > 6:
 		rightCanScroll = true
 		get_node("negative/pageUpButton").visible = true
 		get_node("negative/pageDownButton").visible = true
@@ -288,7 +328,7 @@ func _on_rightScrollArea_area_entered(area):
 		rightScrollButtonStepx = -10
 
 func _on_rightScrollArea_area_exited(area):
-	if area.get_name() == "cursorArea" && negativeList.size() > 6:
+	if area.get_name() == "cursorArea" && bodyNegativeList.size() > 6:
 		rightCanScroll = false
 		rightScrollButtonTicks = 4
 		rightScrollButtonStepx = 10

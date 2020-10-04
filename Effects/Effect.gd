@@ -114,12 +114,14 @@ func initVariables():
 		good = false
 		effectProperties.erase("Bad")
 		
+	if "cycle" in effectProperties:
+		turns = 0
 	if "active" in effectProperties:
 		active = true
 		effectProperties.erase("active")
 	else:
 		active = false
-	
+		
 	for prop in effectProperties:
 		if prop.begins_with("priority"):
 			priority = int(prop.split(" ")[1])
@@ -127,6 +129,7 @@ func initVariables():
 	if "delay" in effectProperties:
 		effectProperties.erase("delay")
 		delay = true
+		
 
 func updateVariables(val, trn, cd):
 	if Card != null:

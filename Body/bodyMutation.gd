@@ -4,8 +4,7 @@ var Body
 var mutationName
 var mutationDescription
 var positive
-
-var scriptObject
+var multiplier = 1
 
 var selected = false
 var displayMutation
@@ -25,10 +24,6 @@ func init(mutname, i):
 	mutationDescription = mutscript[0]["mutationDescription"]
 	positive = mutscript[0]["positive"]
 	
-	scriptObject = Reference.new()
-	scriptObject.set_script(mutscript[1])
-	scriptObject.init(Body.get_parent())
-	
 	index = i
 	
 	makeSprite()
@@ -39,10 +34,9 @@ func init(mutname, i):
 	displayMutation.init(self)
 
 func incrementMutation():
-	scriptObject.multiplier += 1
-	scriptObject.init()
+	multiplier += 1
 	get_node("multiplier").visible = true
-	get_node("multiplier").text = "x" + str(scriptObject.multiplier)
+	get_node("multiplier").text = "x" + str(multiplier)
 	displayMutation.updateMultiplier()
 
 func makeSprite():

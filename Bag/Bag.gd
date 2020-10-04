@@ -26,6 +26,8 @@ var bagCardList = {
 	"Attack": null,
 	"Defend": null,
 	"Spell": null,
+	"Positive": null,
+	"Negative": null,
 	"Item": null,
 	"Harmful": null
 }
@@ -441,6 +443,10 @@ func initNoGear():
 	bagCardList["Defend"] = defendList
 	var spellList = []
 	bagCardList["Spell"] = spellList
+	var positiveList = []
+	bagCardList["Positive"] = positiveList
+	var negativeList = []
+	bagCardList["Negative"] = negativeList
 	var deviceList = []
 	bagCardList["Device"] = deviceList
 	var itemList = []
@@ -517,7 +523,7 @@ func bagCardListSize():
 	
 func getBagCardList(index):
 	var key = "Device"
-	var keylist = ["Device", "Attack", "Defend", "Spell", "Item", "Harmful"]
+	var keylist = ["Device", "Attack", "Defend", "Spell", "Positive", "Negative", "Item", "Harmful"]
 	while index >= len(bagCardList[key]):
 		index -= len(bagCardList[key])
 		for i in keylist.size():
