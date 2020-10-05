@@ -67,6 +67,14 @@ func _process(delta):
 		node.position.y += stepy
 
 func mutate():
+	var tiers = {
+		"A": 1,
+		"B": 2,
+		"C": 3,
+		"D": 4,
+		"E": 5,
+		"F": 6,
+	}
 	if Tier == "Final Boss":
 		MaxHealth *= 10
 		Strength *= 10
@@ -84,7 +92,7 @@ func mutate():
 		Strength += Strength/4
 		Dexterity += Dexterity/4
 		Intelligence += Intelligence/4
-		MutationLevel = int(Tier)*2
+		MutationLevel = tiers[Tier]*2
 		
 	CurrentHealth = MaxHealth
 	
@@ -98,12 +106,12 @@ func mutate():
 func addMutation(mutationName):
 	if mutationName in mutationList:
 		mutationList[mutationName].multiplier += 1
-		mutationList[mutationName].init()
+		mutationList[mutationName].init(self)
 	else:
 		var positive = scriptgen.MutationScripts[mutationName][0]["positive"]
 		var scriptObject = Reference.new()
 		scriptObject.set_script(scriptgen.MutationScripts[mutationName][1])
-		scriptObject.init(guy)
+		scriptObject.init(self)
 		
 		singleList[positive].append(scriptObject)
 		mutationList[mutationName] = scriptObject

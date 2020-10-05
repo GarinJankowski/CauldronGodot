@@ -1,7 +1,7 @@
 Name	Description	Text Log	Enemy Usable	Enemy Text	Flags		
 Sharp Claws	Attacks deal 1d(Mut) extra damage.	hello	1	hello	value: 1 d Mut		
 Spiny Skin	"Every time the opponent damages you, deal (Mut) damage."	hello	1	hello	(trigger)dealDirectDamage: Mut		
-Gorger	Gain (Mut)/2 Max Health after every combat.	hello	0	N/A	(trigger)useCard: Gorger		
+Gorger	Gain (Mut)/2 Max Health after winning combat.	hello	1	hello	(trigger)useCard: Gorger		
 Camouflage	"At the start of combat, retain excess energy for 2 turns and gain (Mut) energy."	hello	0	N/A	"(start)selfEffect: Energized, 2"	(start)gainEnergy: Mut	
 Hemoglobin	All healing received is increased by (Mut).	hello	1	hello	value: Mut		
 Tough Hide	Health loss is reduced by (Mut).	hello	1	hello	value: Mut		

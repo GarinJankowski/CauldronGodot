@@ -221,6 +221,7 @@ func createCardFunctions(cardstring):
 				functionString += tab + "Card.addEffect(" + target + ", '" + effname + "', " + valuename + ", " + turnsname + ")"
 			elif act[0] == "statUp":
 				var vals = act[1].split(", ")
+				actionValues[act[0]] = 0
 				functionString += tab + "actionValues['" + act[0] + "'] += myself.addStat('" + vals[0] + "', myself.calculate('" + vals[1] + "'))"
 			elif act[0] == "insertEnemyDeck" || act[0] == "insertSelfDeck":
 				var parts = act[1].split(", ")
@@ -354,6 +355,8 @@ func createCardFunctions(cardstring):
 	if "defensesCost" in cardProperties:
 		usableString += "|| opponent.Block() > 0 || opponent.Shield() > 0 || opponent.Allies()"
 		costDescription += "Opponent must have no defenses. "
+	if "forceUsable" in cardProperties:
+		costDescription += "This card must be played. "
 	if "stranglehold" in cardActions:
 		usableString += " || (opponent.hasEffect('strangleholdBad') && myself.getEffect('strangleholdGood') > 0)"
 	if cardType == "Attack":
@@ -408,8 +411,8 @@ func createCardFunctions(cardstring):
 	varString += liststring
 	
 	scriptString = varString + scriptString
-	
-#	if cardName == "Freeze":
+
+#	if cardName == "Gorger":
 #		print_debug(scriptString)
 	script.set_source_code(scriptString)
 	script.resource_name = "Card" + cardName
@@ -837,9 +840,13 @@ func createEffectFunctions(effectstring):
 			endString += "\n\tmyself.addTempStat('" + things[0] + "', -Effect.calculate('" + things[1] + "'))"
 			effectProperties.append("stat")
 		elif action.begins_with("cycle"):
+			if "permanent" in effectProperties:
+				effectProperties.erase("stackable")
 			var tab = "\n\t"
 			effectProperties.append("cycle")
 			initString += tab + "cycle = Effect.calculate('" + str(action.split(": ")[1]) + "')"
+			initString += tab + "if cycle < 1:"
+			initString += tab + "\tcycle = 1"
 			
 			turnString += tab + "if cycleCounter == cycle:"
 			turnString += tab + "\tcycleCounter = 1"
@@ -1141,7 +1148,7 @@ func createMutationFunctions(mutstring, positive):
 	if triggerString == "":
 		triggerString = "\n\tpass"
 		
-	scriptString += initString + "\n\nfunc startFunction():" + startString + "\n\nfunc getValue(amount = 0):\n\tvar value = 0" + valueString + "\n\nfunc triggerFunction(CardCombat = null, amount = 0):" + triggerString
+	scriptString += initString + "\n\nfunc startFunction():" + startString + "\n\nfunc valueFunction(amount = 0):\n\tvar value = 0" + valueString + "\n\nfunc triggerFunction(CardCombat = null, amount = 0):" + triggerString
 
 #	if mutationName == "Berserk":
 #		print_debug(scriptString)

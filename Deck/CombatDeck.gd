@@ -237,7 +237,7 @@ func checkProperties(index):
 					cardnull = true
 	
 	#burn/Burn modifier
-	if card.has("burn") || card.mods["Burn"] || card.cardType == "Item" || card.has("ignite") || me.hasEffect("Forget"):
+	if checkBurn(card):
 		me.trigger("Forget")
 		card.cardProperties.erase("ignite")
 		#Stay modifier
@@ -311,6 +311,13 @@ func checkOtherActions(card):
 	#fill hand
 	if card.fill() != null:
 		fillHand(card.fill(), card)
+
+func checkBurn(card):
+	if card.has("burn") || card.mods["Burn"] || card.cardType == "Item" || card.has("ignite") || me.hasEffect("Forget") || (me.hasEffect("Charred Skin") && card.cardType == "Defend"):
+		if me.hasEffect("Charred Skin") && card.cardType == "Defend":
+			me.trigger("Charred Skin")
+		return true
+	return false
 
 func checkStay(card):
 	#Stay modifier

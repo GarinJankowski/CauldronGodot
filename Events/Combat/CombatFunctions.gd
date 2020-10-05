@@ -26,14 +26,17 @@ func rtd(amount, sides):
 
 #functions to edit the numbers
 func change(who, type, amount, Card = null, turns = 1):
-	if who.hasEffect("Nullify") && (type == "CurrentHealth" || type == "Mana" || type == "Energy"):
+	if who.hasEffect("Nullify") && (type == "Health" || type == "Mana" || type == "Energy"):
 		return
-	if type == "CurrentHealth":
+	if type == "Health":
+		var pasthealth = who.CurrentHealth
 		who.CurrentHealth += amount
 		if who.CurrentHealth < 0:
 			who.CurrentHealth = 0
-		elif who.CurrentHealth > who.MaxHealth + who.tempMaxHealth:
-			who.CurrentHealth = who.MaxHealth + who.tempMaxHealth
+		elif who.CurrentHealth > who.convertStat("MHP"):
+			who.CurrentHealth = who.convertStat("MHP")
+		if who.hasMutation("Mending Flesh") && pasthealth >= int(who.convertStat("MHP")*0.7) && who.CurrentHealth < int(who.convertStat("MHP")*0.7):
+			who.triggerMutation("Mending Flesh")
 		if amount < 0:
 			who.trigger("Frozen")
 			if who.hasEffect("Stranglehold (Attacker)"):
@@ -45,8 +48,8 @@ func change(who, type, amount, Card = null, turns = 1):
 		who.CurrentMana += amount
 		if who.CurrentMana < 0:
 			who.CurrentMana = 0
-		elif who.CurrentMana > who.MaxMana + who.tempMaxMana:
-			who.CurrentMana = who.MaxMana + who.tempMaxMana
+		elif who.CurrentMana > who.convertStat("MMP"):
+			who.CurrentMana = who.convertStat("MMP")
 		if who.isPlayer():
 			who.updateMana()
 	elif type == "Block":
@@ -106,6 +109,7 @@ func checkEnergy():
 	var amount = 0
 	while player.CurrentEnergy >= player.MaxEnergy:
 		player.addExtraTurns(1)
+		player.triggerMutation("Quick Thinker")
 		if player.isAlive() && opponent.isAlive():
 			amount += 1
 		if player.hasEffect("Energized") || player.hasEffect("Stealth") || player.hasEffect("Invisibility"):
@@ -159,13 +163,17 @@ func addEffect(target, effectName, value, turns):
 
 #deal damage functions
 func calculateDirectDamage(damage, me, enemy, Card):
-	if Card != null && Card.cardType == "Attack":
-		damage += me.Effects.getAllValues("Sharpen")
-		if Card.has("projectile"):
-			damage += me.Effects.getAllValues("Swing")
-			damage += me.Effects.getAllValues("Fuse")
-		if me.hasEffect("Aim"):
-			damage *= 2
+	if Card != null:
+		if Card.cardType == "Attack":
+			damage += me.Effects.getAllValues("Sharpen")
+			damage += me.valueMutation("Sharp Claws")
+			if Card.has("projectile"):
+				damage += me.Effects.getAllValues("Swing")
+				damage += me.Effects.getAllValues("Fuse")
+			if me.hasEffect("Aim"):
+				damage *= 2
+	damage += me.valueMutation("Frenzy")*damage
+	damage += enemy.valueMutation("Frenzy")*damage
 	return damage
 func dealDirectDamage(damage, Card):
 	var dmg
@@ -177,22 +185,30 @@ func directDamage(damage, myself, opponent, Card):
 	var calcdmg = calculateDirectDamage(damage, myself, opponent, Card)
 	var usedmg = calcdmg
 	
-	if Card != null && Card.cardType == "Attack":
-		myself.tickEffect("Sharpen")
-		if Card.has("projectile"):
-			myself.tickEffect("Fuse")
-		myself.tickEffect("Aim")
+	if Card != null:
+		if Card.cardType == "Attack":
+			myself.tickEffect("Sharpen")
+			if Card.has("projectile"):
+				myself.tickEffect("Fuse")
+			myself.tickEffect("Aim")
+		usedmg += myself.valueMutation("Focused Rage", usedmg)
 	if opponent.hasEffect("Phase"):
 		opponent.increaseEffect("Phase", usedmg)
 		usedmg = 0
 	if (opponent.hasEffect("Dodge") || opponent.hasEffect("Elude") || opponent.hasEffect("Sense")) && opponent != myself && Card != null:
 		usedmg = 0
-		
+	
 	if opponent.hasEffect("Persist"):
 		usedmg /= 2
 		myself.tickEffect("Persist")
 	if opponent.hasEffect("Parry"):
 		usedmg /= 2
+	
+	if myself.hasMutation("Knockback") && Card != null:
+		Card.savedValues["Knockback"] = usedmg
+	if opponent.hasMutation("Shock Absorbers") && usedmg > opponent.convertStat("MHP"):
+		opponent.triggerMutation("Shock Absorbers")
+		
 	if opponent.Shield() > 0:
 		usedmg = 0
 		change(opponent, "Shield", -1)
@@ -202,7 +218,6 @@ func directDamage(damage, myself, opponent, Card):
 	else:
 		change(opponent, "Block", -usedmg)
 		usedmg = 0
-		
 	if opponent.hasEffect("Permashield") && usedmg > 0:
 		usedmg = 0
 		opponent.addEffect("Permashield", -1, -1, Card)
@@ -216,9 +231,17 @@ func directDamage(damage, myself, opponent, Card):
 	
 	if opponent.Effects.allyBlock(usedmg):
 		usedmg = 0
+		
+	if opponent.hasMutation("Mana Veins"):
+		if usedmg > opponent.CurrentMana:
+			usedmg -= opponent.CurrentMana
+			change(opponent, "Mana", -opponent.CurrentMana)
+		else:
+			change(opponent, "Mana", -usedmg)
+			usedmg = 0
 	
 	if usedmg > 0:
-		change(opponent, "CurrentHealth", -usedmg)
+		change(opponent, "Health", -usedmg)
 	
 	if Card != null:
 		Card.cardProperties.append("Damage Dealt")
@@ -226,6 +249,9 @@ func directDamage(damage, myself, opponent, Card):
 	return calcdmg
 	
 func calculateIndirectDamage(damage, me, enemy, Card):
+	damage -= enemy.valueMutation("Tough Hide")
+	if damage < 0:
+		damage = 0
 	if (enemy.hasEffect("Dodge") || enemy.hasEffect("Elude") || enemy.hasEffect("Sense")) && enemy != me && Card != null:
 		damage = 0
 	return damage
@@ -236,7 +262,7 @@ func takeIndirectDamage(damage, Card):
 func indirectDamage(damage, myself, opponent, Card):
 	var calcdmg = calculateIndirectDamage(damage, myself, opponent, Card)
 	
-	change(opponent, "CurrentHealth", -calcdmg)
+	change(opponent, "Health", -calcdmg)
 		
 	return calcdmg
 
@@ -261,10 +287,12 @@ func gainHealth(health, Card):
 	return health(health, me, enemy, Card)
 func health(health, myself, opponent, Card):
 	var calchp = calculateHealth(health, myself, opponent, Card)
+	
+	calchp += myself.valueMutation("Hemoglobin")
 	if myself.hasEffect("Shatter"):
 		calchp = 0
 	
-	change(myself, "CurrentHealth", calchp)
+	change(myself, "Health", calchp)
 		
 	return calchp
 
@@ -361,6 +389,9 @@ func selfPierce(myself, opponent, Card):
 func shuffle(myself, opponent, Card):
 	opponent.currentCombatDeck.shuffleDeck(Card)
 	#opponent.currentCombatDeck.shuffleAddPrint()
+	
+func selfShuffle(myself, opponent, Card):
+	myself.currentCombatDeck.shuffleDeck(Card)
 
 func fill(cardValue, myself, opponent, Card):
 	myself.currentCombatDeck.forceFillHand(cardValue)

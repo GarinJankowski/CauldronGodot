@@ -109,9 +109,9 @@ Frozen	-1	Bad	(trigger)self: remove
 Record	-1	Good	zero	delay	(trigger)self: UNIQUEFUNCTION		
 You	-1	Good	ally	self: UNIQUEFUNCTION			
 							
-Mending Growth	0	Good	ally	gainHealth: Mut			
-Charred Skin	-1	Bad	N/A				
+Mending Growth	0	Good	ally	gainHealth: 1 d Mut			
+Charred Skin	-1	Bad	(trigger)self: decrement				
 Volatile	-1	Bad	cycle: 4	unstackable	takeDirectDamage: Val	dealDirectDamage: Val	
 Berserk	0	Bad	fill: Attack				
 Muscle Mass	-1	Bad	cycle: Mut	useCard: Muscle Mass	self: zero	zero	
-Scrambled	-1	Bad	cycle: 8 - Mut	action: shuffle			
+Scrambled	-1	Bad	cycle: 8 - Mut	action: selfShuffle			

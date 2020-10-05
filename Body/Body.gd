@@ -151,17 +151,17 @@ func _process(delta):
 func _input(event):
 	if open && (leftCanScroll || rightCanScroll) && event is InputEventMouseButton:
 		if event.button_index == BUTTON_WHEEL_UP:
-			bodyScrollUp(true, -1, 1)
-			bodyScrollUp(false, -1, 1)
+			bodyScrollUp("Positive", -1, 1)
+			bodyScrollUp("Negative", -1, 1)
 		elif event.button_index == BUTTON_WHEEL_DOWN:
-			bodyScrollUp(true, 1, 1)
-			bodyScrollUp(false, 1, 1)
+			bodyScrollUp("Positive", 1, 1)
+			bodyScrollUp("Negative", 1, 1)
 
 func addMutation(mutationName):
 	if mutationName in mutationList:
 		bodyMutationList[mutationName].incrementMutation()
 		mutationList[mutationName].multiplier += 1
-		mutationList[mutationName].init()
+		mutationList[mutationName].init(guy)
 	else:
 		var positive = scriptgen.MutationScripts[mutationName][0]["positive"]
 		var scriptObject = Reference.new()
@@ -207,7 +207,7 @@ func has(mutationName):
 
 func updateBodyMutationNode(positive):
 	if bodySingleList[positive].size() > 6:
-		get_node(positive.to_lower() + "/bodyMutations").positive.y = 0
+		get_node(positive.to_lower() + "/bodyMutations").position.y = 0
 	else:
 		get_node(positive.to_lower() + "/bodyMutations").position.y = 265 - bodySingleList[positive].size()*40
 
@@ -335,16 +335,16 @@ func _on_rightScrollArea_area_exited(area):
 
 
 func _on_leftbutton_ScrollPageUp_pressed():
-	bodyScrollUp(true, -1, bodyMutationsOnScreen)
+	bodyScrollUp("Positive", -1, bodyMutationsOnScreen)
 
 func _on_leftbutton_ScrollPageDown_pressed():
-	bodyScrollUp(true, 1, bodyMutationsOnScreen)
+	bodyScrollUp("Positive", 1, bodyMutationsOnScreen)
 
 func _on_rightbutton_ScrollPageUp_pressed():
-	bodyScrollUp(false, -1, bodyMutationsOnScreen)
+	bodyScrollUp("Negative", -1, bodyMutationsOnScreen)
 
 func _on_rightbutton_ScrollPageDown_pressed():
-	bodyScrollUp(false, 1, bodyMutationsOnScreen)
+	bodyScrollUp("Negative", 1, bodyMutationsOnScreen)
 
 
 func _on_leftbutton_ScrollPageUp_button_down():

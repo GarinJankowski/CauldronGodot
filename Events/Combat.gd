@@ -158,6 +158,7 @@ func turn():
 #restore the player's stats
 func enemyDeath():
 	textlog.push("The " + enemy.enemyName + " dies.")
+	guy.triggerMutation("Gorger")
 	textlog.push("[g]You gain " + str(room.experience) + " experience.")
 	var lvls = guy.gainExperience(room.experience)
 	for i in lvls:
@@ -220,6 +221,7 @@ func fleeCombat():
 func checkDeath():
 	if !guy.isAlive():
 		waiting = true
+		enemy.triggerMutation("Gorger")
 		guy.DEAD()
 		return true
 	elif !enemy.isAlive():
@@ -297,6 +299,9 @@ func nextTurn():
 	if affected.hasActive("Good"):
 		hasactive = true
 	affected.Effects.turn("Good")
+	var sensitive = affected.valueMutation("Sensitive")
+	for i in sensitive:
+		affected.Effects.turn("Good")
 	guyDeck.updateDeck1()
 	guyDeck.updateDeck2()
 	guyDeck.printHand()
@@ -310,6 +315,8 @@ func nextTurn():
 	if affected.hasActive("Bad"):
 		hasactive = true
 	affected.Effects.turn("Bad")
+	for i in sensitive:
+		affected.Effects.turn("Bad")
 	guyDeck.printHand()
 	if checkDeath():
 		return true

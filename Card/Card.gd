@@ -10,6 +10,7 @@ var logOutput = ""
 var cardActions = {}
 var actionValues = {}
 var cardProperties = []
+var savedValues = {}
 var uniqueFlags = []
 var uniqueValue = 0
 
@@ -72,7 +73,9 @@ var colors = {
 		"enemySpell": "[r]",
 		"enemyHarmful": "[b]",
 		"enemyItem": "[r]",
-		"enemyDevice": "[r]"
+		"enemyDevice": "[r]",
+		"enemyPositive": "[r]",
+		"enemyNegative": "[r]"
 	}
 
 var dynamicFont
@@ -192,7 +195,7 @@ func _process(delta):
 		ticks -= 1
 
 func cardFunction(copytimes = 0):
-	if myself.isAlive() && opponent.isAlive():
+#	if myself.isAlive() && opponent.isAlive():
 		#Confuse/Jinx
 		if myself.hasEffect("Confuse") || myself.hasEffect("Jinx"):
 			deflectedCardFunction(copytimes)
@@ -313,6 +316,8 @@ func checkCardTypeEffects():
 		myself.trigger("Spell Shield")
 		myself.trigger("Crab")
 		myself.trigger("Spell Trap")
+	else:
+		myself.triggerMutation("Addicted")
 	
 	CombatDeck.get_ref().lastPlayed = self
 
@@ -337,10 +342,14 @@ func checkOtherEffects():
 			Combat.gainHealth(int(actionValues["dealDirectDamage"]), self)
 			myself.tickEffect("Attack Heal")
 			myself.removeEffect("Attack Heal")
+		if "Knockback" in savedValues:
+			myself.triggerMutation("Knockback", self, savedValues["Knockback"])
+			savedValues.erase("Knockback")
 		
 		opponent.trigger("Spikes")
 		opponent.trigger("Sear")
 		opponent.trigger("Parry")
+		opponent.triggerMutation("Spiny Skin")
 		myself.trigger("Sneak")
 		myself.trigger("Stealth")
 		opponent.trigger("Sleep")
@@ -566,8 +575,8 @@ func cardLogOutput():
 			elif word == "away":
 				addword = colors["Attack"]
 				var distance
-				if "enemyGainDistance" in actionValues:
-					distance = actionValues["enemyGainDistance"]
+				if "enemygainDistance" in actionValues:
+					distance = actionValues["enemygainDistance"]
 				else:
 					distance = actionValues["gainDistance"]
 				if distance > 2:

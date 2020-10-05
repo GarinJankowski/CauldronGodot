@@ -74,7 +74,7 @@ Jab	Attack	Deal 4+1d(Str) damage. Gain 1 distance. Lose 4 energy.	{You} jab{s} {
 Press	Attack	"Against defenses, pierce the opponent and gain 2 distance. Deal 1d(Str) damage. Lose 6 energy."	"{You} jab{s} {enemyName}, dealing {dealDirectDamage} damage."	ALTERNATE: enemyDefenses	dealDirectDamage: 1 d Str	gainEnergy: -6					
 PressGhost	Attack	Pierce the opponent. Gain 2 distance. Deal 1d(Str) damage. Lose 6 energy.	"{You} force{s} {enemyName} back, [you]piercing[n] {them}, dealing {dealDirectDamage} damage, and driving {them} {away}."	action: pierce	gainDistance: 2	dealDirectDamage: 1 d Str	gainEnergy: -6				
 Raise	Attack	"Gain (Str)/2-5 energy. Then, gain 5 Strength for 2 turns."	[you]{You} raise{s} {your} weapon.	gainEnergy: Str / 2 - 5	"gainStat: Strength, 5, 2"						
-Shatter	Attack	Deal (Str)x3 damage. The opponent cannot heal or gain beneficial effects for 4 turns. Lose 10 energy.	{You} shatter{s} {enemyName} for {dealDirectDamage} damage.	energyCost: 5	dealDirectDamage: Str * 3	"effect: Shatter, 4"	gainEnergy: -10				
+Shatter	Attack	Deal (Str)x3 damage. The opponent cannot heal nor gain beneficial effects for 4 turns. Lose 10 energy.	{You} shatter{s} {enemyName} for {dealDirectDamage} damage.	energyCost: 5	dealDirectDamage: Str * 3	"effect: Shatter, 4"	gainEnergy: -10				
 Transpierce	Attack	"Against defenses, pierce the opponent and gain (Str) energy. Otherwise, lose all extra turns and deal (Str) damage for each lost."	{You} stab{s} {enemyName} for {dealDirectDamage} damage.	ALTERNATE: enemyBlockOrShield	UNIQUEFUNCTION	CUSTOMCOPYFUNCTION					
 TranspierceGhost	Attack	Pierce the enemy. Gain (Str) energy.	{You} [you]pierce[n] {enemyName} and gain {gainEnergy} energy.	action: pierce	gainEnergy: Str						
 Phase	Attack	"Lose health equal to yours minus 1. For (Str)/3 turns, damage taken is instead stored and gained as energy when this ends. Burn this card."	{You} part{s} from the material world for [you]{selfEffectTurns} turns[n] and losing {gainHealth} health.	UNIQUEFUNCTION	"selfEffect: Phase, 0, Str / 3"	burn					
@@ -288,10 +288,11 @@ Sugar Cube	Item	Gain 8 energy for 2 turns.	{You} eat{s} a bit of sugar.	"energyO
 Runed Glove	Item	Your next card has twice the effect.	{You} duplicate{s} {your} next action.	"selfEffect: Copy, 1"							
 Handle Wrap	Item	Gain 5 Strength for 2 turns. Gain 8 energy.	{You} grip{s} {your} weapon tightly.	"gainStat: Strength, 5, 2"	gainEnergy: 8						
 											
-Knockback	Positive	Give the opponent (Mut)/2 distance.	[you]{You} knock{s} {enemyName} {away}.	enemyGainDistance: Mut / 2							
+Gorger	Positive	Gain (Mut)/2 Max Health permanently.	"[you]{You} devour{s} {enemyName}, gaining {statUp} Max Health."	"statUp: Max Health, Mut / 2"							
+Knockback	Positive	Give the opponent (Mut)/2 distance.	"[you]{You} hit {enemyName} so hard, {you} knocked {them} back!"	enemygainDistance: Mut / 2							
 Shock Absorbers	Positive	Gain (Mut)/5+1 shield for 2 turns.	"[you]{You} gain{s} {gainShield} shield for {gainShieldTurns}, absorbing incoming hits."	"gainShield: Mut / 5 + 1, 2"							
-Muscle Mass	Negative	Deal your stored up damage.	[you]{You} use{s} {your} stored up damage and crush{es} {enemyName} for {dealDirectDamage}.	dealDirectDamage: effect(Muscle Mass)							
-Sneeze	Negative	The opponent takes 1d(Mut) damage for 3 turns. Discard this for 5 turns.	[you]Achoo![n] {You} spray{s} {enemyName} with acid for {directDamageOTTurns}.	forceUsable	"directDamageOT: 1 d Mut, 3"	discard: 5					
+Muscle Mass	Negative	Deal your stored up damage.	[you]{You} use{s} {your} stored up damage and crush{es} {enemyName} for {dealDirectDamage}.	dealDirectDamage: effect(Muscle_Mass)							
+Sneeze	Negative	The opponent takes 1d(Mut) damage for 3 turns. Discard this for 5 turns.	[you]ACHOO![n] {You} spray{s} {enemyName} with acid for {directDamageOTTurns}.	forceUsable	"directDamageOT: 1 d Mut, 3"	discard: 5					
 											
 Bite	Attack	Deal 1d(Str) damage.	{You} bite{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str							
 Defend	Defend	Gain (Dex) block. Discard this for 1 turn.	{You} gain{s} {gainBlock} block for {gainBlockTurns}.	"gainBlock: Dex, 1"	discard: 1						
@@ -393,7 +394,7 @@ Form Rocks	Spell	Gain (Int)d2 block for 3 turns. Gain 3 mana. Discard this card 
 Rock Throw	Attack	Projectile. Deal damage equal to your block.	"{You} throw{s} {your} rocks at {enemyName}, dealing {dealDirectDamage} damage."	manaCost: 1	dealDirectDamage: block	link: 3	projectile				
 Stone Shield	Defend	Gain (Dex)/2 shield for 3 turns. Discard this card for 6 turns.	"{You} form{s} a stone plating, gaining {gainShield} shield for {gainSheildTurns}."	"gainShield: Dex / 2, 3"	discard: 6	link: 1					
 Form Boulder	Spell	Gain (Int) + (Int)d4 block for 2 turns. Gain 1 mana. Burn this card.	"{You} form{s} a massive boulder, gaining {gainBlock} block for {gainBlockTurns}."	gainBlock: Int d 4 + Int	gainMana: 1	burn	stay: 2	link: 2			
-Stone Slam	Attack	Deal 2d(Str) damage. Give 2 distance.	"{You} bludgeon{s} {enemyName}, dealing {dealDirectDamage} and knocking {them} {away}."	dealDirectDamage: 2 d Str	enemyGainDistance: 2	link: 1					
+Stone Slam	Attack	Deal 2d(Str) damage. Give 2 distance.	"{You} bludgeon{s} {enemyName}, dealing {dealDirectDamage} and knocking {them} {away}."	dealDirectDamage: 2 d Str	enemygainDistance: 2	link: 1					
 Stone Spike	Attack	Pierce the enemy and deal 1d(Str) damage. Discard this card for 4 turns.	"{You} summon{s} stone spikes from the ground, [you]piercing[n] {their} defenses and dealing {dealDirectDamage} damage."	action: pierce	dealDirectDamage: 1 d Str	discard: 4	link: 1				
 											
 Spin	Defend	Gain (Dex)x2 deflect for 2 turns. Discard this card for 6 turns.	"{You} spin{s} rapidly, deflecting attacks for [you]{selfEffectTurns} turns."	"selfEffect: Deflect, Dex * 2, 2"	discard: 6						

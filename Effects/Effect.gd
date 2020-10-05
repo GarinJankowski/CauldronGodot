@@ -11,6 +11,7 @@ var active
 var priority = -1
 var everyOther = false
 var delay = false
+var cycle = false
 
 var value
 var turns
@@ -114,8 +115,6 @@ func initVariables():
 		good = false
 		effectProperties.erase("Bad")
 		
-	if "cycle" in effectProperties:
-		turns = 0
 	if "active" in effectProperties:
 		active = true
 		effectProperties.erase("active")
@@ -129,6 +128,10 @@ func initVariables():
 	if "delay" in effectProperties:
 		effectProperties.erase("delay")
 		delay = true
+		
+	if "cycle" in effectProperties:
+		effectProperties.erase("cycle")
+		cycle = true
 		
 
 func updateVariables(val, trn, cd):
@@ -161,9 +164,10 @@ func takeTurn():
 			everyOther = true
 	if turns > 0:
 		turns -= 1
-		setDisplayTurns()
 		if effectName == "Focus":
 			setValue(turns)
+	if turns > 0 || cycle:
+		setDisplayTurns()
 
 func has(prop):
 	if prop in effectProperties:
@@ -270,12 +274,15 @@ func setDisplayName():
 	
 func setDisplayTurns():
 	var dt = " turns left"
-	if turns == -1:
+	if turns == -1 && !cycle:
 		dt = ""
 	else:
-		if turns == 1:
+		var turnsnum = turns
+		if cycle && turns == -1:
+			turnsnum = scriptObject.cycle - scriptObject.cycleCounter + 1
+		if turnsnum == 1:
 			dt = " turn left"
-		dt = "(" + str(turns) + dt + ")"
+		dt = "(" + str(turnsnum) + dt + ")"
 	displayTurns = dt
 
 func setBreakpoint():

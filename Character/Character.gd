@@ -72,7 +72,7 @@ func init():
 	Strength = 3
 	Dexterity = 3
 	Intelligence = 3
-	MutationLevel = 0
+	MutationLevel = 2
 	
 	CurrentExperience = 0
 	MaxExperience = 10
@@ -132,6 +132,11 @@ func init():
 	#Bag.addCard("")
 	#Bag.addMod("", 0)
 	#Body.addMutation("")
+	
+#	Body.addMutation("Weight Lifter")
+#	Body.addMutation("Reconstruction")
+#	Body.addMutation("Muscle Mass")
+#	Body.addMutation("Brainless")
 	
 func gainExperience(value):
 	CurrentExperience += value
@@ -356,7 +361,7 @@ func valueMutation(mutationName, amount = 0):
 	return Body.value(mutationName, amount)
 
 func hasMutation(mutationName):
-	return Body.has()
+	return Body.has(mutationName)
 	
 func isPlayer():
 	return true
