@@ -1,5 +1,5 @@
 Name	Description	Text Log	Enemy Usable	Enemy Text	Flags	
-Charred Skin	Burn the first (Mut) Defends you play during combat.	hello	1	hello	(start)selfEffect: Charred Skin, Mut	
+Charred Skin	Burn the first (Mut) Defends you play during combat.	hello	1	hello	"(start)selfEffect: Charred Skin, Mut"	
 Frenzy	Take and deal double damage.	hello	1	hello	value: multiplier	
 Volatile	"Every 4 turns, take and deal 5d(Mut) damage. Playing Defends delays this by 1 turn."	hello	1	hello	"(start)selfEffect: Volatile, 5 d Mut"	
 Brain Worm	"""+2x(Mut) Max Mana, -(Mut) Max Health."""	hello	1	hello	"scale: Max Mana, 2"	"scale: Max Health, -1"
@@ -10,7 +10,8 @@ Brittle	"At the start of combat, gain 2 shield for 5 turns and lose (Mut)x3 heal
 Sensitive	Your effects trigger twice each turn and expire twice as quickly.	hello	1	hello	value: multiplier	
 Acid Mucus	Add a Sneeze to your deck.	hello	1	hello	addCard: Sneeze	
 Addicted	"""+5 Intelligence. Playing a non-Spell causes 1 Intelligence loss for (Mut) turns."""	hello	1	hello	"statUp: Intelligence, 5"	"(trigger)gainStat: Intelligence, -1, Mut"
-Mana Veins	Taking damage removes mana before removing health.	hello	0	N/A	N/A	
 Brainless	"Instead of costing mana, Spells damage you equal to the cost."	hello	1	hello	N/A	
 Scrambled	"Every 8-(Mut) turns, shuffle your deck."	hello	1	hello	(start)selfEffect: Scrambled	
 Paranoia	Does nothing.	hello	1	hello	N/A	
+Atrophy	Turn losses instead cause (Mut) Strength and Dexterity loss for 2 turns.	hello	0	N/A	"(trigger)gainStat: Strength, -Mut, 2"	"(trigger)gainStat: Dexterity, -Mut, 2"
+Faltering Flesh	Going below 30% health grants a 5 turn ally with (Mut) health. Losing this ally causes (Mut)d2 health loss.	hello	1	hello	"(trigger)selfEffect: Faltering Growth, Mut, 5"	

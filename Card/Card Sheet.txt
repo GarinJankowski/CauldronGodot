@@ -112,7 +112,7 @@ Dodge	Defend	"For 1 turn, ignore the opponent's next offensive card. If any were
 Dodge Energy	Defend	Gain (Dex) energy.	"{You} dodge{s} the attack, gaining {gainEnergy} energy."	gainEnergy: Dex							
 Step Back	Defend	Gain 1 distance. Gain 3 energy. Burn this card.	{You} step{s} {away} from {enemyName}.	gainDistance: 1	gainEnergy: 3	burn					
 											
-Fortify	Defend	Add (Dex)/2 block and 1 turn to every block effect you have. Lose 10 energy.	"{You} fortif{y} {your} defenses, gaining {gainBlock} block."	UNIQUEFUNCTION	gainEnergy: -10						
+Fortify	Defend	Gain 1 block for 3 turns. Add (Dex)/2 block and 1 turn to every block effect you have. Lose 10 energy.	"{You} fortif{y} {your} defenses, gaining {gainBlock} block."	"gainBlock: 1, 3"	UNIQUEFUNCTION	gainEnergy: -10					
 Stabilize	Defend	Gain (Dex) block for 1 turn. Gain 6 energy.	{You} gain{s} {gainBlock} block for {gainBlockTurns}.	"gainBlock: Dex, 1"	gainEnergy: 6						
 Reinforce	Defend	"For 3 turns, gain (Dex)/2 block for 1 turn."	"{You} reinforce{s} {your} defense, gaining {blockOTValue} block for {blockOTTurns}."	"blockOT: Dex / 2, 3"	gainEnergy: -3						
 Regrow	Defend	Gain (Dex) health. Gain 6 energy.	{You} gain{s} {gainHealth} health.	gainHealth: Dex	gainEnergy: 6						
@@ -289,9 +289,10 @@ Runed Glove	Item	Your next card has twice the effect.	{You} duplicate{s} {your} 
 Handle Wrap	Item	Gain 5 Strength for 2 turns. Gain 8 energy.	{You} grip{s} {your} weapon tightly.	"gainStat: Strength, 5, 2"	gainEnergy: 8						
 											
 Gorger	Positive	Gain (Mut)/2 Max Health permanently.	"[you]{You} devour{s} {enemyName}, gaining {statUp} Max Health."	"statUp: Max Health, Mut / 2"							
+Reconstruction	Positive	Lose 5 Max Health permanently. Gain full health. Gain (Mut)*3 permablock.	[you]{Your} body reconstructs itself!	"statUp: Max Health, -5"	UNIQUEFUNCTION	"selfEffect: Permablock, Mut * 3"					
 Knockback	Positive	Give the opponent (Mut)/2 distance.	"[you]{You} hit {enemyName} so hard, {you} knocked {them} back!"	enemygainDistance: Mut / 2							
 Shock Absorbers	Positive	Gain (Mut)/5+1 shield for 2 turns.	"[you]{You} gain{s} {gainShield} shield for {gainShieldTurns}, absorbing incoming hits."	"gainShield: Mut / 5 + 1, 2"							
-Muscle Mass	Negative	Deal your stored up damage.	[you]{You} use{s} {your} stored up damage and crush{es} {enemyName} for {dealDirectDamage}.	dealDirectDamage: effect(Muscle_Mass)							
+Muscle Mass	Negative	Deal your stored up damage.	[you]{You} use{s} {your} stored up damage and crush{es} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: effect(Muscle_Mass)							
 Sneeze	Negative	The opponent takes 1d(Mut) damage for 3 turns. Discard this for 5 turns.	[you]ACHOO![n] {You} spray{s} {enemyName} with acid for {directDamageOTTurns}.	forceUsable	"directDamageOT: 1 d Mut, 3"	discard: 5					
 											
 Bite	Attack	Deal 1d(Str) damage.	{You} bite{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str							

@@ -296,8 +296,12 @@ func createCardFunctions(cardstring):
 				uniqueFlags.append(act[0])
 				actionValues[act[0]] = 0
 				var line = ""
-				if act[0] == "manaCost":
+				if act[0] == "manaCost" && cardType == "Spell":
 					line += tab + "if !myself.hasEffect('No Mana Cost'):"
+					tab += "\t"
+					line += tab + "if myself.hasMutation('Brainless'):"
+					line += tab + "\tactionValues['" + act[0] + "'] += Combat.takeDirectDamage(-Card.calculate(cardActions['" + act[0] + "']), Card)"
+					line += tab + "else:"
 					tab += "\t"
 				line += tab + "actionValues['" + act[0] + "'] += Combat." + f + "(Card.calculate(cardActions['" + act[0] + "']), Card)"
 				costString += line
@@ -538,15 +542,22 @@ func uniqueCardFunction(cardName, actionValues):
 		functionstr += tab + "if myself.hasEffect('Block'):"
 		functionstr += tab + "\tfor eff in effectList['Block']:"
 		functionstr += tab + "\t\teff.add(fortifyblock)"
+		functionstr += tab + "\t\teff.turns += 1"
 		functionstr += tab + "\t\tactionValues['gainBlock'] += fortifyblock"
 	elif cardName == "Lightning":
+		#custom Brainless interaction
 		actionValues['dealDirectDamage'] = 0
 		actionValues['dealDirectDamageTimes'] = 0
-		functionstr += "\n\tvar times = myself.CurrentMana"
-		functionstr += "\n\tCombat.gainMana(-times, Card)"
-		functionstr += "\n\tfor i in times:"
-		functionstr += "\n\t\tactionValues['dealDirectDamageTimes'] += 1"
-		functionstr += "\n\t\tactionValues['dealDirectDamage'] += Combat.dealDirectDamage(Card.calculate('1 d 2'), Card)"
+		functionstr += tab + "var times"
+		functionstr += tab + "if myself.hasMutation('Brainless'):"
+		functionstr += tab + "\ttimes = myself.CurrentHealth"
+		functionstr += tab + "\tCombat.takeDirectDamage(times, Card)"
+		functionstr += tab + "else:"
+		functionstr += tab + "\ttimes = myself.CurrentMana"
+		functionstr += tab + "\tCombat.gainMana(-times, Card)"
+		functionstr += tab + "for i in times:"
+		functionstr += tab + "\tactionValues['dealDirectDamageTimes'] += 1"
+		functionstr += tab + "\tactionValues['dealDirectDamage'] += Combat.dealDirectDamage(Card.calculate('1 d 2'), Card)"
 	elif cardName == "Splinter":
 		actionValues['dealDirectDamage'] = 0
 		functionstr += "\n\tactionValues['dealDirectDamage'] += Combat.dealDirectDamage(Card.calculate('Int * ' + str(myself.getEffect('Extra Turns'))), Card)"
@@ -654,6 +665,9 @@ func uniqueCardFunction(cardName, actionValues):
 		functionstr += tab + "\tCard.logOutput = '{You} adjust{s} {your} vitals, gaining {gainEnergy} energy, {gainMana} mana, and losing {gainHealth} health.'"
 		functionstr += tab + "else:"
 		functionstr += tab + "\tCard.logOutput = '{You} fail{s} to adjust {your} vitals.'"
+	if cardName == "Reconstruction":
+		functionstr += tab + "myself.CurrentHealth = myself.convertStat('MHP')"
+		functionstr += tab + "myself.updateUI()"
 		
 	return functionstr
 
@@ -876,7 +890,7 @@ func createEffectFunctions(effectstring):
 				elif act[1] == "decrement":
 					actionstring += tab + "Effect.add(-1)"
 				elif act[1] == "zero":
-					actionstring += tab + "Effect.add(-Effect.value)"
+					actionstring += tab + "Effect.add(-int(Effect.value))"
 				elif act[1] == "UNIQUEFUNCTION":
 					actionstring += uniqueEffectFunction(effectName, whichstring)
 			elif act[0] == "fill":
@@ -899,9 +913,12 @@ func createEffectFunctions(effectstring):
 					tab += "\t"
 				actionstring += tab + "myself.useGhostCard('" + cardname + "', Combat)"
 			elif act[0] == "manaCost":
-				actionstring += tab + "if Effect.calculate('" + act[1] + "') > myself.CurrentMana:"
+				actionstring += tab + "if Effect.calculate('" + act[1] + "') > myself.CurrentMana && !myself.hasMutation('Brainless'):"
 				actionstring += tab + "\treturn"
-				actionstring += tab + "Combat.gainMana(-Effect.calculate('" + act[1] + "'), Card)"
+				actionstring += tab + "if myself.hasMutation('Brainless'):"
+				actionstring += tab + "\tCombat.takeDirectDamage(Effect.calculate('" + act[1] + "'), Card)"
+				actionstring += tab + "else:"
+				actionstring += tab + "\tCombat.gainMana(-Effect.calculate('" + act[1] + "'), Card)"
 			else:
 				actionstring += tab + "Combat." + act[0] + "(Effect.calculate('" + act[1] + "'), Card)"
 				#if act[0] == "gainEnergy":
@@ -949,6 +966,8 @@ func createEffectFunctions(effectstring):
 	varString += liststring
 	scriptString = varString + scriptString
 	
+#	if effectName == "Muscle Mass":
+#		print_debug(scriptString)
 	script.set_source_code(scriptString)
 	script.resource_name = "Effect" + effectName
 	script.resource_path = "res://Effect/" + script.resource_name + ".gd"
@@ -1177,7 +1196,6 @@ func uniqueMutationCheck(mutName, tab):
 	
 func uniqueMutationFunction(mutName, tab):
 	var actionString = ""
-	if mutName == "Reconstruction":
-		actionString += tab + "myself.CurrentHealth = myself.convertStat('MHP')"
-		actionString += tab + "myself.updateUI()"
+	if mutName == "":
+		actionString += tab + ""
 	return actionString

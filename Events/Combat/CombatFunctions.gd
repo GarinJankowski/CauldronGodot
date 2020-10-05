@@ -30,6 +30,13 @@ func change(who, type, amount, Card = null, turns = 1):
 		return
 	if type == "Health":
 		var pasthealth = who.CurrentHealth
+		if who.hasMutation("Mana Veins") && amount < 0:
+			if -amount > who.CurrentMana:
+				amount += who.CurrentMana
+				change(who, "Mana", -who.CurrentMana)
+			else:
+				change(who, "Mana", amount)
+				amount = 0
 		who.CurrentHealth += amount
 		if who.CurrentHealth < 0:
 			who.CurrentHealth = 0
@@ -37,6 +44,8 @@ func change(who, type, amount, Card = null, turns = 1):
 			who.CurrentHealth = who.convertStat("MHP")
 		if who.hasMutation("Mending Flesh") && pasthealth >= int(who.convertStat("MHP")*0.7) && who.CurrentHealth < int(who.convertStat("MHP")*0.7):
 			who.triggerMutation("Mending Flesh")
+		if who.hasMutation("Faltering Flesh") && pasthealth >= int(who.convertStat("MHP")*0.3) && who.CurrentHealth < int(who.convertStat("MHP")*0.3):
+			who.triggerMutation("Faltering Flesh")
 		if amount < 0:
 			who.trigger("Frozen")
 			if who.hasEffect("Stranglehold (Attacker)"):
@@ -117,10 +126,11 @@ func checkEnergy():
 		else:
 			player.CurrentEnergy = 0
 	while player.CurrentEnergy <= -20+player.MaxEnergy:
-		if player.ExtraTurns() > 0:
-			player.addExtraTurns(-1)
-		else:
-			enemy.addExtraTurns(1)
+		if !player.triggerMutation("Atrophy"):
+			if player.ExtraTurns() > 0:
+				player.addExtraTurns(-1)
+			else:
+				enemy.addExtraTurns(1)
 		if player.isAlive() && opponent.isAlive():
 			amount -= 1
 		#player.CurrentEnergy += 20-player.MaxEnergy
@@ -162,6 +172,7 @@ func addEffect(target, effectName, value, turns):
 	return turns
 
 #deal damage functions
+#calculate is used to calculate the damage ignorant of the target, only using the source's modifiers
 func calculateDirectDamage(damage, me, enemy, Card):
 	if Card != null:
 		if Card.cardType == "Attack":
@@ -181,10 +192,11 @@ func dealDirectDamage(damage, Card):
 	return dmg
 func takeDirectDamage(damage, Card):
 	return directDamage(damage, me, me, Card)
+#applies the modifiers and deals the damages
 func directDamage(damage, myself, opponent, Card):
 	var calcdmg = calculateDirectDamage(damage, myself, opponent, Card)
 	var usedmg = calcdmg
-	
+	#outgoing changes from the source
 	if Card != null:
 		if Card.cardType == "Attack":
 			myself.tickEffect("Sharpen")
@@ -192,6 +204,11 @@ func directDamage(damage, myself, opponent, Card):
 				myself.tickEffect("Fuse")
 			myself.tickEffect("Aim")
 		usedmg += myself.valueMutation("Focused Rage", usedmg)
+		#if the source has Muscle Mass, ignore the rest of the function
+		if myself.hasEffect("Muscle Mass") && Card.cardName != "Muscle Mass":
+			myself.addEffect("Muscle Mass", usedmg, -1, Card)
+			return 0
+	#incoming changes from the enemy
 	if opponent.hasEffect("Phase"):
 		opponent.increaseEffect("Phase", usedmg)
 		usedmg = 0
@@ -231,14 +248,6 @@ func directDamage(damage, myself, opponent, Card):
 	
 	if opponent.Effects.allyBlock(usedmg):
 		usedmg = 0
-		
-	if opponent.hasMutation("Mana Veins"):
-		if usedmg > opponent.CurrentMana:
-			usedmg -= opponent.CurrentMana
-			change(opponent, "Mana", -opponent.CurrentMana)
-		else:
-			change(opponent, "Mana", -usedmg)
-			usedmg = 0
 	
 	if usedmg > 0:
 		change(opponent, "Health", -usedmg)

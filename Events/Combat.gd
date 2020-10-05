@@ -220,14 +220,16 @@ func fleeCombat():
 
 func checkDeath():
 	if !guy.isAlive():
-		waiting = true
-		enemy.triggerMutation("Gorger")
-		guy.DEAD()
-		return true
+		if !(guy.convertStat("MHP") > 5 && guy.triggerMutation("Reconstruction")):
+			waiting = true
+			enemy.triggerMutation("Gorger")
+			guy.DEAD()
+			return true
 	elif !enemy.isAlive():
-		waiting = true
-		enemy.enemyDeath()
-		return true
+		if !(enemy.convertStat("MHP") > 5 && enemy.triggerMutation("Reconstruction")):
+			waiting = true
+			enemy.enemyDeath()
+			return true
 	return false
 
 #check whos turn

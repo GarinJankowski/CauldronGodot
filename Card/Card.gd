@@ -636,7 +636,31 @@ func updateDescription():
 			i += 1
 	if cardType == "Harmful":
 		newdesc = newdesc.replace("(", "").replace(")", "")
+		
 	get_node("Top/descriptionText").text = newdesc
+	updateCostDescription()
+	
+func updateCostDescription():
+	var newcost = ""
+	if "manaCost" in cardActions:
+		if myself.hasMutation("Brainless"):
+			newcost += "Take " + str(-int(cardActions["manaCost"])) + " damage."
+		else:
+			newcost += "Costs " + str(-int(cardActions["manaCost"])) + " mana. "
+	if "energyCost" in cardActions:
+		if myself.hasMutation("Weight Lifter"):
+			var energycost =  int(cardActions["energyCost"]) + myself.valueMutation("Weight Lifter")
+			if energycost > 0:
+				energycost = 0
+			cardActions["energyCost"] = str(energycost)
+		newcost += "Costs " + str(-int(cardActions["energyCost"])) + " energy. "
+	if "distanceCost" in cardActions:
+		newcost += "Costs " + str(-int(cardActions["distanceCost"])) + " dsitance. "
+	if "defensesCost" in cardProperties:
+		costDescription += "Opponent must have no defenses. "
+	if "forceUsable" in cardProperties:
+		costDescription += "This card must be played. "
+	get_node("Top/costText").text = newcost
 
 func changeToDevice():
 	cardType = "Device"

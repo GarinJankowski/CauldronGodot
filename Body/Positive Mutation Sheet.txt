@@ -5,12 +5,13 @@ Gorger	Gain (Mut)/2 Max Health after winning combat.	hello	1	hello	(trigger)useC
 Camouflage	"At the start of combat, retain excess energy for 2 turns and gain (Mut) energy."	hello	0	N/A	"(start)selfEffect: Energized, 2"	(start)gainEnergy: Mut	
 Hemoglobin	All healing received is increased by (Mut).	hello	1	hello	value: Mut		
 Tough Hide	Health loss is reduced by (Mut).	hello	1	hello	value: Mut		
-Weight Lifter	Energy costs are reduced by (Mut)	hello	0	N/A	value: Mut		
-Reconstruction	Dying revives you with (Mut)x3 permablock and 5 less Max Health permanently.	hello	1	hello	"(trigger)statUp: Max Health, -5"	(trigger)UNIQUEFUNCTION	(trigger)gainBlock: Mut * 3
+Strong Arm	Energy costs are reduced by (Mut)	hello	0	N/A	value: Mut		
+Reconstruction	Dying revives you with (Mut)x3 permablock and 5 less Max Health permanently.	hello	1	hello	(trigger)useCard: Reconstruction		
 Quick Thinker	Getting an extra turn gives you (Mut)+3 mana.	hello	1	hello	(trigger)gainMana: Mut + 3		
 Focused Rage	Dealing at least (Mut)x5 damage in one hit adds (Mut)x3 damage.	hello	1	hello	UNIQUECHECKvalue: Mut * 3		
-Mending Flesh	Going below 70% health grants an ally with 1 health that grants (Mut) health each turn.	hello	1	hello	"(trigger)selfEffect: Mending Growth, 1, 5"		
+Mending Flesh	Going below 70% health grants a 5 turn ally with 1 health that grants 1d(Mut) health each turn.	hello	1	hello	"(trigger)selfEffect: Mending Growth, 1, 5"		
 Growth Spurt	"""+(Mut)/4 Strength, Intelligence, and Dexterity."""	hello	1	hello	"scale: Strength, 0.25"	"scale: Dexterity, 0.25"	"scale: Intelligence, 0.25"
 Gelatinous	"At the start of combat, gain (Mut) deflect for 3 turns."	hello	1	hello	"(start)selfEffect: Deflect, Mut, 3"		
-Knockback	Deal at least (Mut)x6 damage in one hit gives the opponent (Mut)/2 distance.	hello	1	hello	UNIQUECHECK(trigger)useCard: Knockback		
+Knockback	Dealing at least (Mut)x6 damage in one hit gives the opponent (Mut)/2 distance.	hello	1	hello	UNIQUECHECK(trigger)useCard: Knockback		
 Shock Absorbers	Taking a hit greater than your max health proactively grants (Mut)/5+1 shield for 2 turns.	hello	1	hello	(trigger)useCard: Shock Absorbers		
+Mana Veins	Losing any health takes from your mana first	hello	0	N/A	N/A		

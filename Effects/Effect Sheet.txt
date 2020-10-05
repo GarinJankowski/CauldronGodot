@@ -115,3 +115,4 @@ Volatile	-1	Bad	cycle: 4	unstackable	takeDirectDamage: Val	dealDirectDamage: Val
 Berserk	0	Bad	fill: Attack				
 Muscle Mass	-1	Bad	cycle: Mut	useCard: Muscle Mass	self: zero	zero	
 Scrambled	-1	Bad	cycle: 8 - Mut	action: selfShuffle			
+Faltering Growth	0	Good	ally	(end)takeIndirectDamage: Mut d 2			
