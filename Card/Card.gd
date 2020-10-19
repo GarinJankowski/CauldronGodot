@@ -253,6 +253,17 @@ func deflectedCardFunction(copytimes):
 	scriptObject.Combat = tempCombat
 	scriptObject.opponent = tempOpponent
 
+#makes checks for any non-Copy effect that duplicates the function of a card
+func checkCopyEffects():
+	var copy = 0
+	if myself.hasEffect("Heave") && cardType == "Attack" && opponent.hasDefenses():
+		copy += 1
+	if myself.hasEffect("Throw") && cardType == "Attack" && hasOffensiveAction():
+		copy += 1
+	if myself.hasEffect("Inspire") && cardType == "Spell" && !"manaCost" in cardActions && cardName != "Thunderstorm" && cardName != "Drown":
+		copy += 1
+	return copy
+	
 #all of this Alternate, times, and copytimes stuff is for certain edge cases with the Copy effect
 #it exists to deal with copying ghost cards and other cards properly so when a card is copied and played, all the copies are play simultaneously
 func useCard(copytimes = 0):
@@ -260,15 +271,12 @@ func useCard(copytimes = 0):
 		actionValues[key] = 0
 	scriptObject.useCost()
 	
-	if (myself.hasEffect("Copy") || (((myself.hasEffect("Heave") && opponent.hasDefenses()) || myself.hasEffect("Throw")) && hasOffensiveAction() && cardType == "Attack") || copytimes > 0) && (!ghost || has("isAlternate")):
+	if (myself.hasEffect("Copy") || checkCopyEffects() || copytimes > 0) && (!ghost || has("isAlternate")):
 		var times = 1
 		if myself.hasEffect("Copy"):
 			times += int(myself.getEffect("Copy"))
 			myself.removeEffect("Copy")
-		if myself.hasEffect("Heave"):
-			times += 1
-		if myself.hasEffect("Throw"):
-			times += 1
+		times += checkCopyEffects()
 		
 		if has("CUSTOMCOPYFUNCTION"):
 			scriptObject.useCustomCopy(times)
@@ -293,6 +301,8 @@ func useCard(copytimes = 0):
 	
 
 func checkCardTypeEffects():
+	if !myself.inCombat:
+		return
 	myself.trigger("Record")
 	if cardType == "Attack":
 		myself.trigger("Transmute")
@@ -322,6 +332,8 @@ func checkCardTypeEffects():
 	CombatDeck.get_ref().lastPlayed = self
 
 func checkOtherEffects():
+	if !myself.inCombat:
+		return
 	#effects that occur when you play an offensive card
 	if hasOffensiveAction():
 		opponent.trigger("Sense")
@@ -342,9 +354,9 @@ func checkOtherEffects():
 			Combat.gainHealth(int(actionValues["dealDirectDamage"]), self)
 			myself.tickEffect("Attack Heal")
 			myself.removeEffect("Attack Heal")
-		if "Knockback" in savedValues:
-			myself.triggerMutation("Knockback", self, savedValues["Knockback"])
-			savedValues.erase("Knockback")
+		if "True Impact" in savedValues:
+			myself.triggerMutation("True Impact", self, savedValues["True Impact"])
+			savedValues.erase("True Impact")
 		
 		opponent.trigger("Spikes")
 		opponent.trigger("Sear")
@@ -414,6 +426,7 @@ func hasOffensiveAction():
 	if "action" in cardActions && cardActions["action"] == "pierce":
 		return true
 	return false
+	
 
 func hasAction(action):
 	for a in cardActions:
@@ -503,7 +516,7 @@ func cardLogOutput():
 			var addword = ""
 			if word.capitalize() == "You" || word.capitalize() == "Your" || word == "yourself":
 				if myself.isPlayer():
-					if i == start:
+					if word.begins_with("You"):
 						addword = "You"
 					else:
 						addword = "you"
@@ -512,7 +525,7 @@ func cardLogOutput():
 					elif word == "yourself":
 						addword += "rself"
 				else:
-					if i == start:
+					if word.begins_with("You"):
 						addword = "The " + myself.enemyName
 					else:
 						addword = "the " + myself.enemyName
@@ -648,8 +661,8 @@ func updateCostDescription():
 		else:
 			newcost += "Costs " + str(-int(cardActions["manaCost"])) + " mana. "
 	if "energyCost" in cardActions:
-		if myself.hasMutation("Weight Lifter"):
-			var energycost =  int(cardActions["energyCost"]) + myself.valueMutation("Weight Lifter")
+		if myself.hasMutation("Strong Arm"):
+			var energycost =  int(cardActions["energyCost"]) + myself.valueMutation("Strong Arm")
 			if energycost > 0:
 				energycost = 0
 			cardActions["energyCost"] = str(energycost)
@@ -657,10 +670,22 @@ func updateCostDescription():
 	if "distanceCost" in cardActions:
 		newcost += "Costs " + str(-int(cardActions["distanceCost"])) + " dsitance. "
 	if "defensesCost" in cardProperties:
-		costDescription += "Opponent must have no defenses. "
+		newcost += "Opponent must have no defenses. "
 	if "forceUsable" in cardProperties:
-		costDescription += "This card must be played. "
-	get_node("Top/costText").text = newcost
+		newcost += "This card must be played. "
+	costDescription = newcost + uniqueCardCost()
+	get_node("Top/costText").text = costDescription
+	
+func uniqueCardCost():
+	var desc = ""
+	if cardName == "Lightning":
+		if myself.hasMutation("Brainless"):
+			desc += "Take a bunch of damage."
+		else:
+			desc += "Costs all your mana. "
+	elif cardName == "Digest":
+		desc += "Opponent must be envenomed. "
+	return desc
 
 func changeToDevice():
 	cardType = "Device"
@@ -751,12 +776,14 @@ func getPriority():
 	
 	if hasUniqueFlag("setup"):
 		priority += 75
+	elif hasAction("selfEffect"):
+		priority += 75
 	
 	if hasAction("damageOT"):
 		priority += 70
 		
 	if hasAction("stranglehold"):
-		if myself.stranglehold() <= 0:
+		if int(myself.stranglehold()) <= 0:
 			priority += 100
 		priority += 60
 	
@@ -765,7 +792,7 @@ func getPriority():
 
 	if hasAction("gainDistance"):
 		priority += 50
-	if hasAction("gainHealth") && myself.MaxHealth - myself.CurrentHealth >= Combat.calculateHealth(calculateMin(cardActions["gainHealth"]), myself, opponent, self):
+	if hasAction("gainHealth") && myself.convertStat("missingHealth") >= Combat.calculateHealth(calculateMin(cardActions["gainHealth"]), myself, opponent, self):
 		priority += 45
 	if hasAction("gainShield"):
 		priority += 45
@@ -774,6 +801,8 @@ func getPriority():
 	if hasAction("action"):
 		if cardActions["action"] == "pierce" && (opponent.Block() > 0 || opponent.Shield() > 0):
 			priority += 30
+	if cardType != "Negative":
+		priority += 1
 	
 	return priority
 

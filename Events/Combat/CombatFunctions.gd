@@ -13,6 +13,7 @@ func init(myself, opponent):
 	
 	Game = get_parent().get_parent().Game
 	textlog = Game.textlog
+	CombatEvent = myself.currentCombatEvent
 
 func setCombatEvent(event):
 	CombatEvent = event
@@ -50,6 +51,7 @@ func change(who, type, amount, Card = null, turns = 1):
 			who.trigger("Frozen")
 			if who.hasEffect("Stranglehold (Attacker)"):
 				who.addStranglehold(amount, Card)
+			CombatEvent.checkDeath()
 		who.updateHealth()
 		#if CombatEvent != null:
 			#CombatEvent.checkDeath()
@@ -59,6 +61,8 @@ func change(who, type, amount, Card = null, turns = 1):
 			who.CurrentMana = 0
 		elif who.CurrentMana > who.convertStat("MMP"):
 			who.CurrentMana = who.convertStat("MMP")
+		if who.CurrentMana == 0:
+			who.trigger("Force Field")
 		if who.isPlayer():
 			who.updateMana()
 	elif type == "Block":
@@ -89,9 +93,9 @@ func change(who, type, amount, Card = null, turns = 1):
 			for i in amount:
 				player.addExtraTurns(1, Card)
 			if amount == 1:
-				textlog.push("[y]EXTRA TURN")
+				textlog.queue("[y]EXTRA TURN")
 			else:
-				textlog.push("[y]" + str(amount) + " EXTRA TURNS")
+				textlog.queue("[y]" + str(amount) + " EXTRA TURNS")
 		elif amount < 0:
 			for i in -amount:
 				if player.ExtraTurns() > 0:
@@ -99,9 +103,9 @@ func change(who, type, amount, Card = null, turns = 1):
 				else:
 					enemy.addExtraTurns(1, Card)
 			if amount == -1:
-				textlog.push("[o]TURN LOSS")
+				textlog.queue("[o]TURN LOSS")
 			else:
-				textlog.push("[o]" + str(-amount) + " TURN LOSSES")
+				textlog.queue("[o]" + str(-amount) + " TURN LOSSES")
 		
 func checkEnergy():
 	var player
@@ -138,14 +142,14 @@ func checkEnergy():
 	
 	if amount > 0:
 		if amount == 1:
-			textlog.push("[y]EXTRA TURN")
+			textlog.queue("[y]EXTRA TURN")
 		else:
-			textlog.push("[y]" + str(amount) + " EXTRA TURNS")
+			textlog.queue("[y]" + str(amount) + " EXTRA TURNS")
 	elif amount < 0:
 		if amount == -1:
-			textlog.push("[o]TURN LOSS")
+			textlog.queue("[o]TURN LOSS")
 		else:
-			textlog.push("[o]" + str(-amount) + " TURN LOSSES")
+			textlog.queue("[o]" + str(-amount) + " TURN LOSSES")
 	player.updateEnergy()
 
 func addEffect(target, effectName, value, turns):
@@ -184,7 +188,10 @@ func calculateDirectDamage(damage, me, enemy, Card):
 			if me.hasEffect("Aim"):
 				damage *= 2
 	damage += me.valueMutation("Frenzy")*damage
+	#? should the bottom one be here or in direct damage
 	damage += enemy.valueMutation("Frenzy")*damage
+	if Card != null:
+		damage += me.valueMutation("Raw Power", damage)
 	return damage
 func dealDirectDamage(damage, Card):
 	var dmg
@@ -203,9 +210,8 @@ func directDamage(damage, myself, opponent, Card):
 			if Card.has("projectile"):
 				myself.tickEffect("Fuse")
 			myself.tickEffect("Aim")
-		usedmg += myself.valueMutation("Focused Rage", usedmg)
 		#if the source has Muscle Mass, ignore the rest of the function
-		if myself.hasEffect("Muscle Mass") && Card.cardName != "Muscle Mass":
+		if myself.hasEffect("Muscle Mass") && myself != opponent && Card.cardName != "Muscle Mass":
 			myself.addEffect("Muscle Mass", usedmg, -1, Card)
 			return 0
 	#incoming changes from the enemy
@@ -221,8 +227,8 @@ func directDamage(damage, myself, opponent, Card):
 	if opponent.hasEffect("Parry"):
 		usedmg /= 2
 	
-	if myself.hasMutation("Knockback") && Card != null:
-		Card.savedValues["Knockback"] = usedmg
+	if myself.hasMutation("Raw Impact") && Card != null:
+		Card.savedValues["Raw Impact"] = usedmg
 	if opponent.hasMutation("Shock Absorbers") && usedmg > opponent.convertStat("MHP"):
 		opponent.triggerMutation("Shock Absorbers")
 		
@@ -258,7 +264,7 @@ func directDamage(damage, myself, opponent, Card):
 	return calcdmg
 	
 func calculateIndirectDamage(damage, me, enemy, Card):
-	damage -= enemy.valueMutation("Tough Hide")
+	damage -= enemy.valueMutation("Pain Tolerance")
 	if damage < 0:
 		damage = 0
 	if (enemy.hasEffect("Dodge") || enemy.hasEffect("Elude") || enemy.hasEffect("Sense")) && enemy != me && Card != null:
@@ -325,6 +331,7 @@ func gainBlock(block, Card, turns = 1):
 func block(block, myself, opponent, Card, turns = 1):
 	var calcblock = calculateBlock(block, myself, opponent, Card)
 	
+	turns += myself.valueMutation("Tough Hide")
 	change(myself, "Block", calcblock, Card, turns)
 		
 	return calcblock
@@ -337,6 +344,7 @@ func gainShield(shield, Card, turns = 1):
 func shield(shield, myself, opponent, Card, turns = 1):
 	var calcshield = calculateShield(shield, myself, opponent, Card)
 	
+	turns += myself.valueMutation("Tough Hide")
 	change(myself, "Shield", calcshield, Card, turns)
 		
 	return calcshield
@@ -348,6 +356,9 @@ func distance(distance, myself, opponent, Card):
 	var calcdistance = distance
 	if myself.hasEffect("Suspend"):
 		calcdistance = 0
+	elif (myself.hasEffect("Stranglehold (Attacker)") || myself.hasEffect("Stranglehold (Target)")) && distance > 0:
+		calcdistance = 0
+		myself.useGhostCard("Stranglehold Distance", myself.currentCombat)
 	
 	change(myself, "Distance", calcdistance, Card)
 	

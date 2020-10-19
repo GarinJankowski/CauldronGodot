@@ -53,10 +53,7 @@ func generateEnemy(px, py):
 	var terrain = m.Terrain[px][py].terrain
 	
 	enemyName = m.enemyGeneration[tier][terrain][randi()%m.enemyGeneration[tier][terrain].size()]
-	if enemyName == "Rat":
-		experience = 1
-	else:
-		experience = xp[tier]
+	experience = xp[tier]
 
 func enableAreaCollisions(truefalse):
 	get_node("roomArea/CollisionShape2D").disabled = !truefalse

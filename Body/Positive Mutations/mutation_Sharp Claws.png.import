@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/mutation_Claws.png-d278c9a3c093c88317fb8fccbd762678.stex"
+path="res://.import/mutation_Sharp Claws.png-69e41285ccb540e6ce9e08a313784d6b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Body/Positive Mutations/mutation_Claws.png"
-dest_files=[ "res://.import/mutation_Claws.png-d278c9a3c093c88317fb8fccbd762678.stex" ]
+source_file="res://Body/Positive Mutations/mutation_Sharp Claws.png"
+dest_files=[ "res://.import/mutation_Sharp Claws.png-69e41285ccb540e6ce9e08a313784d6b.stex" ]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=true
+flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

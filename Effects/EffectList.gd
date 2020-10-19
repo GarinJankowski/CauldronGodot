@@ -51,8 +51,11 @@ func fixRetainedEffects():
 			effect.scriptObject.Card = null
 			effect.myself = myself
 			effect.Combat = myself.currentCombat
+			if effect.Combat == null:
+				effect.scriptObject.opponent = null
+			else:
+				effect.scriptObject.opponent = myself.currentCombat.enemy
 			effect.scriptObject.myself = myself
-			effect.scriptObject.opponent = myself.currentCombat.enemy
 			effect.scriptObject.Combat = myself.currentCombat
 
 #if the effect is stackable, add it to the existing one

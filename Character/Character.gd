@@ -72,7 +72,7 @@ func init():
 	Strength = 3
 	Dexterity = 3
 	Intelligence = 3
-	MutationLevel = 3
+	MutationLevel = 0
 	
 	CurrentExperience = 0
 	MaxExperience = 10
@@ -132,6 +132,8 @@ func init():
 	#Bag.addCard("")
 	#Bag.addMod("", 0)
 	#Body.addMutation("")
+	#addStat("", 0)
+	
 	
 func gainExperience(value):
 	CurrentExperience += value
@@ -331,16 +333,20 @@ func restoreVariables():
 	onExtraTurn = false
 
 func restoreStats():
+	Effects.fixRetainedEffects()
 	Effects.removeEffects("Bad")
-	CurrentHealth = MaxHealth
-	CurrentMana = MaxMana
-	CurrentEnergy = 0
 	
 	tempMaxHealth = 0
 	tempStrength = 0
 	tempDexterity = 0
 	tempIntelligence = 0
 	tempMutationLevel = 0
+	updateMutScaling()
+	
+	CurrentHealth = convertStat("MHP")
+	CurrentMana = convertStat("MMP")
+	CurrentEnergy = 0
+	
 	
 	statsRestored = true
 	updateUI()
@@ -360,9 +366,6 @@ func hasMutation(mutationName):
 	
 func isPlayer():
 	return true
-	
-func isAlive():
-	return CurrentHealth > 0
 	
 func DEAD():
 		updateStats()

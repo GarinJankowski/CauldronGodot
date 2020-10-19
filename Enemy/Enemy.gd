@@ -12,6 +12,9 @@ var singleList = {
 	"Negative": negativeList
 }
 
+var inCombat = true
+var mutated = false
+
 var healthBar
 var healthBarSizeX
 
@@ -67,6 +70,7 @@ func _process(delta):
 		node.position.y += stepy
 
 func mutate():
+	mutated = true
 	var tiers = {
 		"A": 1,
 		"B": 2,
@@ -81,7 +85,7 @@ func mutate():
 		Dexterity *= 10
 		Intelligence *= 10
 		MutationLevel = 100
-	elif Tier == "Boss":
+	elif Tier.begins_with("Boss"):
 		MaxHealth *= 10
 		Strength *= 10
 		Dexterity *= 10
@@ -116,6 +120,16 @@ func addMutation(mutationName):
 		singleList[positive].append(scriptObject)
 		mutationList[mutationName] = scriptObject
 
+func pushMutationText():
+	var postext = scriptgen.MutationScripts[positiveList[0].mutationName][0]["enemyLog"]
+	var negtext = scriptgen.MutationScripts[negativeList[0].mutationName][0]["enemyLog"]
+	
+	var firstchar = postext.substr(0, 1)
+	postext.erase(0, 1)
+	
+	var output = "[P]" + firstchar.to_upper() + postext + "[h] and " + negtext + "."
+	textlog.push(output)
+
 func startMutation(positive):
 	for mut in singleList[positive]:
 		mut.startFunction()
@@ -126,6 +140,8 @@ func triggerMutation(mutationName, Card = null, amount = 0):
 		var Combat
 		if Card != null:
 			Combat = Card.Combat
+		else:
+			Combat = currentCombat
 		mutationList[mutationName].triggerFunction(Combat, amount)
 		return true
 	return false
@@ -259,9 +275,6 @@ func setValuesFromString(enemystring):
 func isPlayer():
 	return false
 
-func isAlive():
-	return CurrentHealth > 0
-	
 func enemyDeath():
 	get_parent().enemyDeath()
 	queue_free()

@@ -83,3 +83,9 @@ func _on_mutationButton_pressed():
 		Input.action_press("number_3")
 		yield(get_tree().create_timer(0.001), "timeout")
 		Input.action_release("number_3")
+		
+func disableButton():
+	get_node("mutationButton").visible = false
+	
+func enableButton():
+	get_node("mutationButton").visible = true

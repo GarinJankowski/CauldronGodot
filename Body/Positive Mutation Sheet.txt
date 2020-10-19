@@ -1,17 +1,21 @@
 Name	Description	Text Log	Enemy Usable	Enemy Text	Flags		
-Sharp Claws	Attacks deal 1d(Mut) extra damage.	hello	1	hello	value: 1 d Mut		
-Spiny Skin	"Every time the opponent damages you, deal (Mut) damage."	hello	1	hello	(trigger)dealDirectDamage: Mut		
-Gorger	Gain (Mut)/2 Max Health after winning combat.	hello	1	hello	(trigger)useCard: Gorger		
-Camouflage	"At the start of combat, retain excess energy for 2 turns and gain (Mut) energy."	hello	0	N/A	"(start)selfEffect: Energized, 2"	(start)gainEnergy: Mut	
-Hemoglobin	All healing received is increased by (Mut).	hello	1	hello	value: Mut		
-Tough Hide	Health loss is reduced by (Mut).	hello	1	hello	value: Mut		
-Strong Arm	Energy costs are reduced by (Mut)	hello	0	N/A	value: Mut		
-Reconstruction	Dying revives you with (Mut)x3 permablock and 5 less Max Health permanently.	hello	1	hello	(trigger)useCard: Reconstruction		
-Quick Thinker	Getting an extra turn gives you (Mut)+3 mana.	hello	1	hello	(trigger)gainMana: Mut + 3		
-Focused Rage	Dealing at least (Mut)x5 damage in one hit adds (Mut)x3 damage.	hello	1	hello	UNIQUECHECKvalue: Mut * 3		
-Mending Flesh	Going below 70% health grants a 5 turn ally with 1 health that grants 1d(Mut) health each turn.	hello	1	hello	"(trigger)selfEffect: Mending Growth, 1, 5"		
-Growth Spurt	"""+(Mut)/4 Strength, Intelligence, and Dexterity."""	hello	1	hello	"scale: Strength, 0.25"	"scale: Dexterity, 0.25"	"scale: Intelligence, 0.25"
-Gelatinous	"At the start of combat, gain (Mut) deflect for 3 turns."	hello	1	hello	"(start)selfEffect: Deflect, Mut, 3"		
-Knockback	Dealing at least (Mut)x6 damage in one hit gives the opponent (Mut)/2 distance.	hello	1	hello	UNIQUECHECK(trigger)useCard: Knockback		
-Shock Absorbers	Taking a hit greater than your max health proactively grants (Mut)/5+1 shield for 2 turns.	hello	1	hello	(trigger)useCard: Shock Absorbers		
-Mana Veins	Losing any health takes from your mana first	hello	0	N/A	N/A		
+Sharp Claws	Attacks deal 1d(Mut) extra damage.	your nails start to develop into claws	1	sharp claws protrude out of their appendages	value: 1 d Mut		
+Spiny Skin	"Every time the opponent damages you, deal (Mut) damage."	your skin twists and grows into sharp points	1	spines cover their body	(trigger)dealDirectDamage: Mut		
+Gorger	Gain (Mut)/2 Max Health after winning combat.	you start to feel kind of hungry	1	they look hungry	(trigger)useCard: Gorger		
+Camouflage	At the start of combat prevent energy loss for 2 turns and gain (Mut)d2 energy.	the entirety of your skin starts to shift in color	0	their skin seems to meld with their surroundings	"(start)selfEffect: Tireless, 2"	(start)gainEnergy: Mut d 2	
+Hemoglobin	All healing received is increased by (Mut).	your wounds start to close a little faster	1	hello	value: Mut		
+Pain Tolerance	Health loss is reduced by (Mut).	your pain tolerance rises	1	hello	value: Mut		
+Tough Hide	Block and shield lasts (Mut) more turns.	your skin grows into a thick exterior	1	they have a layer of thick hide	value: Mut		
+Strong Arm	Energy costs are reduced by (Mut)	you suddenly feel like lifting something heavy	0	N/A	value: Mut		
+Reconstruction	Dying revives you with (Mut)x3 permablock and 5 less Max Health permanently.	"you feel all the cells in your body cling to each other, like they refuse to be apart"	1	hello	(trigger)useCard: Reconstruction		
+Quick Thinker	Getting an extra turn gives you (Mut)+3 mana.	you feel a bit more clever	1	hello	(trigger)gainMana: Mut + 3		
+Raw Power	Dealing at least (Mut)x5 damage in one hit adds (Mut)x3 damage.	you feel the pure power in your attacks	1	hello	UNIQUECHECKvalue: Mut * 3		
+Mending Flesh	Going below 70% health grants a 5 turn ally with 1 health that grants 1d(Mut) health each turn.	your flesh twists to close any wounds	1	their flesh twists and churns	"(trigger)selfEffect: Mending Growth, 1, 5"		
+Growth Spurts	"""+(Mut)/4 Strength, Intelligence, and Dexterity."""	you feel like you still have room to grow	1	hello	"scale: Strength, 0.25"	"scale: Dexterity, 0.25"	"scale: Intelligence, 0.25"
+Gelatinous	"At the start of combat, gain (Mut) deflect for 3 turns."	your skin forms a rubbery membrane	1	a gelatinous membrane covers their body	"(start)selfEffect: Deflect, Mut, 3"		
+Raw Impact	Dealing at least (Mut)x6 damage in one hit gives the opponent (Mut)/2 distance.	you feel the true impact of your attacks	1	hello	UNIQUECHECK(trigger)useCard: Raw Impact		
+Shock Absorbers	Taking a hit greater than your max health proactively grants (Mut)/5+1 shield for 2 turns.	you feel more stable	1	hello	(trigger)useCard: Shock Absorbers		
+Mana Veins	Losing any health takes from your mana first	mana shoots through your veins	0	N/A	N/A		
+Foresight	"At the start of combat, fill your hand with Spells."	you become able to prepare for the future	1	hello	(start)fill: Spell		
+Night Vision	"At the start of combat, gain (Mut) distance."	your range of vision increases	1	they are looking at you from far away	(start)gainDistance: Mut		
+Tentacle Arms	Add a Wrap to your deck.	tentacles sprout out of your body	1	they have multiple tentacles coming out of their body	addCard: Wrap		

@@ -237,9 +237,9 @@ func generateTerrain():
 			if randi()%10 == 0:
 				terrainStrings[x][y] = "Hills"
 	
-	for x in 3:
-		for y in 3:
-			terrainStrings[gridWidth-x-1][gridHeight-y-1] = "City"
+#	for x in 3:
+#		for y in 3:
+#			terrainStrings[gridWidth-x-1][gridHeight-y-1] = "City"
 	for x in 3:
 		for y in 3:
 			terrainStrings[x][y] = "Field"

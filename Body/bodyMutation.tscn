@@ -3,7 +3,7 @@
 [ext_resource path="res://Body/bodyMutation.gd" type="Script" id=1]
 [ext_resource path="res://TIMESS__.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://UI/Shapes/squareglow.png" type="Texture" id=3]
-[ext_resource path="res://Body/Positive Mutations/mutation_Spines.png" type="Texture" id=4]
+[ext_resource path="res://Body/Positive Mutations/mutation_Spiny Skin.png" type="Texture" id=4]
 [ext_resource path="res://Map/whitesquare.png" type="Texture" id=5]
 [ext_resource path="res://Bag/UI Elements/bagCards/bagCardCursor.png" type="Texture" id=6]
 

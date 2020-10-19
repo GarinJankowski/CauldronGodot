@@ -50,8 +50,8 @@ func _process(delta):
 
 func gainMutationLevel():
 	guy.addStat("Mutation Level", 1)
-	textlog.push("[p]You gain 1 Mutation.")
-	textlog.push("[p]You feel your body changing...")
+	textlog.push("[P]You gain 1 Mutation.")
+	textlog.push("[P]You feel your body changing...")
 
 func chooseMutation(positive, index):
 	var mutlist
@@ -73,15 +73,15 @@ func chooseMutation(positive, index):
 	itemgen.MutationLeftovers(mutlist, positive)
 	
 	var text = Game.scriptgen.MutationScripts[mutname][0]["mutationLog"]
-	var numchars = 1
-	if text.substr(0, 1) == "{":
-		numchars += 1
-	var firstchar = text.substr(0, numchars)
-	text.erase(0, numchars)
+#	var numchars = 1
+#	if text.substr(0, 1) == "{":
+#		numchars += 1
+#	var firstchar = text.substr(0, numchars)
+#	text.erase(0, numchars)
 	if positive == "Positive":
-		text = "[P]..." + firstchar.to_upper() + text + ".."
+		text = "[p]..." + text + "..."
 	elif positive == "Negative":
-		text = "[h]...and " + firstchar.to_lower() + text
+		text = "[h]...and " + text + "."
 	textlog.push(text)
 			
 func end2():
@@ -106,7 +106,17 @@ func mutationEvent(positive):
 		negativeMutations = newlist
 	
 func disableButtons():
-	pass
+	for mut in positiveMutations:
+		if typeof(mut) != TYPE_STRING:
+			mut.disableButton()
+	for mut in negativeMutations:
+		if typeof(mut) != TYPE_STRING:
+			mut.disableButton()
 	
 func enableButtons():
-	pass
+	for mut in positiveMutations:
+		if typeof(mut) != TYPE_STRING:
+			mut.enableButton()
+	for mut in negativeMutations:
+		if typeof(mut) != TYPE_STRING:
+			mut.enableButton()

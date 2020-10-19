@@ -181,6 +181,7 @@ func addMutation(mutationName):
 		#if positive && mutationList.size() == 1:
 		selectMutation(bodyMut)
 	guy.updateUI()
+	guy.Bag.tickMainBodyButton()
 	
 func start(positive):
 	for mut in singleList[positive]:
@@ -191,6 +192,8 @@ func trigger(mutationName, Card = null, amount = 0):
 		var Combat
 		if Card != null:
 			Combat = Card.Combat
+		else:
+			Combat = guy.currentCombat
 		mutationList[mutationName].triggerFunction(Combat, amount)
 		return true
 	return false

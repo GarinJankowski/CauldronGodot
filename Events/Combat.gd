@@ -1,6 +1,7 @@
 extends "res://Events/Event.gd"
 
 var turn
+var firstDead = ""
 
 var enemy
 
@@ -11,7 +12,8 @@ var guyDeck
 var enemyDeck
 
 var waiting
-var timertime = 0.1
+#var timertime = 0.1
+var timertime = 0.5
 
 func init2(r):
 	init(r)
@@ -31,7 +33,8 @@ func init2(r):
 	if r.enemyName[0] in "AEIOU":
 		a = "an"
 	textlog.push("[r]You encounter " + a + " " + r.enemyName + ".")
-	pushMutationText()
+	if enemy.mutated:
+		enemy.pushMutationText()
 	
 	guy.currentCombatEvent = self
 	enemy.currentCombatEvent = self
@@ -67,8 +70,7 @@ func init2(r):
 	enemyCombat.setCombatEvent(self)
 	enemy.selfCombat.setCombatEvent(self)
 	
-	if map.currentTerrainEquals("Desert"):
-		guy.Effects.fixRetainedEffects()
+	guy.Effects.fixRetainedEffects()
 
 	guy.startMutation("Positive")
 	enemy.startMutation("Positive")
@@ -84,6 +86,7 @@ func init2(r):
 	guyDeck.checkAllUsable()
 	
 	checkDeath()
+	checkEndCombat()
 	turn = "guy"
 	
 func _process(delta):
@@ -101,19 +104,19 @@ func turn():
 			guyDeck.updateDeck1()
 			guyDeck.useCard(0)
 			guyDeck.shuffleAddPrint()
-			if nextTurn():
+			if !nextTurn():
 				return
 		elif (Input.is_action_just_pressed("number_2") || Input.is_action_just_pressed("ui_up")) && guyDeck.cardAt(1) && guyDeck.Hand[1].isUsable():
 			guyDeck.updateDeck1()
 			guyDeck.useCard(1)
 			guyDeck.shuffleAddPrint()
-			if nextTurn():
+			if !nextTurn():
 				return
 		elif (Input.is_action_just_pressed("number_3") || Input.is_action_just_pressed("ui_right")) && guyDeck.cardAt(2) && guyDeck.Hand[2].isUsable():
 			guyDeck.updateDeck1()
 			guyDeck.useCard(2)
 			guyDeck.shuffleAddPrint()
-			if nextTurn():
+			if !nextTurn():
 				return
 		elif Input.is_action_just_pressed("reshuffle") && !guyDeck.handUsable():
 			guyDeck.updateDeck1()
@@ -121,7 +124,7 @@ func turn():
 			guyDeck.lastPlayed = guyDeck.reshuffleCard
 			guyDeck.lastClicked = guyDeck.reshuffleCard
 			guyDeck.shuffleAddPrint()
-			if nextTurn():
+			if !nextTurn():
 				return
 		elif Input.is_action_just_pressed("flee") && guyDeck.fleeOn:
 			fleeCombat()
@@ -150,13 +153,17 @@ func turn():
 				enemyDeck.shuffleDeck()
 				textlog.push("[B]The " + enemy.enemyName + " fails to take an action.")
 		enemyDeck.shuffleAddPrint()
-		if nextTurn():
+		if !nextTurn():
 			return
 
 #when the enemy dies:
 #queue_free() the enemy and combat functions and decks
 #restore the player's stats
 func enemyDeath():
+	#delete this when you're confident reservations work properly
+	if !textlog.textQueue.empty() && textlog.textQueue[0].begins_with("RESERVED"):
+		print(textlog.textQueue)
+		
 	textlog.push("The " + enemy.enemyName + " dies.")
 	guy.triggerMutation("Gorger")
 	textlog.push("[g]You gain " + str(room.experience) + " experience.")
@@ -177,6 +184,7 @@ func enemyDeath():
 	guyDeck.removeDeck()
 	enemyDeck.removeDeck()
 	guy.inCombat = false
+	guy.currentCombat = null
 	
 	guy.restoreVariables()
 	
@@ -219,18 +227,25 @@ func fleeCombat():
 	end()
 
 func checkDeath():
-	if !guy.isAlive():
-		if !(guy.convertStat("MHP") > 5 && guy.triggerMutation("Reconstruction")):
-			waiting = true
+	if firstDead == "":
+		if !guy.isAlive():
+			if !(guy.convertStat("MHP") > 0 && guy.triggerMutation("Reconstruction")):
+				firstDead = "guy"
+		elif !enemy.isAlive():
+			if !(enemy.convertStat("MHP") > 0 && enemy.triggerMutation("Reconstruction")):
+				firstDead = "enemy"
+	
+func checkEndCombat():
+	var ended = false
+	if firstDead != "":
+		waiting = true
+		ended = true
+		if firstDead == "guy":
 			enemy.triggerMutation("Gorger")
 			guy.DEAD()
-			return true
-	elif !enemy.isAlive():
-		if !(enemy.convertStat("MHP") > 5 && enemy.triggerMutation("Reconstruction")):
-			waiting = true
+		elif firstDead == "enemy":
 			enemy.enemyDeath()
-			return true
-	return false
+	return ended
 
 #check whos turn
 func checkTurn(who):
@@ -260,10 +275,9 @@ func endTurnEffects():
 
 #set the turn to someone
 func nextTurn():
-	if checkDeath():
-		return true
-		
 	endTurnEffects()
+	if checkEndCombat():
+		return false
 		
 	waiting = true
 	yield(get_tree().create_timer(timertime), "timeout")
@@ -307,8 +321,9 @@ func nextTurn():
 	guyDeck.updateDeck1()
 	guyDeck.updateDeck2()
 	guyDeck.printHand()
-	if checkDeath():
-		return true
+	if checkEndCombat():
+		return false
+	
 	#guyCombat.checkEnergy()
 	if hasactive:
 		yield(get_tree().create_timer(timertime), "timeout")
@@ -320,21 +335,17 @@ func nextTurn():
 	for i in sensitive:
 		affected.Effects.turn("Bad")
 	guyDeck.printHand()
-	if checkDeath():
-		return true
+	#checkDeath()
+	if checkEndCombat():
+		return false
+	
 	#guyCombat.checkEnergy()
 	if hasactive:
 		yield(get_tree().create_timer(timertime), "timeout")
 	affected.checkPhases()
 	waiting = false
 	
-	return false
-
-func pushMutationText():
-	if !enemy.positiveList.empty() && !enemy.negativeList.empty():
-		var posmut = enemy.positiveList[0].mutationName
-		var negmut = enemy.negativeList[0].mutationName
-		textlog.push("[r]It seems to have [P]" + posmut + " [r]and [h]" + negmut + "[r]")
+	return true
 
 func getRecording():
 	return [guy.getRecording(), enemy.getRecording()]

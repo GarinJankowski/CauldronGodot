@@ -124,6 +124,8 @@ func initVariables():
 	for prop in effectProperties:
 		if prop.begins_with("priority"):
 			priority = int(prop.split(" ")[1])
+		elif prop == "ally":
+			priority = 14
 	
 	if "delay" in effectProperties:
 		effectProperties.erase("delay")
@@ -139,7 +141,7 @@ func updateVariables(val, trn, cd):
 		Card = cd
 		Combat = Card.Combat.duplicate()
 		add_child(Combat)
-		Combat.init(Combat.me, Combat.enemy)
+		Combat.init(myself, Combat.enemy)
 	value = val
 	turns = trn
 	tick()
@@ -261,10 +263,17 @@ func balanceSteps():
 		stepy *= -1
 
 func shouldExist():
-	#rewrite this
-	if (value is int && value <= 0 && (!"zero" in effectProperties && (good || !has("stat")))) || turns == 0:
-		return false
-	return true
+	return !(shouldValueOut() || shouldTimeOut())
+	
+func shouldValueOut():
+	if value is int && value <= 0 && (!"zero" in effectProperties && (good || !has("stat"))):
+		return true
+	return false
+	
+func shouldTimeOut():
+	if turns == 0 && !(myself.hasEffect("Force Field") && (effectName == "Block" || effectName == "Shield" || has("ally"))):
+		return true
+	return false
 
 func setDisplayName():
 	var dn = effectName

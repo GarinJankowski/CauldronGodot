@@ -85,7 +85,7 @@ func createCardFunctions(cardstring):
 	scriptString += "\n\nfunc initCombat():"
 	scriptString += "\n\tCombat = Card.Combat\n\tmyself = Card.myself\n\topponent = Card.opponent\n\topponentHealth = opponent.CurrentHealth\n"
 	
-	functionString = "\nfunc useCard(copytimes = 0):"
+	functionString = "\n\nfunc useCard(copytimes = 0):"
 	var costString = ""
 	
 	for i in values.size():
@@ -279,7 +279,11 @@ func createCardFunctions(cardstring):
 				elif parts[0] == "selfDistance":
 					functionString += tab + "if myself.hasEffect('Distance'):"
 					functionString += tab + "\tmyself.tickEffect('Distance')"
+				elif parts[0] == "enemyDistance":
+					functionString += tab + "if opponent.hasEffect('Distance'):"
+					functionString += tab + "\topponent.tickEffect('Distance')"
 				functionString += tab + "\tCard.cardProperties.append('usedAlternate')"
+				functionString += tab + "\tCard.textlog.cancel('" + cardName + "')"
 				functionString += tab + "\tmyself.useGhostCard('" + cardName + "Ghost" + "', Combat, copytimes)"
 				functionString += tab + "\treturn"
 				functionString += tab + "elif copytimes > 0:"
@@ -333,15 +337,12 @@ func createCardFunctions(cardstring):
 	
 	var logString = ""
 	if logOutput != 'N/A':
-		logString += "\n\tCard.textlog.push(Card.cardLogOutput())"
-	if "logFirst" in cardProperties:
-		functionString = functionString.replace("func useCard():", "func useCard():" + logString)
-	else:
-		functionString +=  logString
+		functionString = functionString.replace("func useCard(copytimes = 0):", "func useCard(copytimes = 0):\n\tCard.textlog.reserve(Card.cardName)")
+		functionString += "\n\tCard.textlog.fulfill(Card.cardLogOutput(), Card.cardName)"
 	
 	if costString == "":
 		costString = "\n\tpass"
-	if functionString == "\nfunc useCard(copytimes = 0):":
+	if functionString == "\n\nfunc useCard(copytimes = 0):":
 		functionString += "\n\tpass"
 	costString = "\nfunc useCost():" + costString
 	scriptString += costString
@@ -353,7 +354,7 @@ func createCardFunctions(cardstring):
 	if "manaCost" in cardActions:
 		usableString += " || (-int(cardActions['manaCost']) > myself.CurrentMana && !myself.hasEffect('No Mana Cost'))"
 	if "energyCost" in cardActions:
-		usableString += " || (-int(cardActions['energyCost']) > myself.CurrentEnergy && !myself.onExtraTurn && myself.ExtraTurns() <= 0)"
+		usableString += " || (-int(cardActions['energyCost']) > myself.CurrentEnergy && !myself.onExtraTurn && myself.ExtraTurns() <= 0 && cardActions['energyCost'] != '0')"
 	if "distanceCost" in cardActions:
 		usableString += " || -int(cardActions['distanceCost']) > myself.Distance()"
 	if "defensesCost" in cardProperties:
@@ -373,6 +374,7 @@ func createCardFunctions(cardstring):
 		var uniquecostlist = uniqueCardCost(cardName)
 		usableString += uniquecostlist[0]
 		costDescription += uniquecostlist[1]
+		cardProperties.append("uniquecost")
 	usableString += ":\n\t\treturn false\n\treturn true"
 	scriptString += usableString
 	
@@ -416,8 +418,8 @@ func createCardFunctions(cardstring):
 	
 	scriptString = varString + scriptString
 
-#	if cardName == "Gorger":
-#		print_debug(scriptString)
+#	if cardName == "Hack":
+#		print(scriptString)
 	script.set_source_code(scriptString)
 	script.resource_name = "Card" + cardName
 	script.resource_path = "res://Card/" + script.resource_name + ".gd"
@@ -954,7 +956,7 @@ func createEffectFunctions(effectstring):
 	if replaceable:
 		effectProperties.append("replaceable")
 	
-	scriptString += initString + "\n\nfunc turnFunction():" + turnString + "\n\nfunc triggerFunction():" + triggerString + "\n\nfunc endFunction():\n\tif (!myself.isAlive() || !opponent.isAlive()) && !'stat' in effectProperties:\n\t\treturn" + endString
+	scriptString += initString + "\n\nfunc turnFunction():" + turnString + "\n\nfunc triggerFunction():" + triggerString + "\n\nfunc endFunction():\n\tif (!myself.isAlive() || (opponent != null && !opponent.isAlive())) && !'stat' in effectProperties:\n\t\treturn" + endString
 	var varString = "\nvar effectName = '" + effectName + "'"
 
 	if actives > 0:
@@ -1092,6 +1094,9 @@ func createMutationFunctions(mutstring, positive):
 			
 			if act[0] == "UNIQUEFUNCTION":
 				actionString += uniqueMutationFunction(mutationName, tab)
+			elif act[0] == "fill":
+				actionString += tab + "myself.currentCombatDeck.fillHand('" + act[1] + "')"
+				actionString += tab + "myself.currentCombatDeck.printHand()"
 			elif act[0] == "statUp":
 				var vals = act[1].split(", ")
 				actionString += tab + "myself.addStat('" + vals[0] + "', myself.calculate('" + vals[1] + "'))"
@@ -1187,9 +1192,9 @@ func createMutationFunctions(mutstring, positive):
 func uniqueMutationCheck(mutName, tab):
 	# the variable to compare to is called 'amount'
 	var checkString = tab + "if "
-	if mutName == "Focused Rage":
+	if mutName == "Raw Power":
 		checkString += "amount >= myself.calculate('Mut * 5')"
-	elif mutName == "Knockback":
+	elif mutName == "Raw Impact":
 		checkString += "amount >= myself.calculate('Mut * 6')"
 	checkString += ":"
 	return checkString

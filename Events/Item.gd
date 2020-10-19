@@ -119,6 +119,7 @@ func getGold():
 		get_node("things/gold/gold1").visible = false
 		get_node("things/gold/gold3").visible = true
 	guy.gainGold(amount)
+	guy.Bag.tickMainBagButton()
 
 func end2():
 	ticks = 10

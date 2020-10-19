@@ -16,6 +16,7 @@ Gain Energy	0	Good	gainEnergy: Val
 Gain Extra Turns	0	Good	gainExtraTurns: Val				
 Gain Block	0	Good	gainBlock: Val				
 Gain Shield	0	Good	gainShield: Val				
+Gain Distance	0	Good	gainDistance: Val				
 Lose Health	0	Bad	takeIndirectDamage: Val				
 Lose Energy	0	Bad	gainEnergy: -Val				
 Take Damage	0	Bad	takeDirectDamage: Val				
@@ -33,7 +34,7 @@ Shield	0	Good	priority 10	stackable
 Block	0	Good	priority 11	stackable			
 Permashield	-1	Good	priority 12				
 Permablock	-1	Good	priority 13				
-Stranglehold (Attacker)	-1	Good	priority 14	unstackable	counterpart	zero	(trigger)self: UNIQUEFUNCTION
+Stranglehold (Attacker)	-1	Good	priority 15	unstackable	counterpart	zero	(trigger)self: UNIQUEFUNCTION
 Stranglehold (Target)	-1	Bad	priority 1	replaceable	trigger: Stranglehold (Attacker)	(trigger)self: UNIQUEFUNCTION	
 							
 Arise	0	Good	ally	dealDirectDamage: 2 d 3			
@@ -56,7 +57,7 @@ Rat	0	Good	(trigger)useCard: Rat Bite
 Crab	0	Good	delay	(trigger)useCard: Crab Shell			
 Salamander	0	Good	(trigger)useCard: Salamander Charge	(end)useCard: Salamander Spit			
 Sear	0	Good	(trigger)useCard: Sear Enemy	(trigger)self: remove			
-Spell Shield	0	Good	(trigger)useCard: Repulse Shield	(trigger)self: remove			
+Force Field	0	Good	(trigger)useCard: Force Field Break	(trigger)self: remove			
 Tireless	0	Good	N/A				
 Tornado	0	Good	gainEnergy: 6				
 Invisibility	0	Good	N/A				
@@ -70,9 +71,10 @@ Sharpen	0	Good	N/A
 Swing	0	Good	(trigger)self: remove	stackable			
 Pull Back	0	Good	(end)useCard: Pull Back Distance				
 Parting Shot	0	Good	(trigger)useCard: Parting Shot Distance	(trigger)self: remove			
-Throw	0	Good	N/A				
+Throw	0	Good	replaceable				
 Parry	0	Good	(trigger)useCard: Parry Attack				
 Zoom	0	Good	(end)useCard: Zoom Strength				
+Inspire	0	Good	replaceable				
 							
 Attack Trap	0	Bad	(trigger)useCard: Attack Trap Triggered	(trigger)self: remove			
 Defend Trap	0	Bad	(trigger)useCard: Defend Trap Triggered	(trigger)self: remove			
@@ -80,7 +82,7 @@ Spell Trap	0	Bad	(trigger)useCard: Spell Trap Triggered	(trigger)self: remove
 Confuse	0	Bad	action: selfPierce				
 Jinx	0	Bad	N/A				
 Lose Energy Later	0	Bad	(end)gainEnergy: -Val				
-Shuffle	0	Bad	action: shuffle	replaceable			
+Shuffle	0	Bad	action: selfShuffle	replaceable			
 Spike Trap	0	Bad	action: selfPierce	takeDirectDamage: Val			
 Taunt	0	Bad	N/A				
 Sleep	0	Bad	replaceable	(trigger)self: remove	(end)useCard: Wake Up		
@@ -104,15 +106,15 @@ Drown (Attacker)	-1	Bad	(trigger)manaCost: Val	(trigger)trigger: Drown (Target)
 Trick (Target)	-1	Bad	unstackable	(trigger)trigger: Trick (Attacker)	(trigger)self: remove		
 Trick (Attacker)	-1	Good	(trigger)useCard: Tricked (Val)	(trigger)self: remove	counterpart		
 Wound	-1	Bad	takeIndirectDamage: Val	(trigger)takeIndirectDamage: Val			
-Frozen	-1	Bad	(trigger)self: remove				
+Frozen	-1	Bad	(trigger)self: remove	replaceable			
 							
 Record	-1	Good	zero	delay	(trigger)self: UNIQUEFUNCTION		
 You	-1	Good	ally	self: UNIQUEFUNCTION			
 							
 Mending Growth	0	Good	ally	gainHealth: 1 d Mut			
 Charred Skin	-1	Bad	(trigger)self: decrement				
-Volatile	-1	Bad	cycle: 4	unstackable	takeDirectDamage: Val	dealDirectDamage: Val	
+Volatile	-1	Bad	cycle: 4	unstackable	useCard: Volatile	takeDirectDamage: Val	dealDirectDamage: Val
 Berserk	0	Bad	fill: Attack				
-Muscle Mass	-1	Bad	cycle: Mut	useCard: Muscle Mass	self: zero	zero	
+Muscle Mass	-1	Bad	cycle: Mut	useCard: Muscle Mass	self: zero	zero	stackable
 Scrambled	-1	Bad	cycle: 8 - Mut	action: selfShuffle			
 Faltering Growth	0	Good	ally	(end)takeIndirectDamage: Mut d 2			

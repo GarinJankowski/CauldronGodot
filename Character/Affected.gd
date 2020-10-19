@@ -60,6 +60,9 @@ var Game
 func affectedInit():
 	Game = get_parent().Game
 
+func isAlive():
+	return CurrentHealth > 0 && convertStat("MHP") > 0
+
 func updateUI():
 	pass
 
@@ -120,9 +123,11 @@ func Distance():
 	return getEffect("Distance") + currentCombat.enemy.getEffect("Distance")
 
 func hasDefenses():
-	if Block() > 0 || Shield() > 0 || Allies():
+	if Block() > 0 || Shield() > 0 || Allies() || hasEffect("Permablock") || hasEffect("Permashield"):
 		tickEffect("Block")
 		tickEffect("Shield")
+		tickEffect("Permablock")
+		tickEffect("Permashield")
 		tickAllies()
 		return true
 	return false
@@ -257,16 +262,26 @@ func convertStat(string, Card = null, Effect = null):
 		num = Card.actionValues[string]
 	elif string == "Str":
 		num = Strength + tempStrength + mutationStats["Strength"]
+		if num < 0:
+			num = 0
 	elif string == "Dex":
 		num = Dexterity + tempDexterity + mutationStats["Dexterity"]
+		if num < 0:
+			num = 0
 	elif string == "Int":
 		num = Intelligence + tempIntelligence + mutationStats["Intelligence"]
+		if num < 0:
+			num = 0
 	elif string == "Mut":
 		num = MutationLevel + tempMutationLevel
+		if num < 0:
+			num = 0
 	elif string == "MHP":
 		num = MaxHealth + tempMaxHealth + mutationStats["Max Health"]
 	elif string == "MMP":
 		num = MaxMana + tempMaxMana + mutationStats["Max Mana"]
+		if num < 0:
+			num = 0
 	elif string == "block":
 		num = Block()
 	elif string == "Val" && Effect != null:
@@ -275,6 +290,8 @@ func convertStat(string, Card = null, Effect = null):
 		num = getEffect(string.replace("effect(", "").replace(")", "").replace("_", " "))
 	elif string.begins_with("missingHealth"):
 		num = MaxHealth + tempMaxHealth + mutationStats["Max Health"] - CurrentHealth
+	elif string.begins_with("currentMana"):
+		num = CurrentMana
 	else:
 		num = float(string)
 		

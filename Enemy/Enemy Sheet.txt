@@ -33,7 +33,7 @@ Air Elemental	N/A	N/A	N/A	N/A	N/A	N/A	"Spin (1), Wind Punch (2), Wind Flurry (1)
 Fire Elemental	N/A	N/A	N/A	N/A	N/A	N/A	"Curl Up (1), Explode (1), Flame Strike (2), Sear Skin (2), Stoke (2)"	Desert		
 Blank Elemental	N/A	N/A	N/A	N/A	N/A	N/A	"Blank Smack (3), Blank Endure (1)"	Field		
 										
-Berserker	Boss A	20	3	3	3	0	"Quick Rest (3), Single Hack (3), Single Chop (1), Go Berserk (50%)"	Twin Axes	"Burn, Burn"	Device: Handle Wrap
+Berserker	Boss A	20	3	3	3	0	"Quick Rest (1), Healing Rest (2), Single Hack (3), Single Chop (1), Go Berserk (50%)"	Twin Axes	"Burn, Burn"	Device: Handle Wrap
 Rogue	Boss A	15	2	6	3	0	"Quick Stab (3), Tip-Toe (2), Hide Self (50%)"	Light Boots	"Link, Link"	Scroll: Teleportation
 Student	Boss A	20	3	3	4	0	"Small Zap (1), Small Charge (2), Big Charge (50%)"	Training Hat	"Flow, Flow"	Device: Worn Pamphlet
 Machinist	Boss B	40	8	6	8	0	"Prepare Dagger (2), Vent Machines (1), Create Hammer (50%)"	Sword with Legs	"Push, Link, Link"	Device: Brown Belt

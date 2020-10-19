@@ -79,6 +79,9 @@ var bagCardHeight = 37.0
 var scrollButtonStepx = 0
 var scrollButtonStartx
 var scrollButtonTicks = 0
+var bagButtonTicks = 0
+var bodyButtonTicks = 0
+var mainButtonScale = 0.002
 
 var modList = {
 	"Burn": 0,
@@ -169,6 +172,12 @@ func moveNodes():
 		bagnode.position -= sidestep
 		if bagnode.position == bagposStart:
 			bagnode.visible = false
+	if bagButtonTicks > 0:
+		get_node("bagButtonMain/button_Bag").scale -= Vector2(mainButtonScale, mainButtonScale)
+		bagButtonTicks -= 1
+	if bodyButtonTicks > 0:
+		get_node("bodyButtonMain/button_Body").scale -= Vector2(mainButtonScale, mainButtonScale)
+		bodyButtonTicks -= 1
 			
 	if scrollButtonTicks > 0:
 		scrollButtonTicks -= 1
@@ -208,6 +217,7 @@ func _input(event):
 			deckScrollUp(1, 4)
 	if open && !guy.inCombat && runesHover && Input.is_action_just_released("RMB"):
 		removeAllMods()
+		
 
 func open():
 	z_index = 29
@@ -293,6 +303,7 @@ func addGear(gearName):
 	bagGear.init(gear)
 	bagGear.setPlace(bagGearList.find(bagGear))
 	updateGearList()
+	tickMainBagButton()
 
 func addScroll(scrollName):
 	var bagScroll = bagScrollPreload.instance()
@@ -302,6 +313,7 @@ func addScroll(scrollName):
 	bagScroll.init(scrollName)
 	bagScroll.setPlace(bagGearList.find(bagScroll))
 	updateGearList()
+	tickMainBagButton()
 	
 	textlog.push("You put the [s]" + scrollName + "[n] in your bag.")
 
@@ -322,6 +334,8 @@ func addCard(cardName, cardType = ""):
 	bagCardListSize()
 	updateBagCards()
 	selectCard(bagCard)
+	if cardType != "Positive" && cardType != "Negative":
+		tickMainBagButton()
 
 func hasScroll(scrollName):
 	for bagItem in bagGearList:
@@ -614,6 +628,19 @@ func enableAreaCollisions(truefalse):
 	noArmor.enableAreaCollisions(truefalse)
 	noHeadgear.enableAreaCollisions(truefalse)
 	get_node("mods/runesArea/CollisionShape2D").disabled = !truefalse
+
+func tickMainBagButton():
+	var newticks = 6
+	bagButtonTicks += newticks
+	var bscale = mainButtonScale*newticks
+	get_node("bagButtonMain/button_Bag").scale += Vector2(bscale, bscale)
+
+func tickMainBodyButton():
+	var newticks = 6
+	bodyButtonTicks += newticks
+	var bscale = mainButtonScale*newticks
+	get_node("bodyButtonMain/button_Body").scale += Vector2(bscale, bscale)
+	
 
 func _on_buttonBody_button_down():
 	get_node("bodyButtonMain/button_Body").scale -= Vector2(0.005, 0.005)

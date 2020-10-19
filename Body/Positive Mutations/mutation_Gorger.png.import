@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/mutation_Carnivore.png-a0a0c56b7a5c5a86c6b320fc1c354ceb.stex"
+path="res://.import/mutation_Gorger.png-870a30faa15ae8f5ac8f25722498d920.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Body/Positive Mutations/mutation_Carnivore.png"
-dest_files=[ "res://.import/mutation_Carnivore.png-a0a0c56b7a5c5a86c6b320fc1c354ceb.stex" ]
+source_file="res://Body/Positive Mutations/mutation_Gorger.png"
+dest_files=[ "res://.import/mutation_Gorger.png-870a30faa15ae8f5ac8f25722498d920.stex" ]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=true
+flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

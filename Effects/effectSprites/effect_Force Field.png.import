@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/mutation_Spines.png-c148d467c03ffd67607ee93da7e6a6fa.stex"
+path="res://.import/effect_Force Field.png-c34f39952f3ff6806608a80deed78daf.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Body/Positive Mutations/mutation_Spines.png"
-dest_files=[ "res://.import/mutation_Spines.png-c148d467c03ffd67607ee93da7e6a6fa.stex" ]
+source_file="res://Effects/effectSprites/effect_Force Field.png"
+dest_files=[ "res://.import/effect_Force Field.png-c34f39952f3ff6806608a80deed78daf.stex" ]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=true
+flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

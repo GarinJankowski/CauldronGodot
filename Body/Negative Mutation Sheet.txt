@@ -1,17 +1,17 @@
 Name	Description	Text Log	Enemy Usable	Enemy Text	Flags	
-Charred Skin	Burn the first (Mut) Defends you play during combat.	hello	1	hello	"(start)selfEffect: Charred Skin, Mut"	
-Frenzy	Take and deal double damage.	hello	1	hello	value: multiplier	
-Volatile	"Every 4 turns, take and deal 5d(Mut) damage. Playing Defends delays this by 1 turn."	hello	1	hello	"(start)selfEffect: Volatile, 5 d Mut"	
-Brain Worm	"""+2x(Mut) Max Mana, -(Mut) Max Health."""	hello	1	hello	"scale: Max Mana, 2"	"scale: Max Health, -1"
-Shrinkage	"""+3x(Mut) Dexterity, -3x(Mut) Max Health."""	hello	1	hello	"scale: Dexterity, 3"	"scale: Max Health, -3"
-Berserk	Fill your hand with Attacks for the first (Mut) turns of every combat.	hello	1	hello	"(start)selfEffect: Berserk, Mut"	
-Muscle Mass	Damage dealt is instead stored and dealt every (Mut) turns. +(Mut) Strength.	hello	1	hello	"(start)selfEffect: Muscle Mass, 0"	
-Brittle	"At the start of combat, gain 2 shield for 5 turns and lose (Mut)x3 health."	hello	1	hello	"(start)gainShield: 2, 5"	(start)takeIndirectDamage: Mut * 3
-Sensitive	Your effects trigger twice each turn and expire twice as quickly.	hello	1	hello	value: multiplier	
-Acid Mucus	Add a Sneeze to your deck.	hello	1	hello	addCard: Sneeze	
-Addicted	"""+5 Intelligence. Playing a non-Spell causes 1 Intelligence loss for (Mut) turns."""	hello	1	hello	"statUp: Intelligence, 5"	"(trigger)gainStat: Intelligence, -1, Mut"
-Brainless	"Instead of costing mana, Spells damage you equal to the cost."	hello	1	hello	N/A	
-Scrambled	"Every 8-(Mut) turns, shuffle your deck."	hello	1	hello	(start)selfEffect: Scrambled	
-Paranoia	Does nothing.	hello	1	hello	N/A	
-Atrophy	Turn losses instead cause (Mut) Strength and Dexterity loss for 2 turns.	hello	0	N/A	"(trigger)gainStat: Strength, -Mut, 2"	"(trigger)gainStat: Dexterity, -Mut, 2"
-Faltering Flesh	Going below 30% health grants a 5 turn ally with (Mut) health. Losing this ally causes (Mut)d2 health loss.	hello	1	hello	"(trigger)selfEffect: Faltering Growth, Mut, 5"	
+Charred Skin	Burn the first (Mut) Defends you play during combat.	your skin breaks out into burnt patches	1	burnt patches cover their body	"(start)selfEffect: Charred Skin, Mut"	
+Frenzy	Take and deal double damage.	you fly into a frenzy	1	they seem to be in a frenzied state	value: multiplier	
+Volatile	"Every 4 turns, take and deal (Mut)d3 damage."	you feel like you're about to explode	1	they like like they're going to explode	"(start)selfEffect: Volatile, Mut d 3"	
+Brain Worm	"""+2x(Mut) Max Mana. At the start of combat, lose (Mut)x3 health."""	you suddenly feel uncomfortable movement in your head	1	it seems something is writhing within their head	"scale: Max Mana, 2"	(start)takeIndirectDamage: Mut * 3
+Shrinkage	"""+3x(Mut) Dexterity, -3x(Mut) Max Health."""	you start to shrink	1	they seem abnormally small	"scale: Dexterity, 3"	"scale: Max Health, -3"
+Berserk	Fill your hand with Attacks for the first (Mut) turns of every combat.	you swell up with rage	1	they look very angry	"(start)selfEffect: Berserk, Mut"	
+Muscle Mass	Damage dealt is instead stored and dealt every (Mut) turns.	your muscles grow so large they begin to weigh you down	1	it looks like their massive muscles are weighing them down	"(start)selfEffect: Muscle Mass, 0"	
+Brittle	"""At the start of combat, gain 2 shield for 5 turns. -2x(Mut) Max Health."""	"you feel frail, like a few hits could make you crumble"	1	their body looks frail	"(start)gainShield: 2, 5"	"scale: Max Health, -2"
+Sensitive	Your effects trigger twice each turn and expire twice as quickly.	your senses start to scream at you	1	they seem unusually sensitive to the world around them	value: multiplier	
+Acid Mucus	Add a Sneeze to your deck.	you develop a bit of a sniffle	1	it looks like they have a runny nose	addCard: Sneeze	
+Addicted	"""+5 Intelligence. Playing a non-Spell causes 1 Intelligence loss for (Mut)x2 turns."""	you feel a compulsion for magic	1	in their eyes you see an intense craving for magic	"statUp: Intelligence, 5"	"(trigger)gainStat: Intelligence, -1, Mut * 2"
+Brainless	"Instead of costing mana, Spells damage you equal to the cost."	your feel your header get much lighter	1	they don't have a brain	N/A	
+Scrambled	"Every 8-(Mut) turns, shuffle your deck."	your decisions become a bit scattered	1	they seem a bit confused and scattered	(start)selfEffect: Scrambled	
+Paranoia	Does nothing.	nothing else happens	1	they look paranoid	N/A	
+Atrophy	Turn losses instead cause (Mut) Strength and Dexterity loss for 2 turns.	your muscles feel weaker	0	N/A	"(trigger)gainStat: Strength, -Mut, 2"	"(trigger)gainStat: Dexterity, -Mut, 2"
+Faltering Flesh	Going below 30% health grants a 5 turn ally with (Mut) health. Losing this ally causes (Mut)d2 health loss.	your body churns uncomfortably	1	their flesh is twisting and churning	"(trigger)selfEffect: Faltering Growth, Mut, 5"	
