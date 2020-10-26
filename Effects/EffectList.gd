@@ -220,7 +220,7 @@ func tick(effectName):
 
 func hasActive(goodbad):
 	for effect in singleList[goodbad]:
-		if effect.active:
+		if effect.active && (!effect.cycle || effect.scriptObject.cycleCounter == effect.scriptObject.cycle):
 			return true
 	return false
 

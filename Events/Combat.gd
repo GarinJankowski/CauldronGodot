@@ -81,7 +81,9 @@ func init2(r):
 	
 	guy.Effects.turn("Good")
 	guy.Effects.turn("Bad")
-		
+	
+	guyDeck.drawCards()
+	enemyDeck.drawCards()
 	guyDeck.printHand()
 	guyDeck.checkAllUsable()
 	
@@ -226,14 +228,21 @@ func fleeCombat():
 	
 	end()
 
+#checks for the first death of the combat
+#if one of the combatants would die but has Reconstruction, it triggers the reconstruction and checks for the death again incase Reconstruction kills them
+#if one of the combatants dies, the firstDead is set, which prepares to end combat/end the game after the next turn
 func checkDeath():
 	if firstDead == "":
 		if !guy.isAlive():
 			if !(guy.convertStat("MHP") > 0 && guy.triggerMutation("Reconstruction")):
 				firstDead = "guy"
+			else:
+				checkDeath()
 		elif !enemy.isAlive():
 			if !(enemy.convertStat("MHP") > 0 && enemy.triggerMutation("Reconstruction")):
 				firstDead = "enemy"
+			else:
+				checkDeath()
 	
 func checkEndCombat():
 	var ended = false

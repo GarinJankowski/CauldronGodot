@@ -147,7 +147,7 @@ func checkScrolls():
 			teleportDirection = "right"
 			get_node("teleportation/Label").text = "Move Right"
 			
-	if guy.Bag.hasScroll("Scroll of Healing") && !guy.statsRestored && map.currentTerrainEquals("Desert") && (map.getTerrain(room.x+1, room.y) == "Desert" || map.getTerrain(room.x, room.y+1) == "Desert"):
+	if guy.Bag.hasScroll("Scroll of Healing") && !guy.statsRestored && map.currentTerrainEquals("Desert") && (room.x+1 < map.gridWidth && (map.getTerrain(room.x+1, room.y) == "Desert") || (room.y+1 < map.gridHeight && map.getTerrain(room.x, room.y+1) == "Desert")):
 		scrollHealing = true
 	
 	if guy.Bag.hasScroll("Scroll of Sight"):

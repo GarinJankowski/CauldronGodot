@@ -313,18 +313,15 @@ func checkCardTypeEffects():
 			if myself.trigger("Ignite"):
 				cardProperties.append("ignite")
 		myself.trigger("Attack Trap")
-		myself.trigger("Salamander")
 	if cardType == "Defend":
 		if CombatDeck.get_ref():
 			CombatDeck.get_ref().fleecounter += 1
 		myself.trigger("Anticipate")
-		myself.trigger("Rat")
 		myself.trigger("Defend Trap")
 	elif CombatDeck.get_ref():
 			CombatDeck.get_ref().fleecounter = 0
 	if cardType == "Spell":
 		myself.trigger("Spell Shield")
-		myself.trigger("Crab")
 		myself.trigger("Spell Trap")
 	else:
 		myself.triggerMutation("Addicted")
@@ -338,6 +335,7 @@ func checkOtherEffects():
 	if hasOffensiveAction():
 		opponent.trigger("Sense")
 		opponent.trigger("Dodge")
+		opponent.trigger("Evade")
 		myself.trigger("Wound")
 	
 	#effects that occur when you deal damage through a card
@@ -365,13 +363,14 @@ func checkOtherEffects():
 		myself.trigger("Sneak")
 		myself.trigger("Stealth")
 		opponent.trigger("Sleep")
+		opponent.trigger("Ant Shield")
 
 func addEffect(target, effectName, value, turns):
 	var operators = "+-*/d"
 	var effectProperties = Game.scriptgen.EffectScripts[effectName][0]
 	
 	var valueStr = ""
-	if typeof(value) == 2:
+	if typeof(value) != TYPE_STRING:
 		valueStr = str(value)
 	elif value != "N/A":
 		if !" d " in value || "stackable" in effectProperties:
@@ -529,7 +528,9 @@ func cardLogOutput():
 						addword = "The " + myself.enemyName
 					else:
 						addword = "the " + myself.enemyName
-					if word.capitalize() == "Your":
+					if word == "Your":
+						addword = "The " + myself.enemyName + "'s"
+					elif word == "your":
 						if "Boss" in myself.Tier:
 							addword = "their"
 						else:
@@ -735,6 +736,8 @@ func getPriority():
 	
 	if hasUniqueFlag("topPriority"):
 		priority += 1000
+	elif hasUniqueFlag("lowPriority"):
+		return 0
 	
 	if hasAction("dealDirectDamage"):
 		var maxdamage = Combat.calculateDirectDamage(calculateMax(cardActions["dealDirectDamage"]), myself, opponent, self)
@@ -772,12 +775,15 @@ func getPriority():
 		priority += 99
 	
 	if hasUniqueFlag("ramping"):
-		priority += 80
+		priority += 85
 	
 	if hasUniqueFlag("setup"):
+		priority += 80
+	elif hasAction("selfEffect") || hasAction("insertSelfDeck"):
 		priority += 75
-	elif hasAction("selfEffect"):
-		priority += 75
+	elif hasAction("effect"):
+		priority += 70
+		
 	
 	if hasAction("damageOT"):
 		priority += 70
@@ -801,6 +807,7 @@ func getPriority():
 	if hasAction("action"):
 		if cardActions["action"] == "pierce" && (opponent.Block() > 0 || opponent.Shield() > 0):
 			priority += 30
+	
 	if cardType != "Negative":
 		priority += 1
 	

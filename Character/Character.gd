@@ -133,8 +133,9 @@ func init():
 	#Bag.addMod("", 0)
 	#Body.addMutation("")
 	#addStat("", 0)
-	
-	
+	Bag.addGear("Wild Headdress")
+
+
 func gainExperience(value):
 	CurrentExperience += value
 	var lvlup = 0
@@ -145,9 +146,11 @@ func gainExperience(value):
 	updateExperience()
 	return lvlup
 
+
 func getMutation(mutationName):
 	return Body.getMutation(mutationName)
-	
+
+
 func updateUI():
 	updateExperience()
 	updateHealth()
@@ -155,7 +158,7 @@ func updateUI():
 	updateEnergy()
 	updateMaxEnergy()
 	updateStats()
-	.updateUI()
+
 
 func updateStats():
 	var text = "[center]"
@@ -201,6 +204,7 @@ func updateStats():
 	if inCombat:
 		currentCombatDeck.updateDescriptions()
 
+
 func updateExperience():
 	#xpBar.get_node("ExperienceIn").rect_size.x = xpBarSizeX*float(CurrentExperience)/float(MaxExperience)
 	updateBar(xpBar.get_node("ExperienceIn"), xpBarSizeX*float(CurrentExperience)/float(MaxExperience))
@@ -210,6 +214,7 @@ func updateExperience():
 		xpBar.get_node("ExperienceIn").visible = true
 		
 	xpBar.get_node("Amount").text = str(CurrentExperience) + "/" + str(MaxExperience)
+
 
 func updateHealth():
 	if CurrentHealth > MaxHealth + tempMaxHealth + mutationStats["Max Health"]:
@@ -225,6 +230,7 @@ func updateHealth():
 		
 	healthBar.get_node("Amount").text = str(CurrentHealth) + "/" + str(MaxHealth + tempMaxHealth + mutationStats["Max Health"])
 
+
 func updateMana():
 	if CurrentMana > MaxMana + tempMaxMana + mutationStats["Max Mana"]:
 		CurrentMana = MaxMana + tempMaxMana + mutationStats["Max Mana"]
@@ -238,7 +244,7 @@ func updateMana():
 		manaBar.get_node("ManaIn").visible = true
 		
 	manaBar.get_node("Amount").text = str(CurrentMana) + "/" + str(MaxMana + tempMaxMana + mutationStats["Max Mana"])
-	
+
 
 func updateEnergy():
 	if CurrentEnergy > 0:
@@ -260,7 +266,8 @@ func updateEnergy():
 	else:
 		energyBar.get_node("Amount").text = str(CurrentEnergy) + "/" + str(MaxEnergy)
 	#updateMaxEnergy()
-	
+
+
 func updateBarEnergy(bar, newwidth):
 	var currentwidth = bar.rect_size.x
 	bar.rect_size.x = currentwidth + (newwidth-currentwidth)/4
@@ -270,6 +277,7 @@ func updateBarEnergy(bar, newwidth):
 	bar.rect_size.x = currentwidth + (newwidth-currentwidth)*3/4
 	yield(get_tree().create_timer(.01), "timeout")
 	bar.rect_size.x = newwidth
+
 
 func updateMaxEnergy():
 	var bar = get_node("Control/Energy/EnergyFront")
@@ -285,6 +293,7 @@ func updateMaxEnergy():
 		right.rect_position.x += (10-MaxEnergy)*8
 	
 	get_node("Control/Energy/EnergyInLeft").rect_position.x = right.rect_position.x
+
 
 func addStat(statstr, amount):
 	if statstr == "Max Health":
@@ -305,8 +314,11 @@ func addStat(statstr, amount):
 		MutationLevel += amount
 		updateMutScaling()
 	updateUI()
+	if !inCombat && !isAlive():
+		DEAD()
 	return amount
-	
+
+
 func addTempStat(statstr, amount):
 	if statstr == "Max Health":
 		tempMaxHealth += amount
@@ -322,15 +334,20 @@ func addTempStat(statstr, amount):
 		tempMutationLevel += amount
 		updateMutScaling()
 	updateUI()
+	if !inCombat && !isAlive():
+		DEAD()
 	return amount
+
 
 func gainGold(amount):
 	Gold += amount
 	Bag.updateGold()
 	get_node("Control/Gold/Amount").text = str(Gold)
 
+
 func restoreVariables():
 	onExtraTurn = false
+
 
 func restoreStats():
 	Effects.fixRetainedEffects()
@@ -347,26 +364,31 @@ func restoreStats():
 	CurrentMana = convertStat("MMP")
 	CurrentEnergy = 0
 	
-	
 	statsRestored = true
 	updateUI()
-		
+
+
 func startMutation(positive):
 	Body.start(positive)
 	#updateUI()
-	
+
+
 func triggerMutation(mutationName, Card = null, amount = 0):
 	return Body.trigger(mutationName, Card, amount)
-	
+
+
 func valueMutation(mutationName, amount = 0):
 	return Body.value(mutationName, amount)
 
+
 func hasMutation(mutationName):
 	return Body.has(mutationName)
-	
+
+
 func isPlayer():
 	return true
-	
+
+
 func DEAD():
 		updateStats()
 		updateUI()

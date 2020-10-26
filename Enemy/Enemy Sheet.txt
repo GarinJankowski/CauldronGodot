@@ -10,7 +10,7 @@ Mole	B	12	3	3	2	0	"Scratch (3), Stones (2)"	"Caves, Hills"
 Salamander	B	12	1	1	6	0	"Spit Fire (1), Charge (1)"	"Caves, Desert"		
 Nest	B	6	2	1	2	0	"Call Wasp (2), Repair Nest (3), Do Nothing (1), StartCard"	"Forest, Desert"		
 										
-Caterpillar	C	25	2	4	0	0	"Urticate (2), Curl (1), Bite (3)"	"Forest, Caves, Desert"		
+Caterpillar	C	25	2	3	0	0	"Urticate (2), Curl (1), Bite (3)"	"Forest, Caves, Desert"		
 Slime	C	20	4	2	-1	0	"Corrode (5), Rear (2), Hit (1), Bounce (2)"	"Forest, Caves, Hills"		
 Tortoise	C	20	4	2	1	0	"Snap (4), Carapace (1)"	"Forest, Hills, Desert"		
 Hound	C	20	5	6	8	0	"Dog Bite (4), Pant (2)"	"Forest, Hills, Desert"		
@@ -25,6 +25,7 @@ Bear	E	70	10	5	2	0	"Single Claw (1), Double Claw (1), Chomp (1), Rush (2), Battl
 Elemental	E	55	6	2	6		N/A	"Forest, Caves, Hills, Desert"		
 										
 Snail	F	70	3	1	2	0	"Tooth (1), Digest (1), Pound (3), Cone Shell (2)"	"Forest, Caves, Hills, Desert"		
+Colony	F	90	10	3	8	0	"Reform (1), StartCard"	"Forest, Caves, Hills, Desert"		
 Elemental	F	80	8	4	8		N/A	"Forest, Caves, Hills, Desert"		
 										
 Water Elemental	N/A	N/A	N/A	N/A	N/A	N/A	"Suffocate (1), Flood Waters (1), Water Slap (2), Evaporate (2), Chill (2)"	Forest		
@@ -34,11 +35,11 @@ Fire Elemental	N/A	N/A	N/A	N/A	N/A	N/A	"Curl Up (1), Explode (1), Flame Strike (
 Blank Elemental	N/A	N/A	N/A	N/A	N/A	N/A	"Blank Smack (3), Blank Endure (1)"	Field		
 										
 Berserker	Boss A	20	3	3	3	0	"Quick Rest (1), Healing Rest (2), Single Hack (3), Single Chop (1), Go Berserk (50%)"	Twin Axes	"Burn, Burn"	Device: Handle Wrap
-Rogue	Boss A	15	2	6	3	0	"Quick Stab (3), Tip-Toe (2), Hide Self (50%)"	Light Boots	"Link, Link"	Scroll: Teleportation
+Rogue	Boss A	15	2	6	3	0	"Quick Stab (3), Evade (1), Hide Self (50%)"	Light Boots	"Link, Link"	Scroll: Teleportation
 Student	Boss A	20	3	3	4	0	"Small Zap (1), Small Charge (2), Big Charge (50%)"	Training Hat	"Flow, Flow"	Device: Worn Pamphlet
-Machinist	Boss B	40	8	6	8	0	"Prepare Dagger (2), Vent Machines (1), Create Hammer (50%)"	Sword with Legs	"Push, Link, Link"	Device: Brown Belt
+Machinist	Boss B	40	6	6	8	0	"Prepare Dagger (2), Vent Machines (1), Create Hammer (50%)"	Sword with Legs	"Push, Link, Link"	Device: Brown Belt
 Shieldbearer	Boss B	50	6	10	6	0	"Block Attack (3), Lift Shield (1), Double Slam (1), Last Stand (30%)"	Tower Shield	"Stay, Flow"	
-Blood Mage	Boss B	30	4	3	14	0	"Throw Dagger (3), Gain Blood (1), Blood Weapon (1), Harden Blood (70%), Harden Blood (30%)"	Sharp Tiara	Copy	
+Blood Mage	Boss B	30	4	3	14	0	"Throw Dagger (3), Retrieve Daggers (1), Gain Blood (1), Blood Weapon (1), Harden Blood (70%), Harden Blood (30%)"	Sharp Tiara	Copy	
 Blademaster	Boss C	140	3	3	3	0	Bite (1)	Curved Blades	"Flow, Push, Flow"	
 Metallurgist	Boss C	110	3	3	3	0	Bite (1)	Perfect Plates	"Stay, Burn, Burn"	
 Lich	Boss C	10	3	3	3	0	Bite (1)	Ancient Crown	"Link, Link, Void"	

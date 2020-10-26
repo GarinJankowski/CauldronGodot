@@ -46,7 +46,7 @@ Double Axe	Weapon	"Heave (3), Hew (2), Sunder (1)"	3	N/A
 No Armor	Armor	Endure (1)	0	Your tough form can take a hit or two.
 				
 Cloak	Armor	Disrupt (1)	1	N/A
-Robes	Armor	"Distance (1), Hasten (1)"	1	N/A
+Robes	Armor	"Distance (1), Prime (1)"	1	N/A
 Leather Armor	Armor	Soften (1)	1	N/A
 Breastplate	Armor	Armor (2)	1	N/A
 Buckler	Armor	Shield (1)	1	N/A

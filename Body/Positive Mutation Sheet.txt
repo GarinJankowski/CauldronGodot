@@ -1,5 +1,5 @@
 Name	Description	Text Log	Enemy Usable	Enemy Text	Flags		
-Sharp Claws	Attacks deal 1d(Mut) extra damage.	your nails start to develop into claws	1	sharp claws protrude out of their appendages	value: 1 d Mut		
+Sharp Claws	Non-projectile attacks deal 1d(Mut) extra damage.	your nails start to develop into claws	1	sharp claws protrude out of their appendages	value: 1 d Mut		
 Spiny Skin	"Every time the opponent damages you, deal (Mut) damage."	your skin twists and grows into sharp points	1	spines cover their body	(trigger)dealDirectDamage: Mut		
 Gorger	Gain (Mut)/2 Max Health after winning combat.	you start to feel kind of hungry	1	they look hungry	(trigger)useCard: Gorger		
 Camouflage	At the start of combat prevent energy loss for 2 turns and gain (Mut)d2 energy.	the entirety of your skin starts to shift in color	0	their skin seems to meld with their surroundings	"(start)selfEffect: Tireless, 2"	(start)gainEnergy: Mut d 2	
@@ -15,7 +15,7 @@ Growth Spurts	"""+(Mut)/4 Strength, Intelligence, and Dexterity."""	you feel lik
 Gelatinous	"At the start of combat, gain (Mut) deflect for 3 turns."	your skin forms a rubbery membrane	1	a gelatinous membrane covers their body	"(start)selfEffect: Deflect, Mut, 3"		
 Raw Impact	Dealing at least (Mut)x6 damage in one hit gives the opponent (Mut)/2 distance.	you feel the true impact of your attacks	1	hello	UNIQUECHECK(trigger)useCard: Raw Impact		
 Shock Absorbers	Taking a hit greater than your max health proactively grants (Mut)/5+1 shield for 2 turns.	you feel more stable	1	hello	(trigger)useCard: Shock Absorbers		
-Mana Veins	Losing any health takes from your mana first	mana shoots through your veins	0	N/A	N/A		
+Mana Veins	Both health loss and losing health from damage take from your mana first	mana shoots through your veins	0	N/A	N/A		
 Foresight	"At the start of combat, fill your hand with Spells."	you become able to prepare for the future	1	hello	(start)fill: Spell		
 Night Vision	"At the start of combat, gain (Mut) distance."	your range of vision increases	1	they are looking at you from far away	(start)gainDistance: Mut		
-Tentacle Arms	Add a Wrap to your deck.	tentacles sprout out of your body	1	they have multiple tentacles coming out of their body	addCard: Wrap		
+Tentacle Arms	Add a Wrap to your deck.	long tentacles sprout out of your body	1	they have multiple tentacles extending from their body	addCard: Wrap		

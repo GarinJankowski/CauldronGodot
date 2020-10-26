@@ -27,6 +27,7 @@ Deflect	0	Good	priority 3	(trigger)self: decrement	stackable
 Phase	0	Good	priority 4	zero	(end)gainEnergy: Val		
 Sense	0	Good	priority 5	(trigger)useCard: Sense Energy	(trigger)self: remove		
 Dodge	0	Good	priority 6	(trigger)useCard: Dodge Energy	(trigger)self: remove		
+Evade	0	Good	priority 7	(trigger)Evade Turn	(trigger)self: remove		
 Elude	0	Good	priority 7				
 Persist	0	Good	priority 8				
 Unbreakable	0	Good	priority 9				
@@ -45,6 +46,9 @@ Tumefy	0	Good	ally
 Rally	0	Good	ally	cycle: 2	dealDirectDamage: 1 d Int		
 Decay	0	Good	ally	gainMana: Int / 2	gainEnergy: -10		
 Wasp	0	Good	ally	useCard: Wasp Sting			
+Rat	0	Good	ally	cycle: 2	useCard: Rat Bite		
+Crab	0	Good	ally	useCard: Crab Shell			
+Salamander	0	Good	ally	useCard: Salamander Charge	(end)useCard: Salamander Spit		
 							
 Attack Heal	0	Good	N/A				
 Charm	0	Good	(trigger)gainMana: Int	(trigger)self: remove			
@@ -53,9 +57,6 @@ Fear	0	Good	action: pierce
 Focus	0	Good	(end)gainMana: 4	(end)fill: Spell			
 No Mana Cost	0	Good	N/A				
 Nullify	0	Good	N/A				
-Rat	0	Good	(trigger)useCard: Rat Bite				
-Crab	0	Good	delay	(trigger)useCard: Crab Shell			
-Salamander	0	Good	(trigger)useCard: Salamander Charge	(end)useCard: Salamander Spit			
 Sear	0	Good	(trigger)useCard: Sear Enemy	(trigger)self: remove			
 Force Field	0	Good	(trigger)useCard: Force Field Break	(trigger)self: remove			
 Tireless	0	Good	N/A				
@@ -75,6 +76,7 @@ Throw	0	Good	replaceable
 Parry	0	Good	(trigger)useCard: Parry Attack				
 Zoom	0	Good	(end)useCard: Zoom Strength				
 Inspire	0	Good	replaceable				
+Ant Shield	0	Good	(trigger)useCard: Ant Lash				
 							
 Attack Trap	0	Bad	(trigger)useCard: Attack Trap Triggered	(trigger)self: remove			
 Defend Trap	0	Bad	(trigger)useCard: Defend Trap Triggered	(trigger)self: remove			
@@ -89,6 +91,7 @@ Sleep	0	Bad	replaceable	(trigger)self: remove	(end)useCard: Wake Up
 Shatter	0	Bad	N/A				
 Suspend	0	Bad	N/A				
 Strong Winds	0	Bad	gainDistance: 1				
+Ants	0	Bad	useCard: Ants				
 							
 Bide	-1	Good	N/A				
 Forget	-1	Good	delay	(trigger)gainMana: Int	(trigger)self: decrement		

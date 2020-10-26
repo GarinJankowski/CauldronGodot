@@ -181,10 +181,11 @@ func calculateDirectDamage(damage, me, enemy, Card):
 	if Card != null:
 		if Card.cardType == "Attack":
 			damage += me.Effects.getAllValues("Sharpen")
-			damage += me.valueMutation("Sharp Claws")
 			if Card.has("projectile"):
 				damage += me.Effects.getAllValues("Swing")
 				damage += me.Effects.getAllValues("Fuse")
+			else:
+				damage += me.valueMutation("Sharp Claws")
 			if me.hasEffect("Aim"):
 				damage *= 2
 	damage += me.valueMutation("Frenzy")*damage
@@ -218,13 +219,15 @@ func directDamage(damage, myself, opponent, Card):
 	if opponent.hasEffect("Phase"):
 		opponent.increaseEffect("Phase", usedmg)
 		usedmg = 0
-	if (opponent.hasEffect("Dodge") || opponent.hasEffect("Elude") || opponent.hasEffect("Sense")) && opponent != myself && Card != null:
+	if (opponent.hasEffect("Dodge") || opponent.hasEffect("Elude") || opponent.hasEffect("Sense") || enemy.hasEffect("Evade")) && opponent != myself && Card != null:
 		usedmg = 0
 	
 	if opponent.hasEffect("Persist"):
 		usedmg /= 2
 		myself.tickEffect("Persist")
 	if opponent.hasEffect("Parry"):
+		usedmg /= 2
+	if opponent.hasEffect("Ant Shield"):
 		usedmg /= 2
 	
 	if myself.hasMutation("Raw Impact") && Card != null:
@@ -258,7 +261,7 @@ func directDamage(damage, myself, opponent, Card):
 	if usedmg > 0:
 		change(opponent, "Health", -usedmg)
 	
-	if Card != null:
+	if Card != null && myself != opponent:
 		Card.cardProperties.append("Damage Dealt")
 	
 	return calcdmg
@@ -267,7 +270,7 @@ func calculateIndirectDamage(damage, me, enemy, Card):
 	damage -= enemy.valueMutation("Pain Tolerance")
 	if damage < 0:
 		damage = 0
-	if (enemy.hasEffect("Dodge") || enemy.hasEffect("Elude") || enemy.hasEffect("Sense")) && enemy != me && Card != null:
+	if (enemy.hasEffect("Dodge") || enemy.hasEffect("Elude") || enemy.hasEffect("Sense") || enemy.hasEffect("Evade")) && enemy != me && Card != null:
 		damage = 0
 	return damage
 func dealIndirectDamage(damage, Card):
@@ -282,14 +285,14 @@ func indirectDamage(damage, myself, opponent, Card):
 	return calcdmg
 
 func directDamageOverTime(value, turns, target, Card):
-	if (enemy.hasEffect("Dodge") || enemy.hasEffect("Elude") || enemy.hasEffect("Sense")) && target != me && Card != null:
+	if (enemy.hasEffect("Dodge") || enemy.hasEffect("Elude") || enemy.hasEffect("Sense") || enemy.hasEffect("Evade")) && target != me && Card != null:
 		turns = 0
 	
 	Card.addEffect(target, "Take Damage", value, str(turns))
 	return turns
 	
 func indirectDamageOverTime(value, turns, target, Card):
-	if (enemy.hasEffect("Dodge") || enemy.hasEffect("Elude") || enemy.hasEffect("Sense")) && target != me && Card != null:
+	if (enemy.hasEffect("Dodge") || enemy.hasEffect("Elude") || enemy.hasEffect("Sense") || enemy.hasEffect("Evade")) && target != me && Card != null:
 		turns = 0
 		
 	Card.addEffect(target, "Lose Health", value, str(turns))

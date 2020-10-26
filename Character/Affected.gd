@@ -284,6 +284,8 @@ func convertStat(string, Card = null, Effect = null):
 			num = 0
 	elif string == "block":
 		num = Block()
+	elif string == "distance":
+		num = Distance()
 	elif string == "Val" && Effect != null:
 		num = Effect.calculate(str(Effect.value))
 	elif string.begins_with("effect("):

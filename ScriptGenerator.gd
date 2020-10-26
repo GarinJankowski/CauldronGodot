@@ -88,6 +88,9 @@ func createCardFunctions(cardstring):
 	functionString = "\n\nfunc useCard(copytimes = 0):"
 	var costString = ""
 	
+	#this variable is for cards with multiple alternates
+	var alternates = 0
+	
 	for i in values.size():
 		var action = values[i]
 		if action == "CUSTOMCOPYFUNCTION":
@@ -282,9 +285,17 @@ func createCardFunctions(cardstring):
 				elif parts[0] == "enemyDistance":
 					functionString += tab + "if opponent.hasEffect('Distance'):"
 					functionString += tab + "\topponent.tickEffect('Distance')"
+				elif parts[0] == "distance":
+					functionString += tab + "if myself.hasEffect('Distance') || opponent.hasEffect('Distance'):"
+					functionString += tab + "\tmyself.tickEffect('Distance')"
+					functionString += tab + "\topponent.tickEffect('Distance')"
+				alternates += 1
+				var ghostName = cardName + "Ghost"
+				if alternates > 1:
+					ghostName += str(alternates)
 				functionString += tab + "\tCard.cardProperties.append('usedAlternate')"
 				functionString += tab + "\tCard.textlog.cancel('" + cardName + "')"
-				functionString += tab + "\tmyself.useGhostCard('" + cardName + "Ghost" + "', Combat, copytimes)"
+				functionString += tab + "\tmyself.useGhostCard('" + ghostName + "', Combat, copytimes)"
 				functionString += tab + "\treturn"
 				functionString += tab + "elif copytimes > 0:"
 				functionString += tab + "\tCard.cardProperties.append('noAlternate')"
@@ -418,7 +429,7 @@ func createCardFunctions(cardstring):
 	
 	scriptString = varString + scriptString
 
-#	if cardName == "Hack":
+#	if cardName == "Reform":
 #		print(scriptString)
 	script.set_source_code(scriptString)
 	script.resource_name = "Card" + cardName
