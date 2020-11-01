@@ -1,32 +1,32 @@
 Name	Tier	Max Health	Strength	Dexterity	Intelligence	Mutation Level	Cards	Terrain		
 Dummy	N/A	1000	0	0	0	0	StartCard			
-Rat	A	5	3	3	3	0	"Bite (4), Defend (1)"	N/A		
-Hawk	A	8	3	8	4	0	"Scratch (3), Tear (2), Fly Back (2)"	"Forest, Hills, Desert"		
-Vine Growth	A	8	2	2	0	0	"Slap (4), Constrict (1)"	"Forest, Caves, Hills"		
-Beetle	A	3	2	3	1	0	"Bite (2), Nip (1), Shell (1), StartCard"	"Forest, Caves, Hills, Desert"		
+Rat	A	5	3	3	3	1	"Bite (4), Defend (1)"	N/A		
+Hawk	A	8	3	8	4	1	"Scratch (3), Tear (2), Fly Back (2)"	"Forest, Hills, Desert"		
+Vine Growth	A	8	2	2	0	1	"Slap (4), Constrict (1)"	"Forest, Caves, Hills"		
+Beetle	A	3	2	3	1	1	"Bite (2), Nip (1), Shell (1), StartCard"	"Forest, Caves, Hills, Desert"		
 										
-Crab	B	12	3	4	1	0	"Shell (2), Pinch (2), Slam (2)"	"Hills, Desert"		
-Mole	B	12	3	3	2	0	"Scratch (3), Stones (2)"	"Caves, Hills"		
-Salamander	B	12	1	1	6	0	"Spit Fire (1), Charge (1)"	"Caves, Desert"		
-Nest	B	6	2	1	2	0	"Call Wasp (2), Repair Nest (3), Do Nothing (1), StartCard"	"Forest, Desert"		
+Crab	B	12	3	4	1	1	"Shell (2), Pinch (2), Slam (2)"	"Hills, Desert"		
+Mole	B	12	3	3	2	1	"Scratch (3), Stones (2)"	"Caves, Hills"		
+Salamander	B	12	1	1	6	1	"Spit Fire (1), Charge (1)"	"Caves, Desert"		
+Nest	B	6	2	1	2	1	"Call Wasp (2), Repair Nest (3), Do Nothing (1), StartCard"	"Forest, Desert"		
 										
-Caterpillar	C	25	2	3	0	0	"Urticate (2), Curl (1), Bite (3)"	"Forest, Caves, Desert"		
-Slime	C	20	4	2	-1	0	"Corrode (5), Rear (2), Hit (1), Bounce (2)"	"Forest, Caves, Hills"		
-Tortoise	C	20	4	2	1	0	"Snap (4), Carapace (1)"	"Forest, Hills, Desert"		
-Hound	C	20	5	6	8	0	"Dog Bite (4), Pant (2)"	"Forest, Hills, Desert"		
+Caterpillar	C	25	2	4	0	1	"Urticate (2), Curl (1), Bite (3)"	"Forest, Caves, Desert"		
+Slime	C	20	7	6	-1	1	"Corrode (5), Rear (2), Hit (1), Bounce (2)"	"Forest, Caves, Hills"		
+Tortoise	C	20	5	4	2	1	"Snap (4), Carapace (1)"	"Forest, Hills, Desert"		
+Hound	C	20	8	6	3	1	"Dog Bite (4), Pant (2)"	"Forest, Hills, Desert"		
 										
-Buffalo	D	40	6	1	1	0	"Ram (4), Buffalo Charge (1), Paw the Ground (2)"	"Forest, Hills, Desert"		
-Spider	D	35	4	3	2	0	"Webs (1), More Webs (1), Venom Bite (1), Dry Bite (4)"	"Forest, Caves, Desert"		
-Worm	D	35	3	10	1	0	"Worm Bite (3), Worm Lunge (1), Dig (1), Strangulate (1)"	"Caves, Hills, Desert"		
+Buffalo	D	40	12	4	1	1	"Ram (4), Buffalo Charge (1), Paw the Ground (2)"	"Forest, Hills, Desert"		
+Spider	D	35	6	6	4	1	"Webs (1), More Webs (1), Venom Bite (1), Dry Bite (4)"	"Forest, Caves, Desert"		
+Worm	D	35	4	10	1	1	"Worm Bite (3), Worm Lunge (1), Dig (1), Strangulate (1)"	"Caves, Hills, Desert"		
 										
-Gryphon	E	60	6	3	1	0	"Shred (1), Flap (1), Peck (2), Claw (3), Fly Back (2)"	"Forest, Hills, Desert"		
-Fairy	E	50	5	10	10	0	"Attack Trap (1), Defend Trap (1), Spell Trap (1), Dash Away (1), Throw Rocks (3)"	"Forest, Caves, Hills"		
-Bear	E	70	10	5	2	0	"Single Claw (1), Double Claw (1), Chomp (1), Rush (2), Battle Roar (2)"	"Forest, Caves, Hills, Desert"		
-Elemental	E	55	6	2	6		N/A	"Forest, Caves, Hills, Desert"		
+Gryphon	E	60	7	12	3	1	"Shred (1), Flap (1), Peck (2), Claw (3), Fly Back (2)"	"Forest, Hills, Desert"		
+Fairy	E	50	5	10	12	1	"Attack Trap (1), Defend Trap (1), Spell Trap (1), Dash Away (1), Throw Rocks (3)"	"Forest, Caves, Hills"		
+Snail	E	40	3	1	2	1	"Tooth (1), Digest (1), Pound (3), Cone Shell (2), StartCard"	"Forest, Caves, Hills, Desert"		
+Elemental	E	55	6	2	6	1	N/A	"Forest, Caves, Hills, Desert"		
 										
-Snail	F	70	3	1	2	0	"Tooth (1), Digest (1), Pound (3), Cone Shell (2)"	"Forest, Caves, Hills, Desert"		
-Colony	F	90	10	3	8	0	"Reform (1), StartCard"	"Forest, Caves, Hills, Desert"		
-Elemental	F	80	8	4	8		N/A	"Forest, Caves, Hills, Desert"		
+Bear	F	70	22	5	3	1	"Single Claw (1), Double Claw (1), Chomp (1), Rush (2), Battle Roar (2)"	"Forest, Caves, Hills, Desert"		
+Colony	F	90	6	3	8	1	"Reform (1), StartCard"	"Forest, Caves, Hills, Desert"		
+Elemental	F	80	8	4	8	1	N/A	"Forest, Caves, Hills, Desert"		
 										
 Water Elemental	N/A	N/A	N/A	N/A	N/A	N/A	"Suffocate (1), Flood Waters (1), Water Slap (2), Evaporate (2), Chill (2)"	Forest		
 Earth Elemental	N/A	N/A	N/A	N/A	N/A	N/A	"Rock Throw (2), Form Rocks (2), Stone Shield (2), Form Boulder (1), Stone Slam (2), Stone Spike (1)"	Caves		
@@ -39,9 +39,9 @@ Rogue	Boss A	15	2	6	3	0	"Quick Stab (3), Evade (1), Hide Self (50%)"	Light Boots
 Student	Boss A	20	3	3	4	0	"Small Zap (1), Small Charge (2), Big Charge (50%)"	Training Hat	"Flow, Flow"	Device: Worn Pamphlet
 Machinist	Boss B	40	6	6	8	0	"Prepare Dagger (2), Vent Machines (1), Create Hammer (50%)"	Sword with Legs	"Push, Link, Link"	Device: Brown Belt
 Shieldbearer	Boss B	50	6	10	6	0	"Block Attack (3), Lift Shield (1), Double Slam (1), Last Stand (30%)"	Tower Shield	"Stay, Flow"	
-Blood Mage	Boss B	30	4	3	14	0	"Throw Dagger (3), Retrieve Daggers (1), Gain Blood (1), Blood Weapon (1), Harden Blood (70%), Harden Blood (30%)"	Sharp Tiara	Copy	
-Blademaster	Boss C	140	3	3	3	0	Bite (1)	Curved Blades	"Flow, Push, Flow"	
-Metallurgist	Boss C	110	3	3	3	0	Bite (1)	Perfect Plates	"Stay, Burn, Burn"	
-Lich	Boss C	10	3	3	3	0	Bite (1)	Ancient Crown	"Link, Link, Void"	
+Blood Mage	Boss B	30	4	3	12	0	"Throw Dagger (3), Retrieve Daggers (1), Gain Blood (1), Blood Weapon (1), Harden Blood (70%), Harden Blood (30%)"	Sharp Tiara	Copy	
+Blademaster	Boss C	140	3	3	3	0	Bite (1)	Rocks	"Flow, Push, Flow"	
+Metallurgist	Boss C	110	3	3	3	0	Bite (1)	Rocks	"Stay, Burn, Burn"	
+Lich	Boss C	10	3	3	3	0	Bite (1)	Rocks	"Link, Link, Void"	
 										
 Dragon	Final Boss	300	0	0	0	0	Bite (1)			

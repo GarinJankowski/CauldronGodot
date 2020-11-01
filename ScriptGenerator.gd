@@ -1044,7 +1044,7 @@ func createMutationFunctions(mutstring, positive):
 	values.remove(0)
 	mutationLog = values[0]
 	values.remove(0)
-	enemyAvailable = values[0]
+	enemyAvailable = bool(int(values[0]))
 	values.remove(0)
 	enemyLog = values[0]
 	values.remove(0)

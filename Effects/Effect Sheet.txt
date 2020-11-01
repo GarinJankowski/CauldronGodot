@@ -16,7 +16,7 @@ Gain Energy	0	Good	gainEnergy: Val
 Gain Extra Turns	0	Good	gainExtraTurns: Val				
 Gain Block	0	Good	gainBlock: Val				
 Gain Shield	0	Good	gainShield: Val				
-Gain Distance	0	Good	gainDistance: Val				
+Gain Distance	0	Good	useCard: GainDistance				
 Lose Health	0	Bad	takeIndirectDamage: Val				
 Lose Energy	0	Bad	gainEnergy: -Val				
 Take Damage	0	Bad	takeDirectDamage: Val				
@@ -27,14 +27,14 @@ Deflect	0	Good	priority 3	(trigger)self: decrement	stackable
 Phase	0	Good	priority 4	zero	(end)gainEnergy: Val		
 Sense	0	Good	priority 5	(trigger)useCard: Sense Energy	(trigger)self: remove		
 Dodge	0	Good	priority 6	(trigger)useCard: Dodge Energy	(trigger)self: remove		
-Evade	0	Good	priority 7	(trigger)Evade Turn	(trigger)self: remove		
-Elude	0	Good	priority 7				
-Persist	0	Good	priority 8				
-Unbreakable	0	Good	priority 9				
-Shield	0	Good	priority 10	stackable			
-Block	0	Good	priority 11	stackable			
-Permashield	-1	Good	priority 12				
-Permablock	-1	Good	priority 13				
+Evade	0	Good	priority 7	(trigger)useCard: Evade Turn	(trigger)self: remove		
+Elude	0	Good	priority 8				
+Persist	0	Good	priority 9				
+Unbreakable	0	Good	priority 10				
+Shield	0	Good	priority 11	stackable			
+Block	0	Good	priority 12	stackable			
+Permashield	-1	Good	priority 13				
+Permablock	-1	Good	priority 14				
 Stranglehold (Attacker)	-1	Good	priority 15	unstackable	counterpart	zero	(trigger)self: UNIQUEFUNCTION
 Stranglehold (Target)	-1	Bad	priority 1	replaceable	trigger: Stranglehold (Attacker)	(trigger)self: UNIQUEFUNCTION	
 							
@@ -46,9 +46,9 @@ Tumefy	0	Good	ally
 Rally	0	Good	ally	cycle: 2	dealDirectDamage: 1 d Int		
 Decay	0	Good	ally	gainMana: Int / 2	gainEnergy: -10		
 Wasp	0	Good	ally	useCard: Wasp Sting			
-Rat	0	Good	ally	cycle: 2	useCard: Rat Bite		
-Crab	0	Good	ally	useCard: Crab Shell			
-Salamander	0	Good	ally	useCard: Salamander Charge	(end)useCard: Salamander Spit		
+Rat	0	Good	ally	cycle: 2	dealDirectDamage: 1 d Str		
+Crab	0	Good	ally	gainBlock: Dex			
+Salamander	0	Good	ally	gainMana: Int / 2	(end)dealDirectDamage: Int d 2		
 							
 Attack Heal	0	Good	N/A				
 Charm	0	Good	(trigger)gainMana: Int	(trigger)self: remove			
@@ -91,7 +91,7 @@ Sleep	0	Bad	replaceable	(trigger)self: remove	(end)useCard: Wake Up
 Shatter	0	Bad	N/A				
 Suspend	0	Bad	N/A				
 Strong Winds	0	Bad	gainDistance: 1				
-Ants	0	Bad	useCard: Ants				
+Ants	0	Bad	takeDirectDamage: 1	takeDirectDamage: 1		
 							
 Bide	-1	Good	N/A				
 Forget	-1	Good	delay	(trigger)gainMana: Int	(trigger)self: decrement		

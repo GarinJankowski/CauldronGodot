@@ -36,7 +36,7 @@ PartGhost	Attack	Gain 1 distance. Lose 10 energy.	{You} move{s} {away} from {ene
 Slice	Attack	Deal 1d3 damage thrice. Gain (Str)/2 energy. Discard this card for 3 turns.	{You} slice{s} {enemyName} [you]thrice[n] for {dealDirectDamage} damage and gain{s} {gainEnergy} energy.	dealDirectDamage: 1 d 3	dealDirectDamage: 1 d 3	dealDirectDamage: 1 d 3	gainEnergy: Str / 2	discard: 3			
 Penetrate	Attack	"Against defenses, pierce the opponent and gain 8 energy. Deal 1d(Str) damage."	{You} penetrate{s} {enemyName} for {dealDirectDamage} damage.	ALTERNATE: enemyDefenses	dealDirectDamage: 1 d Str						
 PenetrateGhost	Attack	Pierce the opponent. Gain 8 energy. Deal 1d(Str) damage.	{You} [you]pierce{s}[n] {enemyName}'s defenses and deal {dealDirectDamage} damage.	action: pierce	gainEnergy: 8	dealDirectDamage: 1 d Str					
-Reach	Attack	Ignores up to 2 distance. Deal 1d(Str) damage. Gain 4 energy.	{You} reach{es} with {your} weapon to deal {dealDirectDamage} damage.	dealDirectDamage: 1 d Str	gainEnergy: 4	reaching					
+Reach	Attack	Ignores up to 1 distance. Deal 1d(Str) damage. Gain 4 energy.	{You} reach{es} with {your} weapon to deal {dealDirectDamage} damage.	dealDirectDamage: 1 d Str	gainEnergy: 4	reaching					
 Crush	Attack	"Deal 2d(Str) damage, adding (Str) against no defenses. Lose 3 energy."	{You} crush{es} {enemyName} for {dealDirectDamage} damage.	energyCost: 3	"ALTERNATE: noEnemyDefenses, Crush Ghost"	dealDirectDamage: 2 d Str	gainEnergy: -3				
 CrushGhost	Attack	"Deal (Str) +2d(Str) damage. Lose 3 energy,"	{You} crush{es} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 2 d Str + Str	gainEnergy: -3						
 Heft	Attack	Gain (Str)/2 energy. Discard this card for 3 turns.	{You} gain{s} {gainEnergy} energy.	gainEnergy: Str / 2	discard: 3						
@@ -74,6 +74,7 @@ ImpaleGhost	Attack	Pierce the opponent. Gain (Str) energy.	{You} [you]pierce{s}[
 Jab	Attack	Deal 4+1d(Str) damage. Gain 1 distance. Lose 4 energy.	{You} jab{s} {enemyName} for {dealDirectDamage} damage and move{s} {away} from {enemyName}.	dealDirectDamage: 1 d Str + 4	gainDistance: 1	gainEnergy: -4					
 Press	Attack	"Against defenses, pierce the opponent and gain 2 distance. Deal 1d(Str) damage. Lose 6 energy."	"{You} jab{s} {enemyName}, dealing {dealDirectDamage} damage."	ALTERNATE: enemyDefenses	dealDirectDamage: 1 d Str	gainEnergy: -6					
 PressGhost	Attack	Pierce the opponent. Gain 2 distance. Deal 1d(Str) damage. Lose 6 energy.	"{You} force{s} {enemyName} back, [you]piercing[n] {them}, dealing {dealDirectDamage} damage, and driving {them} {away}."	action: pierce	gainDistance: 2	dealDirectDamage: 1 d Str	gainEnergy: -6				
+Extend	Attack	Ignores up to 2 distance. Deal 1d(Str) damage. Gain 2 energy.	"{You} extend{s} {your} weapon outward, stabbing {enemyName} for {dealDirectDamage} damage."	dealDirectDamage: 1 d Str	gainEnergy: 2	reaching2					
 Raise	Attack	"Gain (Str)/2-5 energy. Then, gain 5 Strength for 2 turns."	[you]{You} raise{s} {your} weapon.	gainEnergy: Str / 2 - 5	"gainStat: Strength, 5, 2"						
 Shatter	Attack	Deal (Str)x3 damage. The opponent cannot heal nor gain beneficial effects for 4 turns. Lose 10 energy.	{You} shatter{s} {enemyName} for {dealDirectDamage} damage.	energyCost: 5	dealDirectDamage: Str * 3	"effect: Shatter, 4"	gainEnergy: -10				
 Transpierce	Attack	"Against defenses, pierce the opponent and gain (Str) energy. Otherwise, lose all extra turns and deal (Str) damage for each lost."	{You} stab{s} {enemyName} for {dealDirectDamage} damage.	ALTERNATE: enemyBlockOrShield	UNIQUEFUNCTION	CUSTOMCOPYFUNCTION					
@@ -98,7 +99,7 @@ Surge	Attack	"Deal (Str) damage, doubled if the last card played was a Spell. Lo
 Channel	Attack	Deal 3+1d(Str) damage. Gain 5 Int for 2 turns. Lose 4 energy.	{You} channel{s} {your} weapon and slash{es} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str + 3	"gainStat: Intelligence, 5, 2"	gainEnergy: -4					
 Prick	Attack	Lose 2 health. Fill your hand with Spells.	{You} prick{s} {yourself} for {takeIndirectDamage} health.	takeIndirectDamage: 2	fill: Spell						
 Siphon	Attack	"Deal (Str) damage. If the last card played was a Spell, gain health, energy, and mana equal to the damage dealt. Burn this card"	{You} stab{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: Str	UNIQUEFUNCTION						
-Sunder	Attack	Deal 2x(Str) damage. The enemy loses 1 health per turn and every time they use an offensive card.	"{You} sunder{s} {enemyName}, dealing {dealDirectDamage} damage and permanently wounding {them}."	energyCost: 10	dealDirectDamage: Str * 2	"effect: Wound, 1"					
+Sunder	Attack	Deal 2x(Str) damage. The enemy loses 1 health every turn and every time they use a card against you.	"{You} sunder{s} {enemyName}, dealing {dealDirectDamage} damage and permanently wounding {them}."	energyCost: 10	dealDirectDamage: Str * 2	"effect: Wound, 1"					
 Hew	Attack	Deal 1d(Str) damage twice. Gain 2d3 energy.	{You} hew{s} {enemyName} [you]twice[n] for {dealDirectDamage} damage and gain{s} {gainEnergy} energy.	dealDirectDamage: 1 d Str	dealDirectDamage: 1 d Str	gainEnergy: 2 d 3					
 Heave	Attack	"For 2 turns, your next damaging Attack has twice the effect against defenses. Gain (Str)/3 energy."	[you]{You} prepare{s} to swing {your} weapon.	"selfEffect: Heave, 2"	gainEnergy: Str / 3						
 Steam	Harmful	Lose 1d6 health.	Steam burns {you} for {takeIndirectDamage} health.	takeIndirectDamage: 1 d 6							
@@ -108,9 +109,9 @@ Armor	Defend	Gain (Dex)+2 block for 3 turns. Lose 3 energy.	{You} gain{s} {gainB
 Shield	Defend	Gain 1 shield for 3 turns. Gain 3 energy. Discard this card for 3 turns.	{You} gain{s} {gainShield} shield for {gainShieldTurns}.	"gainShield: 1, 3"	gainEnergy: 3	discard: 3					
 Soften	Defend	Gain (Dex) block for 2 turns. Gain 1 energy.	{You} gain{s} {gainBlock} block for {gainBlockTurns}.	"gainBlock: Dex, 2"	gainEnergy: 1						
 Disrupt	Defend	Gain (Dex)+5 energy. You cannot lose energy for 2 turns.	"{You} throw{s} {your} cloak at {enemyName}, gaining {gainEnergy} energy."	gainEnergy: 5 + Dex	"selfEffect: Tireless, 2"						
-Distance	Defend	Gain 1 distance. Gain (Dex)+3 energy.	{You} move{s} {away} from {enemyName}.	gainDistance: 1	gainEnergy: Dex + 3						
+Distance	Defend	Gain 1 distance. Gain (Dex)+3 energy. Discard this card for 3 turns.	{You} move{s} {away} from {enemyName} and gain{s} {gainEnergy} energy.	gainDistance: 1	gainEnergy: Dex + 3	discard: 3					
 Prime	Defend	Fill your hand with Spells. Gain 10 energy. Burn this card.	[you]{You} prepare{s} {your} spells.	fill: Spell	gainEnergy: 10	burn					
-Dodge	Defend	"For 1 turn, ignore the opponent's next offensive card. If any were ignored, gain (Dex) energy."	[you]{You} prepare{s} to dodge an oncoming attack.	"selfEffect: Dodge, 1"							
+Dodge	Defend	"For 1 turn, ignore the next card the opponent uses on you. If any were ignored, gain (Dex) energy."	[you]{You} prepare{s} to dodge an oncoming attack.	"selfEffect: Dodge, 1"							
 Dodge Energy	Defend	Gain (Dex) energy.	"{You} dodge{s} the attack, gaining {gainEnergy} energy."	gainEnergy: Dex							
 Step Back	Defend	Gain 1 distance. Gain 3 energy. Burn this card.	{You} step{s} {away} from {enemyName}.	gainDistance: 1	gainEnergy: 3	burn					
 											
@@ -121,7 +122,9 @@ Regrow	Defend	Gain (Dex) health. Gain 6 energy.	{You} gain{s} {gainHealth} healt
 Divert	Defend	"For 2 turns, retain excess energy. Next turn, gain (Dex)x2 energy. Burn this card."	"{You} divert{s} {enemyName}, gaining {energyOTValue} energy next turn."	"energyOT: Dex * 2, 1"	"selfEffect: Energized, 2"	burn					
 Block	Defend	Gain 1 shield for 1 turn. Gain (Dex) energy next turn. Discard this for 3 turns.	{You} block{s} for {gainShield} shield for {gainShieldTurns}.	"gainShield: 1, 1"	"energyOT: Dex, 1"	discard: 5					
 Protect	Defend	Gain (Dex)/6+1 shield for 3 turns. Lose 5 energy. Discard this card for 3 turns.	"{You} protect{s} {yourself}, gaining {gainShield} shield for {gainShieldTurns}."	"gainShield: Dex / 6 + 1, 3"	gainEnergy: -5	discard: 3					
-Kite	Defend	"For (Dex)/2 turns, gain 1 distance and lose 3 energy. Burn this card."	[you]{You} start{s} to kite {enemyName}.	"distanceOT: 1, Dex / 2"	"loseEnergyOT: 6, Dex / 2"	burn					
+Kite	Defend	"For (Dex)/2 turns, gain 1 distance, if you have none, and lose 5 energy. Burn this card."	[you]{You} start{s} to kite {enemyName}.	"distanceOT: 1, Dex / 2"	"loseEnergyOT: 5, Dex / 2"	burn					
+GainDistance	Defend	"Gain 1 distance, if you have none."	N/A	ALTERNATE: selfDistance	gainDistance: 1						
+GainDistanceGhost	Defend	Don't gain 1 distance.	N/A	N/A							
 Invigorate	Defend	Gain 2 mana and energy for (Dex) turns. Burn this card.	[you]{Your} thoughts and actions start to move slightly faster.	"manaOT: 2, Dex"	"energyOT: 2, Dex"	burn					
 Gleam	Defend	Gain (Dex)/3 deflect for 1 turn. Lose 5 energy. Burn this card.	{You} reflect the next oncoming attack for [you]1 turn.[n]	"selfEffect: Deflect, Dex / 3, 1"	gainEnergy: -5	burn					
 Withdraw	Defend	Gain 2 distance. Discard this for 5 turns.	{You} step{s} {away} from {enemyName}.	energyCost: 5	gainDistance: 2	discard: 5					
@@ -133,7 +136,7 @@ Obstruct	Defend	Gain 2 shield for 3 turns. Lose 2 energy. Discard this card for 
 Assault	Defend	Pierce yourself. Fill your hand with Attacks. Gain 6 energy.	[you]{You} [enemy]lose{s} {your} defenses [you]and prepare{s} to attack.	action: selfPierce	fill: Attack	gainEnergy: 6					
 Retreat	Defend	Gain (Dex)/2 block for 3 turns. Gain (Dex)/2 energy. Burn this card.	"{You} retreat{s}, gaining {gainBlock} block and {gainEnergy} energy."	"gainBlock: Dex / 2, 3"	gainEnergy: Dex / 2	burn					
 Stealth	Defend	Gain (Dex) energy each turn and retain excess energy. This effect ends after your next damage dealt. Lose all extra turns when it ends.	[you]{You} attempt{s} to hide your presence.	"selfEffect: Stealth, Dex"							
-Elude	Defend	"Ignore the opponent's offensive cards for 1 turn. Next turn, gain (Dex) energy."	[you]{You} ignore{s} any attacks next turn.	"selfEffect: Elude, 1"	"energyOT: Dex, 1"						
+Elude	Defend	"Ignore the opponent's cards againts you for 1 turn. Next turn, gain (Dex) energy."	[you]{You} ignore{s} any attacks next turn.	"selfEffect: Elude, 1"	"energyOT: Dex, 1"						
 Accelerate	Defend	"For 3 turns, gain (Dex) energy and prevent energy loss. Add a Steam card to your deck."	[you]{You} accelerate{s}.	"energyOT: Dex, 3"	"selfEffect: Tireless, 3"	insertSelfDeck: Steam (1)					
 Vent	Defend	Burn all of the cards in your Hand. Gain 8 energy.	[you]{You} vent{s} {your} boots.	burnHand	gainEnergy: 8						
 Propel	Defend	"Gain 1 distance, doubled if on an Extra Turn. Lose 6 energy."	{You} propel{s} {yourself} {away} from {enemyName}.	ALTERNATE: extraTurn	gainDistance: 1	gainEnergy: -6					
@@ -143,7 +146,7 @@ Zoom Strength	Defend	Remove your distance. Gain (Dex) Strength for 1 turn.	"{You
 Blockade	Defend	Gain (Dex)/3 permanent shield. Shuffle your deck. Burn this card.	"{You} plant{s} {your} shield in the ground, gaining {selfEffectValue} permanent shield."	"selfEffect: Permashield, Dex / 3"	shuffle	burn					
 Full Armor	Defend	Gain (Dex)+8 block for 5 turns. Lose 6 energy.	{You} gain {gainBlock} block.	"gainBlock: Dex + 8, 5"	gainEnergy: -6						
 Stronghold	Defend	Convert all block into permanent block. Lose 6 energy. Burn this card.	"{You} put{s} up a persisent defense, gaining {selfEffectValue} permanent block."	"selfEffect: Permablock, block"	gainBlock: -block	gainEnergy: -6	burn				
-Mail	Defend	Gain (Dex)+6 block for 2 turns. Lose 3 energy. Prevent energy loss for 2 turns.	{You} gain{s} {gainBlock} block.	"gainBlock: Dex + 6, 2"	gainEnergy: -3	"selfEffect: Tireless, 2"					
+Mail	Defend	Gain (Dex) block for 2 turns. Gain (Dex)/4 block for 6 turns. Gain 3 energy.	{You} gain{s} a total of {gainBlock} block.	"gainBlock: Dex, 2"	"gainBlock: Dex / 4, 6"	gainEnergy: 3					
 Scales	Defend	"Gain (Dex) block for 2 turns. Next turn, gain (Dex) block for 1 turn. Lose 4 energy."	{You} gain{s} {gainBlock} block.	"gainBlock: Dex, 2"	"blockOT: Dex, 1"	gainEnergy: -4					
 Sear	Defend	"Gain (Dex) block for 2 turns. If the opponent attacks you in the next 2 turns, they will lose 1 health for (Dex) turns. Gain 2 energy."	{You} gain{s} {gainBlock} block.	"gainBlock: Dex, 2"	"selfEffect: Sear, 2"	gainEnergy: 2					
 Sear Enemy	Attack	The opponent loses 1 health for (Dex) turns.	N/A	"damageOT: 1, Dex"							
@@ -172,7 +175,7 @@ Lightning	Spell	Deal 1d2 damage for each mana lost.	{You} electrocute{s} {enemyN
 Overcharge	Spell	Take 2 damage. Gain 3 Max Mana for (Int)/2 turns. Gain (Int)/2 mana.	"{You} overcharge{s} {yourself}, taking {takeDirectDamage} damage to raise {your} max mana and gain {gainMana} mana."	takeDirectDamage: 2	"gainStat: Max Mana, 3, Int / 2"	gainMana: Int / 2					
 Miasma	Spell	The opponent loses 1d3 health for (Int) turns. Gain 1d3 mana for (Int) turns. Discard this card for 10 turns.	"{You} release{s} toxic fumes, poisoning {enemyName} for and gaining mana for [you]{damageOTTurns}[n]."	"damageOT: 1 d 3, Int"	"manaOT: 1 d 3, Int"	discard: 10					
 Compromise	Spell	Trigger the opponent's detrimental effects (Int)/3 times and increase their duration by that amount.	[you]{You} expose{s} {enemyName} to affliction.	manaCost: 4	UNIQUEFUNCTION	logFirst					
-Freeze	Spell	Give (Int)/2 block for 3 turns. The opponent can't play offensive cards until they lose any health.	"{You} incase{s} {enemyName} in a block of ice, giving {them} {enemygainBlock} block."	manaCost: 10	"enemygainBlock: Int / 2, 3"	effect: Frozen					
+Freeze	Spell	Give (Int)/2 block for 3 turns. The opponent can't play cards against you until they lose any health.	"{You} incase{s} {enemyName} in a block of ice, giving {them} {enemygainBlock} block."	manaCost: 10	"enemygainBlock: Int / 2, 3"	effect: Frozen					
 Splinter	Spell	"Deal 1d4 damage. Gain 2 mana. Against defenses, do this (Int)/2 times."	{You} splinter{s} {their} body for {dealDirectDamage} damage and gain{s} {gainMana} mana.	ALTERNATE: enemyDefenses	dealDirectDamage: 1 d 3	gainMana: 1					
 SplinterGhost	Spell	Deal 1d4 damage and gain 2 mana (Int)/2 times.	{You} splinter{s} {their} body [you]{times} times[n] for {dealDirectDamage} damage and gain{s} {gainMana} mana.	(times(Int / 2))dealDirectDamage: 1 d 4	(times(Int / 2))gainMana: 2						
 Unfreeze	Spell	Unfreeze yourself.	[you]{You} {are} freed from the ice!								
@@ -206,7 +209,7 @@ Fuel	Spell	Lose 1 health for (Int) turns. Gain 5 max mana for 3 turns. Gain (Int
 Rubberize	Spell	Gain (Int)/3 deflect for 1 turn. Lose (Int) energy.	"{You} turn {yourself} into rubber, deflecting any oncoming hits and losing {gainEnergy} energy."	manaCost: 10	"selfEffect: Deflect, Int / 2, 1"	gainEnergy: -Int					
 Melt	Spell	Lose (Int) energy twice next turn and gain (Int)x2 mana.	[you]{You} start{s} to liquefy.	"loseEnergyOT: Int, 1"	"loseEnergyOT: Int, 1"	gainMana: Int * 2					
 Kinesis	Spell	Gain 2d(Int) Strength and 2d(Int) Dexterity for 2 turns. Gain (Int) energy.	{You} enhance{s} {your} movements and gain{s} {gainEnergy} energy.	manaCost: 5	"gainStat: Strength, 2 d Int, 2"	"gainStat: Dexterity, 2 d Int, 2"	gainEnergy: Int				
-Sense	Spell	Ignore an opponent's offensive card next turn. Triggering this gives (Int) energy and mana.	[you]{You} sense{s} an incoming attack.	"selfEffect: Sense, 1"							
+Sense	Spell	"For 1 turn, ignore the next card the opponent uses on you. Triggering this gives (Int) energy and mana."	[you]{You} sense{s} an incoming attack.	"selfEffect: Sense, 1"							
 Sense Energy	Spell	Gain (Int) energy and mana.	"{You} avoided the sensed attack, gaining {gainEnergy} energy and {gainMana} mana."	gainEnergy: Int	gainMana: Int						
 											
 Thunderstorm	Spell	"Every turn, spend 2 mana to deal 1d(Int) damage."	[you]A storm begins to brew.	"selfEffect: Thunderstorm, 1 d Int"							
@@ -238,15 +241,11 @@ Recharge	Spell	Gain (Int)/2 mana for 3 turns.	"{You} recharge{s}, gaining mana f
 Sleep	Spell	The enemy cannot play cards for (Int) turns or until they take damage.	{You} cast{s} {enemyName} into a deep slumber for [you]{effectTurns}. 	manaCost: 15	"effect: Sleep, Int"						
 Wake Up	Spell	Wake up.	[you]{You} wake{s} up!								
 Confuse	Spell	"For 3 turns, the opponent gets pierced and their cards target themselves."	{You} cast{s} {enemyName} into a stupefaction for [you]{effectTurns}.	manaCost: 10	"effect: Confuse, 3"						
-Trick	Spell	The next offensive card played by the opponent first gives you (Int)/3 mana and damages them for 1d(Int).	[you]{You} prepare{s} a trick for {enemyName}.	"selfEffect: Trick (Attacker), 1"	effect: Trick (Target)						
+Trick	Spell	The opponent's next card against you first gives you (Int)/3 mana and damages them for 1d(Int).	[you]{You} prepare{s} a trick for {enemyName}.	"selfEffect: Trick (Attacker), 1"	effect: Trick (Target)						
 Tricked	Spell	Gain (Int)/3 mana and deal 1d(Int) damage.	"{You} trick{s} {enemyName}, gaining {gainMana} mana and dealing {dealDirectDamage} damage!"	gainMana: Int / 3	dealDirectDamage: 1 d Int						
 Call Rat	Spell	"For (Int) turns, gain a 5 hp ally that deals 1d(Str) damage every other turn."	{You} summon{s} a rat to {your} aid for [you]{selfEffectTurns}.	manaCost: 3	"selfEffect: Rat, 5, Int"						
-Call Crab	Spell	"For (Int) turns, gain a 12 hp ally that gains (Dex) block for 1 turn every turn."	{You} summon{s} a crab to {your} aid for [you]{selfEffectTurns}.	manaCost: 6	"selfEffect: Crab, 12, Int"						
-Call Salamander	Spell	"For (Int) turns, gain a 12 hp ally that gains (Int)/2 mana every turn. This effect deals (Int) damage when it ends."	{You} summon{s} a salamander to {your} aid for [you]{selfEffectTurns}.	"selfEffect: Salamander, 12, Int"							
-Rat Bite	Attack	Deal 1d(Str) damage.	A rat bites {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str							
-Crab Shell	Defend	Gain (Dex) block for 1 turn.	A crab gives {you} {gainBlock} block for {gainBlockTurns}.	"gainBlock: Dex, 1"							
-Salamander Charge	Spell	Gain (Int)/2 mana.	A salamander charges up {gainMana} mana.	gainMana: Int / 2							
-Salamander Spit	Spell	Deal (Int) damage.	A salamander spits fire at {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: Int							
+Call Crab	Spell	"For (Int) turns, gain a 12 hp ally that gains (Dex) block for 1 turn every turn."	{You} summon{s} a crab to {your} aid for [you]{selfEffectTurns}.	manaCost: 10	"selfEffect: Crab, 12, Int"						
+Call Salamander	Spell	"For (Int) turns, gain a 12 hp ally that gains (Int)/2 mana every turn. This effect deals (Int)d2 damage when it ends."	{You} summon{s} a salamander to {your} aid for [you]{selfEffectTurns}.	"selfEffect: Salamander, 12, Int"							
 Record	Spell	Burn this card. Begin to record your actions. Add a Return to your deck.	[you]{You} set{s} a returning point.	manaCost: 10	UNIQUEFUNCTION	insertSelfDeck: Return (1)					
 Return	Spell	Turn back time. Lose 66% of your health. Gain a permanent ally equal to your health that plays your recorded cards in a loop. Burn this card.	[you]{You} warp{s} back in time.	UNIQUEFUNCTION	CUSTOMCOPYFUNCTION						
 Skip	Spell	"Take 1 damage. Trigger all your effects (Int)/4 times, reducing any durations by that amount."	{You} take{s} {takeDirectDamage} damage. {You} fast forward{s} {your} body [you]{times}[n] in time.	manaCost: 2	takeDirectDamage: 1	UNIQUEFUNCTION	logFirst				
@@ -306,93 +305,87 @@ Sneeze	Negative	The opponent takes 1d(Mut) damage for 3 turns. Discard this for 
 Volatile	Negative	Explode.	[you]{You} explode{s}!	N/A							
 											
 Bite	Attack	Deal 1d(Str) damage.	{You} bite{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str							
-Defend	Defend	Gain (Dex) block. Discard this for 1 turn.	{You} gain{s} {gainBlock} block for {gainBlockTurns}.	"gainBlock: Dex, 1"	discard: 1						
+Defend	Defend	Gain (Dex) block. Discard this for 2 turns.	{You} gain{s} {gainBlock} block for {gainBlockTurns}.	"gainBlock: Dex, 1"	discard: 2						
 											
 Scratch	Attack	Deal 1d(Str) damage.	{You} scratch{es} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str	link: 2						
 Tear	Attack	"Against no defenses, the opponent loses 1 health for 5 turns. Discard this for 1 turn."	"{You} tear{s} {their} flesh, causing [you]bleed[n] for [you]3 turns[n]."	ALTERNATE: enemyDefenses	"damageOT: 1, 5"	discard: 1	link: 1				
 TearGhost	Defend	Fail your Tear.	"[enemy]{You} attempt{s} to tear {their} flesh, but is blocked."								
 Fly Back	Defend	Gain 1 distance. Discard this for 5 turns.	"{You} fl{y}, moving {away} from {enemyName}."	gainDistance: 1	discard: 5	link: 1					
 											
-Slap	Attack	Deal 1 damage.	{You} slap{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1	link: 2						
-Constrict	Attack	Apply a 1+1d(Str) stranglehold with 3 hp. Burn this card.	[you]{You} wrap{s} {yourself} around {enemyName}.	stranglehold: 3	link: 1	burn					
-Constrict (Attack)	Attack	Deal 1+1d(Str) damage.	{You} constrict{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str + 1							
+Slap	Attack	Deal 1d(Str) damage.	{You} slap{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str	link: 2						
+Constrict	Attack	Apply a 1d(Str) stranglehold with 3 hp. Burn this card.	[you]{You} wrap{s} {yourself} around {enemyName}.	stranglehold: 3	link: 1	burn					
+Constrict (Attack)	Attack	Deal 1d(Str) damage.	{You} constrict{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str							
 Constrict (Release)	Defend	Release the enemy from any strangleholds. Add a Constrict to your deck. Burn this card.	[enemy]{You} {have} taken enough damage to lose {your} grip.	release							
 											
 Nip	Attack	Deal 1+1d(Str) damage.	{You} bite{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str + 1							
 Shell	Defend	Gain (Dex)d2 block for 2 turns. Discard this for 1 turn.	{You} gain{s} {gainBlock} block for {gainBlockTurns}.	"gainBlock: Dex d 2, 2"	discard: 5	link: 1					
-BeetleStart	Defend	Gain 3 block for 10 turns.	N/A	"gainBlock: 3, 10"							
+Beetle Start	Defend	Gain 3 block for 10 turns.	N/A	"gainBlock: 3, 10"							
 											
 Pinch	Attack	Deal 1d(Str) damage.	{You} pinch{es} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str							
 Slam	Attack	Deal damage equal to your block.	{You} use{s} {your} block to slam {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: block	link: 2						
 											
-Stones	Attack	Projectile. Deal (Str)+2 damage. Burn this card.	{You} launch{es} stones at {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: Str + 2	burn	projectile					
+Stones	Attack	Projectile. Deal (Str)d2 damage. Burn this card.	{You} launch{es} stones at {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: Str d 2	burn	projectile					
 											
 Spit Fire	Attack	Projectile. Deal (Int)d2 damage. 	{You} spit{s} fire at {enemyName} for {dealDirectDamage} damage.	manaCost: 10	dealDirectDamage: Int d 2	projectile					
 Charge	Spell	Gain 3+1d(Int) mana.	[you]{You} inhale{s}.	gainMana: 1 d Int + 3							
 											
-NestStart	Spell	Gain 2 allies with 1 health that deals 1d(Str) damage per turn.	N/A	"selfEffect: Wasp, 1, 3"	"selfEffect: Wasp, 1, 3"						
-Call Wasp	Spell	Gain 1d(Int) allies with 1 health for 3 turns that deal 1d(Str) damage each turn. Add a Repair Nest to your deck. Discard this card for 4 turns.	[you]{You} call{s} forth {your} wasp allies for {selfEffectTurns}.	"selfEffect: (1 d Int), Wasp, 1, 3"	discard: 4	burn					
-Repair Nest	Defend	Gain (Dex) health. Burn this card.	{You} get{s} repaired for {gainHealth} health.	gainHealth: Dex	stay: 1						
+Nest Start	Spell	Gain 2 allies with 1 health that deals 1d(Str) damage per turn.	N/A	"selfEffect: Wasp, 1, 3"	"selfEffect: Wasp, 1, 3"						
+Call Wasp	Spell	Gain 1d(Int) allies with 1 health for 3 turns that deal 1d(Str) damage each turn. Add a Repair Nest to your deck. Discard this card for 4 turns.	[you]{You} call{s} forth {your} wasp allies.	"selfEffect: (1 d Int), Wasp, 1, 3"	discard: 4	burn					
+Repair Nest	Defend	Gain (Dex) health. Burn this card.	{You} get{s} repaired for {gainHealth} health.	gainHealth: Dex	burn	stay: 2					
 Do Nothing	Defend	Do nothing.	{You} do{es} nothing.								
 Wasp Sting	Attack	Deal 1d(Str) damage.	A wasp stings {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str							
 											
 Urticate	Defend	Add 2 Hairs cards to the enemy's deck. Burn this card.	[you]{You} defensively raise{s} {your} hairs.	"insertEnemyDeck: Sting (2), Dex"	burn						
-Sting	Harmful	Take 2d(VAL) damage.	{You} get{s} stung for {takeDirectDamage} damage.	takeDirectDamage: 2 d UNIQUEVALUE							
+Sting	Harmful	Take 2d(VAL) damage. Burn this card.	{You} get{s} stung for {takeDirectDamage} damage.	takeDirectDamage: 2 d UNIQUEVALUE	burn						
 Curl	Defend	Gain 1d5 block for 2 turns.	{You} gain{s} {gainBlock} block.	"gainBlock: 1 d 5, 2"							
 											
 Corrode	Attack	Pierce the enemy. Deal (Str)/4d2 damage.	"{You} corrode{s} {enemyName}, [you]piercing[n] {their} defenses and dealing {dealDirectDamage} damage."	action: pierce	dealDirectDamage: Str / 4 d 2						
 Rear	Spell	Gain 1 mana. Discard this card for 6 turns.	[you]{You} rear{s} {your} body.	gainMana: 1	discard: 5	link: 1					
-Hit	Attack	Deal (Str)d2+(Str) damage.	{You} smack{s} {enemyName} for {dealDirectDamage} damage.	manaCost: 1	dealDirectDamage: Str d 2 + Str	link: 2					
-Bounce	Defend	Gain 3 deflect for 1 turn. Burn this card.	"{You} tense{s} {your} body, deflecting attacks for [you]1 turn."	"selfEffect: Deflect, 3, 1"	burn						
+Hit	Attack	Deal 2d(Str) damage.	{You} smack{s} {enemyName} for {dealDirectDamage} damage.	manaCost: 1	dealDirectDamage: 2 d Str	link: 2					
+Bounce	Defend	Gain (Dex)/2 deflect for 1 turn. Burn this card.	"{You} tense{s} {your} body, deflecting attacks for [you]1 turn."	"selfEffect: Deflect, Dex / 2, 1"	burn						
 											
-Carapace	Defend	Gain 1d(Dex) shield for 2 turns. Gain 1 mana. Discard this for 1 turn.	{You} hide{s} in {your} shell and gain{s} {gainShield} shield for {gainShieldTurns}.	"gainShield: Dex d 2, 2"	gainMana: 1	discard: 1					
-Snap	Attack	"Deal 1d(Str) damage, dealing (Str)d2 instead if you have shield."	{You} bite{s} {enemyName} for {dealDirectDamage} damage.	ALTERNATE: selfShield	dealDirectDamage: 1 d Str						
-SnapGhost	Attack	Deal (Str)d2 damage.	"{You} snap{s} at {enemyName} from {your} shell, dealing {dealDirectDamage} damage."	dealDirectDamage: Str d 2							
-TortoiseStart	Defend	Gain 1 shield for 10 turns.	N/A	"gainShield: 1, 10"							
+Carapace	Defend	Gain 1d(Dex) shield for 2 turns. Gain 1 mana. Discard this for 1 turn.	{You} hide{s} in {your} shell and gain{s} {gainShield} shield for {gainShieldTurns}.	"gainShield: 1 d Dex, 2"	gainMana: 1	discard: 1					
+Snap	Attack	"Deal 1d(Str) damage, dealing 2d(Str) instead if you have shield."	{You} bite{s} {enemyName} for {dealDirectDamage} damage.	ALTERNATE: selfShield	dealDirectDamage: 1 d Str						
+SnapGhost	Attack	Deal 2d(Str) damage.	"{You} snap{s} at {enemyName} from {your} shell, dealing {dealDirectDamage} damage."	dealDirectDamage: 2 d Str							
+Tortoise Start	Defend	Gain 1 shield for 10 turns.	N/A	"gainShield: 1, 10"							
 											
 Pant	Defend	Gain (Dex)/3 heatlh. Discard this for 5 turns.	"{You} pant{s}, gaining {gainHealth} health."	gainHealth: Dex / 3	discard: 5	stay: 1					
-Dog Bite	Attack	Deal 2+1d(Str) damage.	{You} bite{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str + 2							
+Dog Bite	Attack	Deal 1d(Str) damage.	{You} bite{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str + 2							
 											
 Paw the Ground	Spell	Gain 3 mana. Discard this card for 6 turns.	[you]{You} paw{s} the ground.	gainMana: 3	discard: 6	link: 2	UNIQUEFLAG: setup				
-Buffalo Charge	Attack	"If the enemy has block or shield, pierce them. If not, deal 7+(Str)d2 damage. Projectile."	"{You} charge{s} at {enemyName}, dealing {dealDirectDamage} damage."	manaCost: 3	ALTERNATE: distance	ALTERNATE: enemyBlockOrShield	dealDirectDamage: Str d 2 + 7	projectile	link: 3	topPriority	
+Buffalo Charge	Attack	"If the enemy has block or shield, pierce them. If not, deal (Str)d2 damage. Projectile."	"{You} charge{s} at {enemyName}, dealing {dealDirectDamage} damage."	manaCost: 3	ALTERNATE: distance	ALTERNATE: enemyBlockOrShield	dealDirectDamage: Str d 2	projectile	link: 3	topPriority	
 Buffalo ChargeGhost	Attack	Close all distance.	"[you]{You} charge{s} at {enemyName}, closing all distance."	gainDistance: -distance							
 Buffalo ChargeGhost2	Attack	Pierce the enemy.	"[you]{You} charge{s} at {enemyName}, piercing {their} defenses."	action: pierce							
-Ram	Attack	Deal 2d(Str) damage.	{You} ram{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 2 d Str							
+Ram	Attack	Deal 2+1d(Str) damage.	{You} ram{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str + 2							
 											
-Venom Bite	Attack	Deal 2d(Str) damage. The enemy loses 2d(Int) health for 5 turns. Gain 1 mana.	{You} bite{s} {enemyName} for {dealDirectDamage} damage and inject{s} {them} with [you]venom[n] for [you]5 turns[n].	defensesCost	manaCost: 2	dealDirectDamage: 2 d Str	"damageOT: 2 d Int, 5"	link: 2			
+Venom Bite	Attack	Deal 1d(Str) damage. The enemy loses 1d(Int) health for 5 turns. Gain 1 mana.	{You} bite{s} {enemyName} for {dealDirectDamage} damage and inject{s} {them} with [you]venom[n] for [you]5 turns[n].	defensesCost	manaCost: 2	dealDirectDamage: 1 d Str	"damageOT: 1 d Int, 5"	link: 2			
 Dry Bite	Attack	Deal 1d(Str) damage. Gain 1d2 mana.	{You} bite{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str	gainMana: 1 d 2	link: 1					
 Webs	Spell	Put a Struggle card in the enemy's deck and a More Webs card in your deck. Fill your hand with Spells. Burn this card.	[you]{You} lay{s} out {your} web.	insertEnemyDeck: Struggle (2)	insertSelfDeck: More Webs (1)	fill: Spell	burn				
-More Webs	Spell	Put 3 Struggle cards in the enemy's deck. Gain 2 mana. Burn this card.	[you]{You} lay{s} out {your} web.	insertEnemyDeck: Struggle (3)	burn						
+More Webs	Spell	Put (Dex)/2 Struggle cards in the enemy's deck. Gain 2 mana. Burn this card.	[you]{You} lay{s} out {your} web.	insertEnemyDeck: Struggle (Dex / 3)	burn						
 Struggle	Harmful	Pierce yourself. Burn this card.	[you]{You} struggle{s} to escape the webs.	action: selfPierce	burn						
 											
 Dig	Defend	Gain 1 shield for 2 turns. Gain 1 distance. Add a Tighten to your deck. Discard this card for 6 turns.	"{You} hide{s} {yourself} in the ground, moving {away} and gaining {gainShield} shield."	gainDistance: 1	gainShield: 2	insertSelfDeck: Tighten (1)	link: 3	discard: 6			
 Tighten	Spell	Gain 3 Strength for 3 turns. Burn this card.	{You} strengthen{s} {your} attacks.	"gainStat: Strength, 3, 3"	UNIQUEFLAG: ramping	burn					
-Strangulate	Attack	Apply a (Str)d2 stranglehold with 6 hp. Gain 1 mana. Burn this card..	[you]{You} wrap{s} {yourself} around {enemyName}.	stranglehold: 6	gainMana: 1	burn	link: 2				
-Strangulate (Attack)	Attack	Deal (Str)d2 damage.	{You} strangle{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: Str d 2							
+Strangulate	Attack	Apply a 2d(Str) stranglehold with 6 hp. Gain 1 mana. Burn this card..	[you]{You} wrap{s} {yourself} around {enemyName}.	stranglehold: 6	gainMana: 1	burn	link: 2				
+Strangulate (Attack)	Attack	Deal 2d(Str) damage.	{You} strangle{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 2 d Str							
 Strangulate (Release)	Defend	Release the enemy from any strangleholds. Add a Constrict to your deck. Lose 1 mana. Fill your hand with Attacks. Burn this card.	[enemy]{You} retreat{s} into the ground.	release	gainMana: -1	fill: Attack					
-Worm Lunge	Attack	Deal 2d(Str) damage.	"{You} lunge{s} at {enemyName}, closing distance and biting {them} for {dealDirectDamage} damage."	distanceCost: 1	dealDirectDamage: 2 d Str	link: 4	flow				
+Worm Lunge	Attack	Deal 2+2d(Str) damage.	"{You} lunge{s} at {enemyName}, closing distance and biting {them} for {dealDirectDamage} damage."	distanceCost: 1	dealDirectDamage: 2 d Str + 2	link: 4	flow				
 Worm Bite	Attack	Deal 1d(Str) damage.	{You} bite{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str	link: 1						
 											
 Shred	Attack	"If the enemy has no defenses, they lose 1d(Str) health for 3 turns. Otherwise, deal 5 damage."	"{You} shred{s} {their} flesh, causing [you]bleed[n] for [you]3 turns[n]."	ALTERNATE: enemyDefenses	"damageOT: 1 d Str, 3"	link: 3					
 ShredGhost	Attack	Deal 5 damage.	"{You} attempt{s} to shred {their} flesh, dealing {dealDirectDamage} damage."	dealDirectDamage: 5							
-Flap	Spell	Gain 2d(Dex) block. Shuffle the enemy's deck.	"[you]{You} create{s} a gust with {your} wings, gaining {gainBlock} block and shuffling {their} deck."	manaCost: 1	gainBlock: 2 d Dex	action: shuffle	link: 2				
-Peck	Attack	Deal 1d(Str) damage 3 times. Gain 1 mana.	"{You} assult{s} {enemyName} with a flurry of pecks, attacking [you]thrice[n] for {dealDirectDamage} damage."	dealDirectDamage: 1 d Str	dealDirectDamage: 1 d Str	dealDirectDamage: 1 d Str	gainMana: 1	link: 1			
-Claw	Attack	Deal 2+1d(Str) damage.	{You} claw{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str + 2							
+Flap	Spell	Gain 1d(Dex) block. Shuffle the enemy's deck.	"[you]{You} create{s} a gust with {your} wings, gaining {gainBlock} block and shuffling {their} deck."	manaCost: 1	gainBlock: 2 d Dex	action: shuffle	link: 2				
+Peck	Attack	Deal 1d(Str) damage 3 times. Gain 1 mana. Discard this card for 2 turns.	"{You} assult{s} {enemyName} with a flurry of pecks, attacking [you]thrice[n] for {dealDirectDamage} damage."	dealDirectDamage: 1 d Str	dealDirectDamage: 1 d Str	dealDirectDamage: 1 d Str	gainMana: 1	link: 1	discard: 2		
+Claw	Attack	Deal 1+1d(Str) damage.	{You} claw{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str + 1							
 											
-Attack Trap	Spell	"If the enemy plays an Attack next turn, they pierce themselves and lose 10 energy. Fill your hand with attacks."	{You} set{s} up an [you]Attack trap[n] for 3 turns.	"effect: Attack Trap, 3"	fill: Attack	link: 2					
+Attack Trap	Spell	"For (Int)/4 turns, if the opponent plays an Attack, they pierce themselves and lose 10 energy. Fill your hand with attacks."	{You} set{s} up an [you]Attack trap[n] for 3 turns.	"effect: Attack Trap, Int / 4"	fill: Attack	link: 2					
 Attack Trap Triggered	Harmful	Pierce your defenses.	"[you]{You} set off the trap, losing your defenses and {gainEnergy} energy!"	action: selfPierce	gainEnergy: -10						
-Defend Trap	Spell	"If the enemy plays a Defend next turn, they lose 2d2 health for 5 turns."	{You} set{s} up an [you]Defend trap[n] for 3 turns.	"effect: Defend Trap, 3"							
+Defend Trap	Spell	"For (Int)/4 turns, if the opponent plays a Defend, they lose 2d2 health for 5 turns."	{You} set{s} up an [you]Defend trap[n] for 3 turns.	"effect: Defend Trap, Int / 4"							
 Defend Trap Triggered	Harmful	Lose 2d2 health for 5 turns.	"[you]{You} set off the trap, losing health for 5 turns!"	"selfDamageOT: 2 d 2, 5"							
-Spell Trap	Spell	"If the enemy plays a Spell next turn, they take 8d3 damage."	{You} set{s} up an [you]Spell trap[n] for 3 turns.	"effect: Spell Trap, 3"							
+Spell Trap	Spell	"For (Int)/4 turns, if the opponent plays a Spell, they take 8d3 damage."	{You} set{s} up an [you]Spell trap[n] for 3 turns.	"effect: Spell Trap, Int / 4"							
 Spell Trap Triggered	Harmful	Take 8d3 damage.	"[you]{You} set off the trap, taking {takeDirectDamage} damage!"	takeDirectDamage: 8 d 3							
 Dash Away	Defend	Gain 1d3 distance. Discard this for 3 turns.	{You} dash{es} {away} from {enemyName}.	gainDistance: 1 d 3	link: 1						
 Throw Rocks	Attack	Projectile. Deal 1d(Str) damage twice.	"{You} throw{s} rocks at {enemyName} [you]twice[n], dealing {dealDirectDamage} damage."	dealDirectDamage: 1 d Str	dealDirectDamage: 1 d Str	projectile	link: 3				
-											
-Single Claw	Attack	Deal 1d(Str) damage.	{You} slash{es} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str							
-Double Claw	Attack	Deal 1d(Str) damage twice. Shuffle your deck.	{You} slash{es} {enemyName} [you]twice[n] for {dealDirectDamage} damage.	manaCost: 3	dealDirectDamage: 1 d Str	dealDirectDamage: 1 d Str	shuffle				
-Rush	Attack	Gain 3d(Int) mana. Your next attack deals (Str) more damage. Fill your hand with Attacks.	[you]{You} rush{es} forward.	gainMana: 3 d Int	"selfEffect: Sharpen, Str"	fill: Attack	link: 2				
-Battle Roar	Spell	Gain 5 Strength for 4 turns. Gain 1 mana. Discard this card for 3 turns.	[you]{You} bellow{s} out a deep roar.	gainMana: 1	"gainStat: Strength, 5, 4"	link: 1	discard: 3	UNIQUEFLAG: ramping			
-Chomp	Attack	Deal (Str) damage.	"{You} crush{es} {enemyName} with {your} jaw, dealing {dealDirectDamage} damage."	manaCost: 3	dealDirectDamage: Str						
 											
 Tooth	Attack	"If the enemy has block or shield, pierce them. Otherwise, they take (Str)d3 damage and lose 2d(Int) health and 3 energy for 5 turns. Gain 3 mana."	"{You} fire{s} a tooth at {enemyName}, dealing {dealDirectDamage} damage and injecting {them} with [you]paralysing venom[n] for [you]5 turns[n]."	manaCost: 2	ALTERNATE: enemyDefenses	dealDirectDamage: Str d 3	"damageOT: 2 d Int, 5"	"enemyLoseEnergyOT: 3, 5"	gainMana: 3	link: 3	
 ToothGhost	Attack	Pierce the enemy.	"[you]{You} fire{s} a tooth at {enemyName}, piercing {their} defenses."	action: pierce							
@@ -401,20 +394,26 @@ Pound	Attack	Deal 3d(Str) damage. Gain 1 mana. Discard this card for 2 turns.	{Y
 Digest	Attack	Apply a 1d(Str) stranglehold with 20 hp.	[you]{You} envelop{s} {their} body.	UNIQUECOST	manaCost: 5	stranglehold: 20					
 Digest (Attack)	Attack	Deal 1d(Str) damage.	{You} dissolve{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str							
 Digest (Release)	Defend	Release the enemy from any strangleholds. Burn this card.	[enemy]{You} loosen{s} {your} grasp.	release							
+Snail Start	Defend	Gain 2 shield for 10 turns.	N/A	"gainShield: 2, 10"							
 											
-ColonyStart	Spell	"Depending on the situation, take on a certain shape, adding appropriate cards to your deck."	[you]{You} take{s} on the shape of a protective dome.	ALTERNATE: enemyBlockOrShield	insertSelfDeck: Ant Shield (2)	insertSelfDeck: Ant Strike (2)					
+Single Claw	Attack	Deal 1d(Str) damage.	{You} slash{es} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str							
+Double Claw	Attack	Deal 1d(Str) damage twice. Shuffle your deck.	{You} slash{es} {enemyName} [you]twice[n] for {dealDirectDamage} damage.	manaCost: 4	dealDirectDamage: 1 d Str	dealDirectDamage: 1 d Str	shuffle				
+Rush	Attack	Gain 3d(Int) mana. Your next attack deals (Str) more damage. Close all distance. Fill your hand with Attacks.	[you]{You} rush{es} forward closing all distance.	gainMana: 3 d Int	"selfEffect: Sharpen, Str"	gainDistance: -distance	fill: Attack	link: 2			
+Battle Roar	Spell	Gain 5 Strength for 4 turns. Gain 1 mana. Discard this card for 3 turns.	[you]{You} bellow{s} out a deep roar.	gainMana: 1	"gainStat: Strength, 5, 4"	link: 1	discard: 3	UNIQUEFLAG: ramping			
+Chomp	Attack	Deal (Str)/2 damage.	"{You} crush{es} {enemyName} with {your} jaw, dealing {dealDirectDamage} damage."	manaCost: 4	dealDirectDamage: Str						
+											
+Colony Start	Spell	"Depending on the situation, take on a certain shape, adding appropriate cards to your deck."	[you]{You} take{s} on the shape of a protective dome.	ALTERNATE: enemyBlockOrShield	insertSelfDeck: Ant Shield (1)	insertSelfDeck: Ant Strike (2)					
 ColonyStartGhost	Spell	Become a humanoid.	[you]{You} take{s} on a humanoid shape.	insertSelfDeck: Ant Smack (2)	insertSelfDeck: Ant Pierce (2)						
-Reform	Spell	"Depending on the situation, take on a certain shape, adding appropriate cards to your deck."	[you]{You} reform{s} {yourself} into a protective dome.	ALTERNATE: distance	ALTERNATE: enemyBlockOrShield	insertSelfDeck: Ant Shield (2)	insertSelfDeck: Ant Strike (2)				
+Reform	Spell	"Depending on the situation, take on a certain shape, adding appropriate cards to your deck."	[you]{You} reform{s} {yourself} into a protective dome.	ALTERNATE: distance	ALTERNATE: enemyBlockOrShield	insertSelfDeck: Ant Shield (1)	insertSelfDeck: Ant Strike (2)				
 ReformGhost	Spell	Become a cannon.	[you]{You} reform{s} {yourself} into the shape of a cannon.	insertSelfDeck: Ant Compress (1)	insertSelfDeck: Ant Launch (1)						
 ReformGhost2	Spell	Become a humanoid.	[you]{You} reform{s} {yourself} into a humanoid shape.	insertSelfDeck: Ant Smack (2)	insertSelfDeck: Ant Pierce (2)						
-Ant Smack	Attack	Deal 2d(Str) damage and apply Ants for 2 turns. Burn this card.	"{You} smack{s} {enemyName}, dealing {dealDirectDamage} damage."	forceUsable	dealDirectDamage: 2 d Str	"effect: Ants, 2"	burn				
-Ant Pierce	Attack	Pierce the opponent and apply Ants for 2 turns. Burn this card.	{You} form{s} a spike and [you]pierce{s}[n] {enemyName}.	forceUsable	action: pierce	"effect: Ants, 2"	burn				
+Ant Smack	Attack	Deal 2d(Str) damage and apply Ants for 2 turns. Burn this card.	"{You} smack{s} {enemyName}, dealing {dealDirectDamage} damage and [you]covering {them} with ants[n]."	forceUsable	dealDirectDamage: 2 d Str	"effect: Ants, 2"	burn				
+Ant Pierce	Attack	Pierce the opponent and apply Ants for 2 turns. Burn this card.	"{You} form{s} a spike and strikes {enemyName}, [you]piercing[n] {them} and [you]covering {them} with ants[n]."	forceUsable	action: pierce	"effect: Ants, 2"	burn				
 Ant Shield	Defend	"For 1+1d(Dex) turns, damage taken is halved and being Attacked applies 3 ants to the opponent. Burn this card."	"{You} form{s} a shield of ants, halving all damage for {selfEffectTurns}."	forceUsable	"selfEffect: Ant Shield, 1 d Dex + 1"	burn					
-Ant Lash	Attack	Apply Ants for 3 turns. Burn this card.	{You} lash{es} back and throw{s} ants at {enemyName}.	forceUsable	"effect: Ants, 3"	burn					
-Ant Strike	Attack	Deal 1d(Str) damage. Apply Ants for a turn. Burn this card.	"{You} form{s} an appendage and strike{s} {enemyName}, dealing {dealDirectDamage} damage."	forceUsable	dealDirectDamage: 1 d Str	"effect: Ants, 1"	burn				
+Ant Lash	Attack	Apply Ants for 3 turns. Burn this card.	[you]{You} lash{es} back and throw{s} ants at {enemyName}.	forceUsable	"effect: Ants, 3"	burn					
+Ant Strike	Attack	Deal 1d(Str) damage. Apply Ants for a turn. Burn this card.	"{You} form{s} an appendage and strike{s} {enemyName}, dealing {dealDirectDamage} damage and [you]covering {them} with ants[n]."	forceUsable	dealDirectDamage: 1 d Str	"effect: Ants, 1"	burn				
 Ant Compress	Attack	Add an Ant Launch to your hand. Burn this card.	[you]{You} compress{es} {yourself}.	forceUsable	gainMana: 5	burn	stay: 1				
 Ant Launch	Attack	"Projectile. Apply 4 rounds of Ants, with each for a certain amount of turns from 1-4. Burn this card."	[you]{You} launch{es} a ball of ants at {enemyName}.	forceUsable	manaCost: 10	projectile	"effect: Ants, Int / 8 + 1"	"effect: Ants, Int / 8 + 2"	"effect: Ants, Int / 8 + 3"	"effect: Ants, Int / 8 + 4"	burn
-Ants	Negative	Take 1 damage 3 times.	Ants bite {you} [enemy]three times[n] for a total of {takeDirectDamage} damage.	takeDirectDamage: 1	takeDirectDamage: 1	takeDirectDamage: 1					
 											
 Form Rocks	Spell	Gain (Int)d2 block for 3 turns. Gain 3 mana. Discard this card for 3 turns.	{You} start{s} to form rocks for [you]{blockOTTurns}.	"blockOT: Int d 2, 3"	gainMana: 2	discard: 3	link: 2				
 Rock Throw	Attack	Projectile. Deal damage equal to your block.	"{You} throw{s} {your} rocks at {enemyName}, dealing {dealDirectDamage} damage."	manaCost: 1	dealDirectDamage: block	link: 3	projectile				
@@ -462,12 +461,12 @@ Twin Chop	Attack	The opponent loses 2 health for (Str) turns. Lose 12 energy.	"{
 											
 Quick Stab	Attack	"Deal 1d(Str) damage, dealing (Str)x4 damage if on an Extra Turn. Discard this card for 1 turn."	{You} stab{s} {enemyName} for {dealDirectDamage} damage.	ALTERNATE: extraTurn	dealDirectDamage: 1 d Str	discard: 1	link: 2				
 Quick StabGhost	Attack	Deal (Str)x4 damage.	{You} stab{s} {their} weak spot for {dealDirectDamage} damage.	dealDirectDamage: Str * 4							
-Evade	Defend	"For 1 turn, ignore the opponent's next offensive card. If any were ignored, gain an extra turn. Discard this card for 2 turns."	[you]{You} prepare{s} to evade an oncoming attack.	"selfEffect: Evade, 1"	discard: 2	UNIQUEFLAG: ramping					
+Evade	Defend	"For 1 turn, ignore the next card the opponent uses on you. If any were ignored, gain an extra turn. Discard this card for 2 turns."	[you]{You} prepare{s} to evade an oncoming attack.	"selfEffect: Evade, 1"	discard: 2						
 Evade Turn	Defend	Gain an extra turn.	"[you]{You} evade{s} the attack, gaining an extra turn."	gainExtraTurns: 1							
 Sand Spray	Spell	The enemy loses (Dex)+4 energy next turn. Burn this card.	"[you]{You} throw{s} sand at {enemyName}, causing energy loss next turn. "	topPriority	"enemyLoseEnergyOT: Dex + 6, 1"	burn	link: 1	stay: 1			
 Hide Self	Defend	Gain 1 shield. Add a Sand Spray to your hand.	[you]{You} gain{s} {gainShield} shield and prepare{s} some sand.	gainShield: 1	insertSelfDeck: Sand Spray (1)	fill: Sand Spray					
 											
-Sneak	Defend	Gain (Dex) energy turn and prevent energy loss. The effect after your next damage dealt. Burn this card.	[you]{You} attempt{s} to sneak out of sight.	"selfEffect: Sneak, Dex"	burn						
+Sneak	Defend	"Each turn, gain (Dex) energy and prevent energy loss. The effect ends after your next damage dealt. Burn this card."	[you]{You} attempt{s} to sneak out of sight.	"selfEffect: Sneak, Dex"	burn						
 											
 Small Zap	Spell	Deal 1d(Int) damage.	{You} zap{s} {enemyName} for {dealDirectDamage} damage.	manaCost: 4	dealDirectDamage: 1 d Int						
 Big Zap	Spell	Deal (Int)+3 damage.	{You} zap{s} {enemyName} for {dealDirectDamage} damage.	manaCost: 8	dealDirectDamage: Int + 3						

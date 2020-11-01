@@ -201,8 +201,8 @@ func cardFunction(copytimes = 0):
 			deflectedCardFunction(copytimes)
 		#Distance
 		#check for distance:
-		#Attack, not a ghost card, has offensive action, projectile/reaching+distance<=2/throw, 
-		elif myself.Distance() > 0 && cardType == "Attack" && !ghost && hasOffensiveAction() && !(has("projectile") || (has("reaching") && myself.Distance() <= 2) || myself.hasEffect("Throw")):
+		#Attack, not a ghost card, has offensive action, projectile/reaching+distance<=1/reaching2+distance<=2/throw, 
+		elif myself.Distance() > 0 && cardType == "Attack" && !ghost && hasOffensiveAction() && !(has("projectile") || (has("reaching") && myself.Distance() <= 1) || (has("reaching2") && myself.Distance() <= 2) || myself.hasEffect("Throw")):
 			#if your card has a distance cost, there are some rules:
 			#distance cost takes into account all distance on the field
 			#if there is exactly enough distance, congratulations, you use your card (another check for Deflection as well)
@@ -383,7 +383,7 @@ func addEffect(target, effectName, value, turns):
 				valueStr += value[k] + " "
 			valueStr = valueStr.substr(0, len(valueStr)-1)
 	turns = calculate(str(turns))
-	if (opponent.hasEffect("Dodge") || opponent.hasEffect("Elude") || opponent.hasEffect("Sense")) && (target == opponent || "counterpart" in Game.scriptgen.EffectScripts[effectName][0]):
+	if (opponent.hasEffect("Dodge") || opponent.hasEffect("Elude") || opponent.hasEffect("Sense") || opponent.hasEffect("Evade")) && (target == opponent || "counterpart" in Game.scriptgen.EffectScripts[effectName][0]):
 		turns = 0
 	if turns != 0:
 		target.addEffect(effectName, valueStr, turns, self)

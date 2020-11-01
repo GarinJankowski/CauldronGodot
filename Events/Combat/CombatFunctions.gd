@@ -82,26 +82,30 @@ func change(who, type, amount, Card = null, turns = 1):
 	elif type == "Energy" && who.isPlayer():
 		who.CurrentEnergy += amount
 		checkEnergy()
-	elif type == "ExtraTurns" && who.isPlayer():
-		var player
-		if me.isPlayer():
-			player = me
+	elif type == "ExtraTurns":
+		var myself
+		var opponent
+		if who == me:
+			myself = me
+			opponent = enemy
 		else:
-			player = enemy
+			myself = enemy
+			opponent = me
+			
 			
 		if amount > 0:
 			for i in amount:
-				player.addExtraTurns(1, Card)
+				myself.addExtraTurns(1, Card)
 			if amount == 1:
 				textlog.queue("[y]EXTRA TURN")
 			else:
 				textlog.queue("[y]" + str(amount) + " EXTRA TURNS")
 		elif amount < 0:
 			for i in -amount:
-				if player.ExtraTurns() > 0:
-					player.addExtraTurns(-1, Card)
+				if myself.ExtraTurns() > 0:
+					myself.addExtraTurns(-1, Card)
 				else:
-					enemy.addExtraTurns(1, Card)
+					opponent.addExtraTurns(1, Card)
 			if amount == -1:
 				textlog.queue("[o]TURN LOSS")
 			else:

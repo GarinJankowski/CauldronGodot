@@ -75,7 +75,7 @@ func init2(r):
 	guy.startMutation("Positive")
 	enemy.startMutation("Positive")
 	if enemy.startCard:
-		enemy.useGhostCard(enemy.enemyName + "Start", enemyCombat)
+		enemy.useGhostCard(enemy.enemyName + " Start", enemyCombat)
 	guy.startMutation("Negative")
 	enemy.startMutation("Negative")
 	

@@ -51,10 +51,10 @@ func fixRetainedEffects():
 			effect.scriptObject.Card = null
 			effect.myself = myself
 			effect.Combat = myself.currentCombat
-			if effect.Combat == null:
-				effect.scriptObject.opponent = null
-			else:
+			if effect.Combat != null && myself.inCombat:
 				effect.scriptObject.opponent = myself.currentCombat.enemy
+			else:
+				effect.scriptObject.opponent = null
 			effect.scriptObject.myself = myself
 			effect.scriptObject.Combat = myself.currentCombat
 

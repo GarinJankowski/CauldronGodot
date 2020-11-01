@@ -133,7 +133,6 @@ func init():
 	#Bag.addMod("", 0)
 	#Body.addMutation("")
 	#addStat("", 0)
-	Bag.addGear("Wild Headdress")
 
 
 func gainExperience(value):
@@ -388,6 +387,9 @@ func hasMutation(mutationName):
 func isPlayer():
 	return true
 
+func checkDeath():
+	if !isAlive():
+		DEAD()
 
 func DEAD():
 		updateStats()
