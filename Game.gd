@@ -12,6 +12,7 @@ var cursor
 var roomInfo = {}
 var terrainInfo = {}
 var runeInfo = {}
+var currentEffectTooltip = null
 
 func _ready():
 	randomize()
@@ -142,6 +143,7 @@ func tileTooltip(truefalse, room = null, terrain = null, mapbottom = false):
 		cursor.get_node("roomTooltip").position.y = roomPos
 		cursor.get_node("terrainTooltip").position.y = terrainPos
 
+
 func runeTooltip(truefalse, rune = null):
 	if truefalse:
 		cursor.get_node("runeTooltip").visible = true
@@ -151,7 +153,9 @@ func runeTooltip(truefalse, rune = null):
 	else:
 		cursor.get_node("runeTooltip").visible = false
 
+
 func effectTooltip(truefalse, effect = null):
+	currentEffectTooltip = effect
 	cursor.get_node("effectGoodTooltip").visible = false
 	cursor.get_node("effectBadTooltip").visible = false
 	if truefalse && effect != null:
@@ -160,10 +164,12 @@ func effectTooltip(truefalse, effect = null):
 			goodbad = "Good"
 		cursor.get_node("effect" + goodbad + "Tooltip").visible = true
 		cursor.get_node("effect" + goodbad + "Tooltip/Label/Name").text = effect.displayName
-		cursor.get_node("effect" + goodbad + "Tooltip/Description").text = effect.displayTurns
-		if effect.displayTurns != "":
-			cursor.get_node("effect" + goodbad + "Tooltip/whitesquare").scale.y = 1
-			cursor.get_node("effect" + goodbad + "Tooltip/whitesquare").position.y = 8
+		cursor.get_node("effect" + goodbad + "Tooltip/Duration").text = effect.displayTurns
+		if effect.displayTurns == "(0 turns left)":
+			cursor.get_node("effect" + goodbad + "Tooltip/Duration").modulate = "ff0000"
 		else:
-			cursor.get_node("effect" + goodbad + "Tooltip/whitesquare").scale.y = 0.59
-			cursor.get_node("effect" + goodbad + "Tooltip/whitesquare").position.y = -55
+			cursor.get_node("effect" + goodbad + "Tooltip/Duration").modulate = "ffffff"
+		cursor.get_node("effect" + goodbad + "Tooltip/Description").text = effect.displayDescription
+		cursor.get_node("effect" + goodbad + "Tooltip/Description").update()
+		var lines = cursor.get_node("effect" + goodbad + "Tooltip/Description").get_line_count()
+		cursor.get_node("effect" + goodbad + "Tooltip/whitesquare").scale.y = 1 + (lines-1)*0.42

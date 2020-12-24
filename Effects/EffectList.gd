@@ -188,7 +188,7 @@ func updatePositions():
 		badList[i].movePos(i)
 
 #make the effects get removed mid-check and update their existence dynamically
-func turn(goodbad = ""):
+func turn(goodbad):
 	var list
 	var checklist
 	if goodbad == "Good":
@@ -200,7 +200,24 @@ func turn(goodbad = ""):
 		
 	for effect in checklist:
 		effect.takeTurn()
-		if !effect.shouldExist():
+		if effect.shouldValueOut():
+			removeEffect(null, effect)
+
+func hasTimedOut():
+	for effect in goodList:
+		if effect.shouldTimeOut():
+			return true
+	for effect in badList:
+		if effect.shouldTimeOut():
+			return true
+	return false
+
+func endTurn():
+	for effect in goodList:
+		if effect.shouldTimeOut():
+			removeEffect(null, effect)
+	for effect in badList:
+		if effect.shouldTimeOut():
 			removeEffect(null, effect)
 
 #triggers all effects of the effectName
@@ -276,6 +293,11 @@ func getAllValues(effectName):
 func getEffect(effectName):
 	if effectName in effectList:
 		return effectList[effectName][0]
+
+func getEffectList(effectName):
+	if effectName in effectList:
+		return effectList[effectName]
+	return []
 		
 func tickAllies():
 	for key in effectList:

@@ -13,7 +13,7 @@ var enemyDeck
 
 var waiting
 #var timertime = 0.1
-var timertime = 0.5
+var timertime = 0.3
 
 func init2(r):
 	init(r)
@@ -69,6 +69,7 @@ func init2(r):
 	guy.selfCombat.setCombatEvent(self)
 	enemyCombat.setCombatEvent(self)
 	enemy.selfCombat.setCombatEvent(self)
+	guyCombat.setReverse(enemyCombat)
 	
 	guy.Effects.fixRetainedEffects()
 
@@ -130,8 +131,8 @@ func turn():
 				return
 		elif Input.is_action_just_pressed("flee") && guyDeck.fleeOn:
 			fleeCombat()
-		#if the enemy could put you to sleep this would be uncommented
-#		elif guy.hasEffect("Sleep"):
+		#if the enemy could put you to sleep or stun you this would be uncommented
+#		elif guy.hasEffect("Sleep") || guy.hasEffect("Stun"):
 #			guyDeck.updateDeck1()
 #			guyDeck.shuffleAddPrint()
 #			if nextTurn():
@@ -148,7 +149,7 @@ func turn():
 	elif checkTurn("enemy") && !close:
 		enemyDeck.updateDeck1()
 		var ai = enemyDeck.enemyAI()
-		if !enemy.hasEffect("Sleep"):
+		if !enemy.hasEffect("Sleep") && !enemy.hasEffect("Stun"):
 			if ai > -1:
 				enemyDeck.useCard(ai)
 			else:
@@ -285,6 +286,21 @@ func endTurnEffects():
 #set the turn to someone
 func nextTurn():
 	endTurnEffects()
+	
+	if checkEndCombat():
+		return false
+	
+	if turn == "guy" and guy.Effects.hasTimedOut():
+		waiting = true
+		yield(get_tree().create_timer(timertime), "timeout")
+		waiting = false
+		guy.Effects.endTurn()
+	elif turn == "enemy" and enemy.Effects.hasTimedOut():
+		waiting = true
+		yield(get_tree().create_timer(timertime), "timeout")
+		waiting = false
+		enemy.Effects.endTurn()
+	
 	if checkEndCombat():
 		return false
 		

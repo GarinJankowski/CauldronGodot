@@ -45,9 +45,9 @@ func makeSprite():
 	if positive == "Negative":
 		get_node("glow/glow").modulate = "3ccb1bd0"
 	
-	get_node("mutationSprite").set_texture(load("res://Body/" + positive + " Mutations/mutation_" + mutationName + ".png"))
-	if get_node("mutationSprite").texture == null:
-		get_node("mutationSprite").set_texture(load("res://Body/" + positive + " Mutations/mutation_" + positive + ".png"))
+	#get_node("mutationSprite").set_texture(load("res://Body/" + positive + " Mutations/mutation_" + mutationName + ".png"))
+	#if get_node("mutationSprite").texture == null:
+	get_node("mutationSprite").set_texture(load("res://Body/" + positive + " Mutations/mutation_" + positive + ".png"))
 
 func select():
 	selected = true

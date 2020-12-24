@@ -91,12 +91,13 @@ Vibrant Collar	Headgear	"Radiate (1), Decay (1)"	2	N/A
 Iron Helmet	Headgear	"Rally (2), Guard (1)"	2	N/A
 Prototype Lens	Headgear	"Laser (1), Magnify (3)"	2	N/A
 Ear Plugs	Headgear	"Screech (2), Echo (1)"	2	N/A
-Black Cowl	Headgear	"Jinx (1), Emphasize (2)"	2	N/A
+Fairy Teeth	Headgear	"Jinx (1), Encourage (2)"	2	N/A
 Laurel Wreath	Headgear	"Regenerate (1), Sap (2)"	2	N/A
 Mail Coif	Headgear	"Sharpen (2), Steel (1)"	2	N/A
 Dragonskin Hood	Headgear	"Fireball (1), Fuel (2)"	2	N/A
 Elastic Cap	Headgear	"Rubberize (2), Melt (1)"	2	N/A
 Wispy Blindfold	Headgear	"Kinesis (2), Sense (1)"	3	N/A
+Shiny Specs	Headgear	"Shock (2), Stun (1)"		
 				
 Head Umbrella	Headgear	"Thunderstorm (2), Power (3), Tornado (1)"	3	N/A
 Crystal Earrings	Headgear	"Sunbeam (2), Synthesize (1), Focus (2)"	3	N/A
@@ -109,6 +110,7 @@ Mark II	Headgear	"Disintegrate (1), Amplify (2), Recharge (2)"	3	N/A
 Swirly Glasses	Headgear	"Sleep (1), Trick (1), Confuse (1)"	3	N/A
 Dusty Monocle	Headgear	"Record (1), Skip (1), Nullify (1), Adjust (1)"	3	N/A
 Wild Headdress	Headgear	"Call Rat (1), Call Crab (1), Call Salamander (1)"	3	N/A
+Black Cowl	Headgear	"Doom (1), Shackle (1), Provoke (1), Conclude (1)"	3	N/A
 				
 Twin Axes	Weapon	"Twin Hack (2), Twin Chop (1)"	A	N/A
 Light Boots	Armor	"Sneak (1), Dodge (1)"	A	N/A

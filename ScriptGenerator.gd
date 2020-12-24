@@ -289,6 +289,11 @@ func createCardFunctions(cardstring):
 					functionString += tab + "if myself.hasEffect('Distance') || opponent.hasEffect('Distance'):"
 					functionString += tab + "\tmyself.tickEffect('Distance')"
 					functionString += tab + "\topponent.tickEffect('Distance')"
+				elif parts[0].begins_with("effect="):
+					var ename = parts[0].split("=")[1]
+					functionString += tab + "if myself.hasEffect('" + ename + "') || opponent.hasEffect('" + ename + "'):"
+					functionString += tab + "\tmyself.tickEffect('" + ename + "')"
+					functionString += tab + "\topponent.tickEffect('" + ename + "')"
 				alternates += 1
 				var ghostName = cardName + "Ghost"
 				if alternates > 1:
@@ -543,7 +548,7 @@ func uniqueCardFunction(cardName, actionValues):
 		functionstr += tab + "\tCard.logOutput = '{You} hook{s} {enemyName}, dealing {dealDirectDamage} damage.'"
 		functionstr += tab + "else:"
 		functionstr += tab + "\tactionValues['gainEnergy'] += Combat.gainEnergy(6, Card)"
-		functionstr += tab + "\tCard.addEffect(myself, 'Strength Up', 5, 2)"
+		functionstr += tab + "\tCard.addEffect(myself, 'Strength Up', 5, 1)"
 		functionstr += tab + "\tCard.logOutput = '{You} hook{s} {enemyName}, dealing {dealDirectDamage} damage and pulling {them} down.'"
 	elif cardName == "Fortify":
 		actionValues['gainBlock'] = 0
@@ -584,7 +589,7 @@ func uniqueCardFunction(cardName, actionValues):
 	elif cardName == "Sunbeam":
 		functionstr += "\n\tvar lastplayed = Card.CombatDeck.get_ref().lastPlayed"
 		functionstr += "\n\tif lastplayed != null && lastplayed.cardName == 'Sunbeam':"
-		functionstr += "\n\t\tmyself.addEffect('Intelligence Up', Card.calculate('Int'), Card.calculate('4'), Card)"
+		functionstr += "\n\t\tmyself.addEffect('Intelligence Up', Card.calculate('Int'), Card.calculate('3'), Card)"
 		functionstr += "\n\t\tCard.logOutput = '{You} double {your} power and sear{s} {enemyName} for {dealDirectDamage} damage.'"
 		functionstr += "\n\telse:"
 		functionstr += "\n\t\tCard.logOutput = '{You} sear{s} {enemyName} for {dealDirectDamage} damage.'"
@@ -678,7 +683,32 @@ func uniqueCardFunction(cardName, actionValues):
 		functionstr += tab + "\tCard.logOutput = '{You} adjust{s} {your} vitals, gaining {gainEnergy} energy, {gainMana} mana, and losing {gainHealth} health.'"
 		functionstr += tab + "else:"
 		functionstr += tab + "\tCard.logOutput = '{You} fail{s} to adjust {your} vitals.'"
-	if cardName == "Reconstruction":
+	elif cardName == "Provoke":
+		functionstr += tab + "var extra = Card.calculate('Int / 4')"
+		functionstr += tab + "var lower = 1"
+		functionstr += tab + "if opponent.hasEffect('Shackle'):"
+		functionstr += tab + "\topponent.tickEffect('Shackle')"
+		functionstr += tab + "\tlower += extra"
+		functionstr += tab + "for doom in opponent.Effects.getEffectList('Doom (Target)'):"
+		functionstr += tab + "\tdoom.addTurns(-lower)"
+		functionstr += tab + "lower = 1"
+		functionstr += tab + "if myself.hasEffect('Shackle'):"
+		functionstr += tab + "\tmyself.tickEffect('Shackle')"
+		functionstr += tab + "\tlower += extra"
+		functionstr += tab + "for doom in myself.Effects.getEffectList('Doom (Target)'):"
+		functionstr += tab + "\tdoom.addTurns(-lower)"
+		functionstr += tab + "myself.trigger('Doom (Attacker)')"
+	elif cardName == "Conclude":
+		functionstr += tab + "var doomlist = opponent.Effects.getEffectList('Doom (Target)') + myself.Effects.getEffectList('Doom (Target)')"
+		functionstr += tab + "if len(doomlist) > 0:"
+		functionstr += tab + "\tvar lowest = doomlist[0].turns"
+		functionstr += tab + "\tfor doom in doomlist:"
+		functionstr += tab + "\t\tif doom.turns < lowest:"
+		functionstr += tab + "\t\t\tlowest = doom.turns"
+		functionstr += tab + "\tfor doom in doomlist:"
+		functionstr += tab + "\t\tdoom.setTurns(lowest)"
+		functionstr += tab + "myself.trigger('Doom (Attacker)')"
+	elif cardName == "Reconstruction":
 		functionstr += tab + "myself.CurrentHealth = myself.convertStat('MHP')"
 		functionstr += tab + "myself.updateUI()"
 		
@@ -734,7 +764,7 @@ func uniqueCopyFunction(cardName, actionValues):
 		functionstr += tab + "else:"
 		functionstr += tab + "\tCard.logOutput = '{You} hook{s} {enemyName}, dealing {dealDirectDamage} damage and pulling {them} down.'"
 		functionstr += tab + "\tactionValues['gainEnergy'] += Combat.gainEnergy(6, Card)"
-		functionstr += tab + "\tCard.addEffect(myself, 'Strength Up', 5, 2)"
+		functionstr += tab + "\tCard.addEffect(myself, 'Strength Up', 5, 1)"
 		functionstr += tab + "Card.textlog.push(Card.cardLogOutput())"
 		functionstr += tab + "for key in Card.actionValues:"
 		functionstr += tab + "\tCard.actionValues[key] = 0"
@@ -742,7 +772,7 @@ func uniqueCopyFunction(cardName, actionValues):
 		functionstr += tab + "\tactionValues['dealDirectDamage'] += Combat.dealDirectDamage(1, Card)"
 		functionstr += tab + "\tif extra:"
 		functionstr += tab + "\t\tactionValues['gainEnergy'] += Combat.gainEnergy(6, Card)"
-		functionstr += tab + "\t\tCard.addEffect(myself, 'Strength Up', 5, 2)"
+		functionstr += tab + "\t\tCard.addEffect(myself, 'Strength Up', 5, 1)"
 		functionstr += logString
 	elif cardName == "Stand Firm":
 		functionstr += tab + "myself.tickEffect('Bide')"
@@ -775,7 +805,7 @@ func uniqueCopyFunction(cardName, actionValues):
 		functionstr += tab + "var currentInt = Card.calculate('Int')"
 		functionstr += tab + "if lastplayed != null && lastplayed.cardName == 'Sunbeam':"
 		functionstr += tab + "\tfor i in times:"
-		functionstr += tab + "\t\tmyself.addEffect('Intelligence Up', currentInt, Card.calculate('4'), Card)"
+		functionstr += tab + "\t\tmyself.addEffect('Intelligence Up', currentInt, Card.calculate('3'), Card)"
 		functionstr += tab + "\tCard.logOutput = '{You} double {your} power and sear{s} {enemyName} for {dealDirectDamage} damage.'"
 		functionstr += tab + "else:"
 		functionstr += tab + "\tCard.logOutput = '{You} sear{s} {enemyName} for {dealDirectDamage} damage.'"
@@ -824,6 +854,7 @@ func createEffectFunctions(effectstring):
 	var script = GDScript.new()
 	
 	var effectName
+	var effectDescription
 	var effectProperties = []
 	
 	var values = effectstring.replace("\"", "").split("\t")
@@ -834,6 +865,8 @@ func createEffectFunctions(effectstring):
 		effectProperties.append("stackable")
 	values.remove(0)
 	effectProperties.append(values[0])
+	values.remove(0)
+	effectDescription = values[0]
 	values.remove(0)
 	
 	var scriptString = "\nvar Effect\nvar Card\nvar Combat\nvar myself\nvar opponent\nvar cycle = 0\nvar cycleCounter = 1\n\n"
@@ -917,14 +950,19 @@ func createEffectFunctions(effectstring):
 				actionstring += tab + "opponent.trigger('" + act[1] + "')"
 				if !"counterpart" in effectProperties:
 					effectProperties.append("counterpart")
-			elif act[0] == "useCard":
+			elif act[0].ends_with("seCard"):
+				var user = "myself"
+				var combat = ""
+				if act[0].begins_with("enemy"):
+					user = "Combat.enemy"
+					combat = ".reverse"
 				var cardname = act[1]
 				if " (" in act[1]:
 					cardname = act[1].split(" (")[0]
 					actionstring += tab + "var times" + str(i) + " = Effect.calculate('" + act[1].split(" (")[1].replace(")", "") + "')"
 					actionstring += tab + "for i in times" + str(i) + ":"
 					tab += "\t"
-				actionstring += tab + "myself.useGhostCard('" + cardname + "', Combat)"
+				actionstring += tab + user + ".useGhostCard('" + cardname + "', Combat" + combat + ")"
 			elif act[0] == "manaCost":
 				actionstring += tab + "if Effect.calculate('" + act[1] + "') > myself.CurrentMana && !myself.hasMutation('Brainless'):"
 				actionstring += tab + "\treturn"
@@ -969,6 +1007,7 @@ func createEffectFunctions(effectstring):
 	
 	scriptString += initString + "\n\nfunc turnFunction():" + turnString + "\n\nfunc triggerFunction():" + triggerString + "\n\nfunc endFunction():\n\tif (!myself.isAlive() || (opponent != null && !opponent.isAlive())) && !'stat' in effectProperties:\n\t\treturn" + endString
 	var varString = "\nvar effectName = '" + effectName + "'"
+	varString += "\nvar effectDescription = \"" + effectDescription + "\""
 
 	if actives > 0:
 		effectProperties.append("active")
@@ -979,13 +1018,13 @@ func createEffectFunctions(effectstring):
 	varString += liststring
 	scriptString = varString + scriptString
 	
-#	if effectName == "Muscle Mass":
+#	if effectName == "Stranglehold (Attacker)" || effectName == "Stranglehold (Target)":
 #		print_debug(scriptString)
 	script.set_source_code(scriptString)
 	script.resource_name = "Effect" + effectName
 	script.resource_path = "res://Effect/" + script.resource_name + ".gd"
 	script.reload()
-	EffectScripts[effectName] = [effectProperties, script]
+	EffectScripts[effectName] = [effectProperties, script, effectDescription]
 
 func uniqueEffectFunction(effectName, whichstring):
 	var functionstr = ""

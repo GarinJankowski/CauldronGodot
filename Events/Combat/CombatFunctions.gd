@@ -4,16 +4,26 @@ var me
 var enemy
 var textlog
 var CombatEvent
+var reverse
 
 var Game
 
-func init(myself, opponent):
+func init(myself, opponent, original=true):
 	me = myself
 	enemy = opponent
 	
 	Game = get_parent().get_parent().Game
 	textlog = Game.textlog
+	if myself == null:
+		print(original)
 	CombatEvent = myself.currentCombatEvent
+	
+	if myself == opponent:
+		reverse = self
+
+func setReverse(revCombat):
+	reverse = revCombat
+	revCombat.reverse = self
 
 func setCombatEvent(event):
 	CombatEvent = event
@@ -361,7 +371,7 @@ func gainDistance(distance, Card):
 	return distance(distance, me, enemy, Card)
 func distance(distance, myself, opponent, Card):
 	var calcdistance = distance
-	if myself.hasEffect("Suspend"):
+	if myself.hasEffect("Suspend") || myself.hasEffect("Shackle"):
 		calcdistance = 0
 	elif (myself.hasEffect("Stranglehold (Attacker)") || myself.hasEffect("Stranglehold (Target)")) && distance > 0:
 		calcdistance = 0

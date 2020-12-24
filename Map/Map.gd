@@ -240,8 +240,8 @@ func generateTerrain():
 #	for x in 3:
 #		for y in 3:
 #			terrainStrings[gridWidth-x-1][gridHeight-y-1] = "City"
-	for x in 3:
-		for y in 3:
+	for x in 2:
+		for y in 2:
 			terrainStrings[x][y] = "Field"
 	
 	for x in range(gridWidth):

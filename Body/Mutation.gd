@@ -41,9 +41,9 @@ func makeSprite():
 		get_node("glow/glowback").modulate = "3ccb1bd0"
 	
 	get_node("backSprite").set_texture(load("res://Body/mutation_back" + positive + ".png"))
-	get_node("mutationSprite").set_texture(load("res://Body/" + positive + " Mutations/mutation_" + mutationName + ".png"))
-	if get_node("mutationSprite").texture == null:
-		get_node("mutationSprite").set_texture(load("res://Body/" + positive + " Mutations/mutation_" + positive + ".png"))
+	#get_node("mutationSprite").set_texture(load("res://Body/" + positive + " Mutations/mutation_" + mutationName + ".png"))
+	#if get_node("mutationSprite").texture == null:
+	get_node("mutationSprite").set_texture(load("res://Body/" + positive + " Mutations/mutation_" + positive + ".png"))
 
 func end(chosen):
 	if chosen:

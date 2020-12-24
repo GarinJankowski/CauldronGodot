@@ -1,123 +1,127 @@
-Name	Turns	G/B	Flags				
-Strength Up	0	Good	"gainStat: Strength, Val"				
-Dexterity Up	0	Good	"gainStat: Dexterity, Val"				
-Intelligence Up	0	Good	"gainStat: Intelligence, Val"				
-Max Health Up	0	Good	"gainStat: Max Health, Val"				
-Max Mana Up	0	Good	"gainStat: Max Mana, Val"				
-Strength Down	0	Bad	"gainStat: Strength, Val"	zero			
-Dexterity Down	0	Bad	"gainStat: Dexterity, Val"	zero			
-Intelligence Down	0	Bad	"gainStat: Intelligence, Val"	zero			
-Max Health Down	0	Bad	"gainStat: Max Health, Val"	zero			
-Max Mana Down	0	Bad	"gainStat: Max Mana, Val"	zero			
-							
-Gain Health	0	Good	gainHealth: Val				
-Gain Mana	0	Good	gainMana: Val				
-Gain Energy	0	Good	gainEnergy: Val				
-Gain Extra Turns	0	Good	gainExtraTurns: Val				
-Gain Block	0	Good	gainBlock: Val				
-Gain Shield	0	Good	gainShield: Val				
-Gain Distance	0	Good	useCard: GainDistance				
-Lose Health	0	Bad	takeIndirectDamage: Val				
-Lose Energy	0	Bad	gainEnergy: -Val				
-Take Damage	0	Bad	takeDirectDamage: Val				
-							
-Extra Turns	-1	Good	priority 1				
-Distance	-1	Good	priority 2	(trigger)self: decrement			
-Deflect	0	Good	priority 3	(trigger)self: decrement	stackable		
-Phase	0	Good	priority 4	zero	(end)gainEnergy: Val		
-Sense	0	Good	priority 5	(trigger)useCard: Sense Energy	(trigger)self: remove		
-Dodge	0	Good	priority 6	(trigger)useCard: Dodge Energy	(trigger)self: remove		
-Evade	0	Good	priority 7	(trigger)useCard: Evade Turn	(trigger)self: remove		
-Elude	0	Good	priority 8				
-Persist	0	Good	priority 9				
-Unbreakable	0	Good	priority 10				
-Shield	0	Good	priority 11	stackable			
-Block	0	Good	priority 12	stackable			
-Permashield	-1	Good	priority 13				
-Permablock	-1	Good	priority 14				
-Stranglehold (Attacker)	-1	Good	priority 15	unstackable	counterpart	zero	(trigger)self: UNIQUEFUNCTION
-Stranglehold (Target)	-1	Bad	priority 1	replaceable	trigger: Stranglehold (Attacker)	(trigger)self: UNIQUEFUNCTION	
-							
-Arise	0	Good	ally	dealDirectDamage: 2 d 3			
-Dagger with Legs	0	Good	ally	useCard: Dagger Stab			
-Hammer with Legs	0	Good	ally	useCard: Hammer Crush			
-Sword with Legs	0	Good	ally	dealDirectDamage: 1 d Str			
-Tumefy	0	Good	ally				
-Rally	0	Good	ally	cycle: 2	dealDirectDamage: 1 d Int		
-Decay	0	Good	ally	gainMana: Int / 2	gainEnergy: -10		
-Wasp	0	Good	ally	useCard: Wasp Sting			
-Rat	0	Good	ally	cycle: 2	dealDirectDamage: 1 d Str		
-Crab	0	Good	ally	gainBlock: Dex			
-Salamander	0	Good	ally	gainMana: Int / 2	(end)dealDirectDamage: Int d 2		
-							
-Attack Heal	0	Good	N/A				
-Charm	0	Good	(trigger)gainMana: Int	(trigger)self: remove			
-Energized	0	Good	N/A				
-Fear	0	Good	action: pierce				
-Focus	0	Good	(end)gainMana: 4	(end)fill: Spell			
-No Mana Cost	0	Good	N/A				
-Nullify	0	Good	N/A				
-Sear	0	Good	(trigger)useCard: Sear Enemy	(trigger)self: remove			
-Force Field	0	Good	(trigger)useCard: Force Field Break	(trigger)self: remove			
-Tireless	0	Good	N/A				
-Tornado	0	Good	gainEnergy: 6				
-Invisibility	0	Good	N/A				
-Sandstorm	0	Good	takeDirectDamage: Val	dealDirectDamage: Val			
-Protostar	0	Good	gainEnergy: 2	(end)self: UNIQUEFUNCTION	(trigger)self: UNIQUEFUNCTION	(trigger)self: remove	
-Fuse	0	Good	unreplaceable				
-Heave	0	Good	replaceable	(trigger)self: remove			
-Aim	0	Good	replaceable	(trigger)useCard: Aim Pierce			
-Anticipate	0	Good	(trigger)addTurns: 2	(end)gainEnergy: Val			
-Sharpen	0	Good	N/A				
-Swing	0	Good	(trigger)self: remove	stackable			
-Pull Back	0	Good	(end)useCard: Pull Back Distance				
-Parting Shot	0	Good	(trigger)useCard: Parting Shot Distance	(trigger)self: remove			
-Throw	0	Good	replaceable				
-Parry	0	Good	(trigger)useCard: Parry Attack				
-Zoom	0	Good	(end)useCard: Zoom Strength				
-Inspire	0	Good	replaceable				
-Ant Shield	0	Good	(trigger)useCard: Ant Lash				
-							
-Attack Trap	0	Bad	(trigger)useCard: Attack Trap Triggered	(trigger)self: remove			
-Defend Trap	0	Bad	(trigger)useCard: Defend Trap Triggered	(trigger)self: remove			
-Spell Trap	0	Bad	(trigger)useCard: Spell Trap Triggered	(trigger)self: remove			
-Confuse	0	Bad	action: selfPierce				
-Jinx	0	Bad	N/A				
-Lose Energy Later	0	Bad	(end)gainEnergy: -Val				
-Shuffle	0	Bad	action: selfShuffle	replaceable			
-Spike Trap	0	Bad	action: selfPierce	takeDirectDamage: Val			
-Taunt	0	Bad	N/A				
-Sleep	0	Bad	replaceable	(trigger)self: remove	(end)useCard: Wake Up		
-Shatter	0	Bad	N/A				
-Suspend	0	Bad	N/A				
-Strong Winds	0	Bad	gainDistance: 1				
-Ants	0	Bad	takeDirectDamage: 1	takeDirectDamage: 1		
-							
-Bide	-1	Good	N/A				
-Forget	-1	Good	delay	(trigger)gainMana: Int	(trigger)self: decrement		
-Pummel	-1	Good	N/A				
-Sneak	-1	Good	gainEnergy: Val	(trigger)self: remove			
-Stealth	-1	Good	gainEnergy: Val	(trigger)gainExtraTurns: -effect(Extra_Turns)	(trigger)self: remove		
-Spikes	-1	Good	(trigger)useCard: Spike Enemy	(trigger)self: decrement			
-Thunderstorm	-1	Good	unstackable	manaCost: 2	dealDirectDamage: Val		
-Transmute	-1	Good	gainHealth: -Val	(trigger)useCard: Blood Strike			
-Copy	-1	Good	N/A				
-Ignite	-1	Good	(trigger)useCard: Ignite Enemy	(trigger)self: decrement			
-							
-Drown (Target)	-1	Bad	trigger: Drown (Attacker)	(trigger)takeIndirectDamage: Val			
-Drown (Attacker)	-1	Bad	(trigger)manaCost: Val	(trigger)trigger: Drown (Target)			
-Trick (Target)	-1	Bad	unstackable	(trigger)trigger: Trick (Attacker)	(trigger)self: remove		
-Trick (Attacker)	-1	Good	(trigger)useCard: Tricked (Val)	(trigger)self: remove	counterpart		
-Wound	-1	Bad	takeIndirectDamage: Val	(trigger)takeIndirectDamage: Val			
-Frozen	-1	Bad	(trigger)self: remove	replaceable			
-							
-Record	-1	Good	zero	delay	(trigger)self: UNIQUEFUNCTION		
-You	-1	Good	ally	self: UNIQUEFUNCTION			
-							
-Mending Growth	0	Good	ally	gainHealth: 1 d Mut			
-Charred Skin	-1	Bad	(trigger)self: decrement				
-Volatile	-1	Bad	cycle: 4	unstackable	useCard: Volatile	takeDirectDamage: Val	dealDirectDamage: Val
-Berserk	0	Bad	fill: Attack				
-Muscle Mass	-1	Bad	cycle: Mut	useCard: Muscle Mass	self: zero	zero	stackable
-Scrambled	-1	Bad	cycle: 8 - Mut	action: selfShuffle			
-Faltering Growth	0	Good	ally	(end)takeIndirectDamage: Mut d 2			
+Name	Turns	G/B	Description	Flags				
+Strength Up	0	Good	Strength is increased by (Val).	"gainStat: Strength, Val"				
+Dexterity Up	0	Good	Dexterity is increased by (Val).	"gainStat: Dexterity, Val"				
+Intelligence Up	0	Good	Intelligence is increased by (Val).	"gainStat: Intelligence, Val"				
+Max Health Up	0	Good	Max Health is increased by (Val).	"gainStat: Max Health, Val"				
+Max Mana Up	0	Good	Max Mana is increased by (Val).	"gainStat: Max Mana, Val"				
+Strength Down	0	Bad	Strength is decreased by (-Val).	"gainStat: Strength, Val"	zero			
+Dexterity Down	0	Bad	Dexterity is decreased by (-Val).	"gainStat: Dexterity, Val"	zero			
+Intelligence Down	0	Bad	Intelligence is decreased by (-Val).	"gainStat: Intelligence, Val"	zero			
+Max Health Down	0	Bad	Max Health is decreased by (-Val).	"gainStat: Max Health, Val"	zero			
+Max Mana Down	0	Bad	Max Mana is decreased by (-Val).	"gainStat: Max Mana, Val"	zero			
+								
+Gain Health	0	Good	Gain (Val) health per turn.	gainHealth: Val				
+Gain Mana	0	Good	Gain (Val) mana per turn.	gainMana: Val				
+Gain Energy	0	Good	Gain (Val) energy per turn.	gainEnergy: Val				
+Gain Extra Turns	0	Good	Gain (Val) extra turn(s) per turn.	gainExtraTurns: Val				
+Gain Block	0	Good	Gain (Val) block per turn.	gainBlock: Val				
+Gain Shield	0	Good	Gain (Val) shield per turn.	gainShield: Val				
+Gain Distance	0	Good	Gain (Val) distance per turn.	useCard: GainDistance				
+Lose Health	0	Bad	Lose (Val) health per turn.	takeIndirectDamage: Val				
+Lose Energy	0	Bad	Lose (Val) energy per turn.	gainEnergy: -Val				
+Take Damage	0	Bad	Take (Val) damage per turn.	takeDirectDamage: Val				
+								
+Extra Turns	-1	Good	(Val) more free turns.	priority 1				
+Distance	-1	Good	Negate the next (Val) melee Attack cards from either combatant.	priority 2	(trigger)self: decrement			
+Deflect	0	Good	The next (Val) cards are negated and forced back against the opponent.	priority 3	(trigger)self: decrement	stackable		
+Phase	0	Good	"Damage taken is instead stored. When this effect ends, gain that much energy. Energy stored: (Val)"	priority 4	zero	(end)gainEnergy: Val		
+Sense	0	Good	"Ignore the next card used by the opponent against the target. If triggered, the target gains (Dex) energy and mana."	priority 5	(trigger)useCard: Sense Energy	(trigger)self: remove		
+Dodge	0	Good	"Ignore the next card used by the opponent against the target. If triggered, the target gains (Dex) energy."	priority 6	(trigger)useCard: Dodge Energy	(trigger)self: remove		
+Evade	0	Good	"Ignore the next card used by the opponent against the target. If triggered, the target gains an extra turn."	priority 7	(trigger)useCard: Evade Turn	(trigger)self: remove		
+Elude	0	Good	"Ignore any cards used by the opponent against the target. When this effect ends, gain (Dex) energy."	priority 8				
+Persist	0	Good	Damage taken is halved.	priority 9				
+Unbreakable	0	Good	Pierce immunity.	priority 10				
+Shield	0	Good	Ignore the next (Val) times damage is taken.	priority 11	stackable			
+Block	0	Good	Ignore the next (Val) damage taken.	priority 12	stackable			
+Permashield	-1	Good	Ignore the next (Val) times damage is taken.	priority 13				
+Permablock	-1	Good	Ignore the next (Val) damage taken.	priority 14				
+Stranglehold (Attacker)	-1	Good	"Losing any health depletes this effect's value by the same amount. Once depleted, the Attacker takes their next turn to end the Stranglehold. Prevents any Distance gain."	priority 15	unstackable	counterpart	zero	(trigger)self: UNIQUEFUNCTION
+Stranglehold (Target)	-1	Bad	The Attacker attacks the Target every turn. Prevents any Distance gain.	priority 1	replaceable	trigger: Stranglehold (Attacker)	(trigger)self: UNIQUEFUNCTION	
+								
+Arise	0	Good	Blocks (Val) damage. Deals 2d3 damage per turn.	ally	dealDirectDamage: 2 d 3			
+Dagger with Legs	0	Good	Blocks (Val) damage. Deals 1d(Str) damage per turn.	ally	useCard: Dagger Stab			
+Hammer with Legs	0	Good	Blocks (Val) damage. Deals (Str)d2 damage per turn.	ally	useCard: Hammer Crush			
+Sword with Legs	0	Good	Blocks (Val) damage. Deals 1d(Str) damage per turn.	ally	dealDirectDamage: 1 d Str			
+Tumefy	0	Good	Blocks (Val) damage.	ally				
+Rally	0	Good	Blocks (Val) damage. Deals 1d(Int) damage every other turn.	ally	cycle: 2	dealDirectDamage: 1 d Int		
+Decay	0	Good	Blocks (Val) damage. Grants (Int)/2 mana and causes 10 energy loss each turn.	ally	gainMana: Int / 2	gainEnergy: -10		
+Wasp	0	Good	Blocks (Val) damage. Deals 1d(Str) damage per turn.	ally	useCard: Wasp Sting			
+Rat	0	Good	Blocks (Val) damage. Deals 1d(Str) damage every other turn.	ally	cycle: 2	dealDirectDamage: 1 d Str		
+Crab	0	Good	Blocks (Val) damage. Gain (Dex) block per turn.	ally	gainBlock: Dex			
+Salamander	0	Good	"Blocks (Val) damage. Gain (Int)/2 mana per turn. When this effect ends, deal (Int)d2 damage."	ally	gainMana: Int / 2	(end)dealDirectDamage: Int d 2		
+								
+Attack Heal	0	Good	The next damaging Attack heals for the damage dealt.	N/A				
+Charm	0	Good	The next card deflected grants (Int) mana.	(trigger)gainMana: Int	(trigger)self: remove			
+Energized	0	Good	Energy gained over the maximum is retained.	N/A				
+Fear	0	Good	Pierce the opponent every turn.	action: pierce				
+Focus	0	Good	"When this effect ends, gain 4 mana and fill your hand with Spells."	(end)gainMana: 4	(end)fill: Spell	turnvalue		
+No Mana Cost	0	Good	Ignores the cost of all Spells.	N/A				
+Nullify	0	Good	"Health, energy, and mana cannot be changed."	N/A				
+Sear	0	Good	The next damage taken causes the opponent to lose 1 health for (Dex) turns.	(trigger)useCard: Sear Enemy	(trigger)self: remove			
+Force Field	0	Good	Defenses cannot be lost due to duration. This effect gets removed at 0 mana.	(trigger)useCard: Force Field Break	(trigger)self: remove			
+Tireless	0	Good	Prevents energy loss.	N/A				
+Tornado	0	Good	a	gainEnergy: 6				
+Invisibility	0	Good	Prevents energy loss. Energy gained over the maximum is retained.	N/A				
+Sandstorm	0	Good	Take and deal (Val) damage every turn.	takeDirectDamage: Val	dealDirectDamage: Val			
+Protostar	0	Good	a	gainEnergy: 2	(end)self: UNIQUEFUNCTION	(trigger)self: UNIQUEFUNCTION	(trigger)self: remove	
+Fuse	0	Good	Projectile Attacks deal (Val) more damage.	unreplaceable				
+Heave	0	Good	"If the opponent has defenses, your next damaging Attack has twice the effect."	replaceable	(trigger)self: remove			
+Aim	0	Good	All damaging Attacks pierce beforehand and deal double damage.	replaceable	(trigger)useCard: Aim Pierce			
+Anticipate	0	Good	"When this effect ends, gain (Val) energy. Playing a Defend increases this duration by 2."	(trigger)addTurns: 2	(end)gainEnergy: Val			
+Sharpen	0	Good	Attacks deal (Val) more damage.	N/A				
+Swing	0	Good	The next projectile Attack deals (Val) more damage.	(trigger)self: remove	stackable			
+Pull Back	0	Good	"When this effect ends, gain 4 distance if you have none. "	(end)useCard: Pull Back Distance				
+Parting Shot	0	Good	Then next projectile Attack grants 3 distance.	(trigger)useCard: Parting Shot Distance	(trigger)self: remove			
+Throw	0	Good	"The next damaging Attack has becomes a projectile, has twice the effect, and discards for 10 turns."	replaceable				
+Parry	0	Good	"Taking damage from the opponent halves the damage, deals 1d(Str) damage, and grants 10 energy."	(trigger)useCard: Parry Attack				
+Zoom	0	Good	a	(end)useCard: Zoom Strength				
+Inspire	0	Good	The next mana-gaining Spell has twice effect.	replaceable				
+Ant Shield	0	Good	Taking damage from the opponent halves the damage and applies 3 Ants to the opponent.	(trigger)useCard: Ant Lash				
+								
+Attack Trap	0	Bad	Playing an Attack pierces the target and causes 10 energy loss.	(trigger)useCard: Attack Trap Triggered	(trigger)self: remove			
+Defend Trap	0	Bad	Playing a Defend causes 2d2 health loss for 5 turns.	(trigger)useCard: Defend Trap Triggered	(trigger)self: remove			
+Spell Trap	0	Bad	Playing a Spell deals 8d3 damage to the target.	(trigger)useCard: Spell Trap Triggered	(trigger)self: remove			
+Confuse	0	Bad	"Every turn, the target gets pierced. Cards played by the target are turned against them."	action: selfPierce				
+Jinx	0	Bad	Cards played by the target are turned against them.	N/A				
+Lose Energy Later	0	Bad	"When this effect ends, lose (Val) energy."	(end)gainEnergy: -Val				
+Shuffle	0	Bad	Shuffle the target's deck every turn.	action: selfShuffle	replaceable			
+Spike Trap	0	Bad	Pierces and deals (Val) damage to the target every turn.	action: selfPierce	takeDirectDamage: Val			
+Taunt	0	Bad	Forces the use of damaging Attacks if there are any in hand.	N/A				
+Shatter	0	Bad	Prevents positive effects from being gained.	N/A				
+Suspend	0	Bad	Prevents the target from affecting distance.	N/A				
+Strong Winds	0	Bad	Causes 1 distance gain per turn.	gainDistance: 1				
+Sleep	0	Bad	Prevents action. This effect ends when the target loses any health.	replaceable	(trigger)self: remove	(end)useCard: Wake Up		
+Ants	0	Bad	Take 1 damage twice per turn.	takeDirectDamage: 1	takeDirectDamage: 1			
+Stun	0	Bad	Prevents action.	N/A				
+Doom (Target)	0	Bad	Destined for ruin.	(end)enemyUseCard: Doom Damage	(end)trigger: Doom (Attacker)	turnvalue		
+Doom (Attacker)	-1	Good	This combatant has doomed someone.	replaceable	counterpart				
+Shackle	0	Bad	Prevents the target from affecting distance.	N/A				
+								
+Bide	-1	Good	Makes the Stand Firm card grant 1 shield for 5 turns and 10 energy loss (Val) times.	N/A				
+Forget	-1	Good	The next (Val) cards played grant (Int) mana and burn.	delay	(trigger)gainMana: Int	(trigger)self: decrement		
+Pummel	-1	Good	Makes the Knock Out card deal 1d(Str) damage (Val) times.	N/A				
+Sneak	-1	Good	Grants (Val) energy per turn and prevents energy loss. Dealing damage to the opponent ends the effect.	gainEnergy: Val	(trigger)self: remove			
+Stealth	-1	Good	Grants (Val) energy per turn and retains energy gained over the maximum. Dealing damage to the opponent ends the effect.	gainEnergy: Val	(trigger)gainExtraTurns: -effect(Extra_Turns)	(trigger)self: remove		
+Spikes	-1	Good	"The next (Val) times damage is taken from the opponent, 4d2 damage is dealt back."	(trigger)useCard: Spike Enemy	(trigger)self: decrement			
+Thunderstorm	-1	Good	"Each turn, 2 mana is spent to deal 1d(Int) damage. Nothing will occur if the cost cannot be met."	unstackable	manaCost: 2	dealDirectDamage: Val		
+Transmute	-1	Good	Causes (Val) health loss per turn. All Attacks also deal (Val) damage and heal for (Val).	gainHealth: -Val	(trigger)useCard: Blood Strike			
+Copy	-1	Good	The effect of the next card played is increased by (Val).	N/A				
+Ignite	-1	Good	The next (Val) damaging Attacks burns the card and causes the opponent to loses 1d3 health for (Str)/2 turns.	(trigger)useCard: Ignite Enemy	(trigger)self: decrement			
+								
+Drown (Target)	-1	Bad	"Each turn, 2 mana is spent from the Attacker to lose (Val) health. Nothing will occur if the cost cannot be met."	trigger: Drown (Attacker)	(trigger)takeIndirectDamage: Val			
+Drown (Attacker)	-1	Bad	Drowning the Target costs (Val) mana.	(trigger)manaCost: Val	(trigger)trigger: Drown (Target)	counterpart		
+Trick (Target)	-1	Bad	Playing a card against the Attacker first causes them to deal damage and gain mana.	unstackable	(trigger)trigger: Trick (Attacker)	(trigger)self: remove		
+Trick (Attacker)	-1	Good	"When triggered, deals 1d(Int) damage and grants (Int)/3 mana (Val) times."	(trigger)useCard: Tricked (Val)	(trigger)self: remove	counterpart		
+Wound	-1	Bad	Lose (Val) health each turn and every time a card is used against the opponent.	takeIndirectDamage: Val	(trigger)takeIndirectDamage: Val			
+Frozen	-1	Bad	Prevents the playing of any cards against the opponent. Losing any health ends the effect.	(trigger)self: remove	replaceable			
+								
+Record	-1	Good	Remembers every card played by the affected. (Val) cards have been played so far.	zero	delay	(trigger)self: UNIQUEFUNCTION		
+You	-1	Good	Blocks (Val) damage. Plays back the cards the were previously recorded in a loop. A card is played each turn.	ally	self: UNIQUEFUNCTION			
+								
+Mending Growth	0	Good	Blocks (Val) damage. Grants 1d(Mut) health per turn.	ally	gainHealth: 1 d Mut			
+Charred Skin	-1	Bad	The next (Val) Defends played will burn.	(trigger)self: decrement				
+Volatile	-1	Bad	Take and deal (Val) damage every 4 turns.	cycle: 4	unstackable	useCard: Volatile	takeDirectDamage: Val	dealDirectDamage: Val
+Berserk	0	Bad	Fills the target's hand with Attacks every turn.	fill: Attack				
+Muscle Mass	-1	Bad	"Damage dealt is instead stored. Every (Mut) turns, this damage is dealt all at once. Damage stored: (Val)"	cycle: Mut	useCard: Muscle Mass	self: zero	zero	stackable
+Scrambled	-1	Bad	Shuffles the target's deck every 8-(Mut) turns.	cycle: 8 - Mut	action: selfShuffle			
+Faltering Growth	0	Good	"Blocks (Val) damage. When this effect ends, lose (Mut)d2 health."	ally	(end)takeIndirectDamage: Mut d 2			

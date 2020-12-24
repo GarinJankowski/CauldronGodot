@@ -1,6 +1,7 @@
 extends Node2D
 
 var effectName
+var effectDescription
 var Card
 var Combat
 var myself
@@ -20,6 +21,7 @@ var scriptObject
 
 var displayName
 var displayTurns
+var displayDescription
 
 var EffectsList
 
@@ -33,6 +35,7 @@ var layerstep = Vector2(-33, 12)
 var dest = Vector2(0, 0)
 
 onready var ticknode = get_node("tick")
+onready var warningnode = get_node("tick/zero_turn_warning")
 var tickdestx
 var tickstepx = 1
 
@@ -61,11 +64,13 @@ func init(ename, v, t, c):
 	var effectInfo = Game.scriptgen.EffectScripts[ename]
 	effectProperties = effectInfo[0].duplicate()
 	scriptObject.set_script(effectInfo[1])
+	effectDescription = effectInfo[2]
 	scriptObject.init(self)
 	initVariables()
 	
 	setDisplayName()
 	setDisplayTurns()
+	setDisplayDescription()
 	var newtxt = (str(value)).replace(" ", "")
 	if newtxt == "0" && !"zero" in effectProperties:
 		newtxt = ""
@@ -73,9 +78,10 @@ func init(ename, v, t, c):
 		newtxt = "x" + newtxt
 	get_node("tick/amount").text = newtxt
 	
-	if effectName == "Focus":
+	if has("turnvalue"):
 		setValue(turns)
-	elif effectName == "Record":
+		
+	if effectName == "Record":
 		get_node("tick/amount").modulate = "000000"
 	elif effectName == "You":
 		specialValue = []
@@ -86,6 +92,7 @@ func init(ename, v, t, c):
 		get_node("tick/amount").rect_position.x = 9
 		startpos.x *= -1
 		layerstep.x *= -1
+		warningnode.position.x *= -1
 		position.x = startpos.x
 		get_node("effectArea").position.x = 27
 		dest.x = position.x
@@ -158,7 +165,7 @@ func endFunction():
 	scriptObject.endFunction()
 
 func takeTurn():
-	if active:
+	if active && turns != 0:
 		if "everyOther" in effectProperties && everyOther:
 			everyOther = false
 		else:
@@ -166,9 +173,10 @@ func takeTurn():
 			everyOther = true
 	if turns > 0:
 		turns -= 1
-		if effectName == "Focus":
+		if has("turnvalue"):
 			setValue(turns)
-	if turns > 0 || cycle:
+		setDisplayTurns()
+	if cycle:
 		setDisplayTurns()
 
 func has(prop):
@@ -183,7 +191,7 @@ func setText(txt):
 	if effectName == "Trick":
 		newtxt = "x" + newtxt
 	get_node("tick/amount").text = newtxt
-	if !shouldExist():
+	if shouldValueOut():
 		EffectsList.removeEffect(null, self)
 
 func remove():
@@ -211,14 +219,24 @@ func add(val, cd = null):
 		Card = cd
 		Combat = Card.Combat.duplicate()
 	setText(str(value))
+	setDisplayDescription()
 
 func addTurns(val):
 	turns += val
+	if turns < 0:
+		turns = 0
+	setDisplayTurns()
+
+func setTurns(val):
+	turns = val
+	if turns < 0:
+		turns = 0
 	setDisplayTurns()
 
 func setValue(val):
 	value = val
 	setText(str(value))
+	setDisplayDescription()
 
 func equals(eff):
 	if eff == effectName:
@@ -284,7 +302,7 @@ func setDisplayName():
 func setDisplayTurns():
 	var dt = " turns left"
 	if turns == -1 && !cycle:
-		dt = ""
+		dt = "(No duration)"
 	else:
 		var turnsnum = turns
 		if cycle && turns == -1:
@@ -293,6 +311,27 @@ func setDisplayTurns():
 			dt = " turn left"
 		dt = "(" + str(turnsnum) + dt + ")"
 	displayTurns = dt
+	if has("turnvalue"):
+		setValue(turns)
+	if myself.isPlayer() && displayTurns == "(0 turns left)":
+		tick()
+		warningnode.visible = true
+	else:
+		warningnode.visible = false
+	if Game.currentEffectTooltip == self:
+		Game.effectTooltip(true, self)
+	
+func setDisplayDescription():
+	var dd = effectDescription
+	if "(Val)" in dd:
+		var dd_split = dd.split("(Val)")
+		var dd_value = "(" + str(value).replace(" ", "") + ")"
+		dd = dd_split[0]
+		for i in range(1, len(dd_split)):
+			dd += dd_value + dd_split[i]
+	displayDescription = dd
+	if Game.currentEffectTooltip == self:
+		Game.effectTooltip(true, self)
 
 func setBreakpoint():
 	setValue(0)

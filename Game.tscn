@@ -41,7 +41,7 @@ script = ExtResource( 2 )
 
 [node name="Background" type="Sprite" parent="Game"]
 modulate = Color( 0.184314, 0.152941, 0.121569, 1 )
-position = Vector2( 517, 294 )
+position = Vector2( 511, 254 )
 scale = Vector2( 2.46, 2.46 )
 z_index = -2
 texture = ExtResource( 1 )
@@ -615,46 +615,86 @@ texture = ExtResource( 13 )
 
 [node name="effectGoodTooltip" type="Node2D" parent="Game/CursorLayer/cursor"]
 visible = false
-position = Vector2( 16, 122 )
+position = Vector2( 16, 114 )
 
 [node name="whitesquare" type="Node2D" parent="Game/CursorLayer/cursor/effectGoodTooltip"]
-position = Vector2( 0, -55 )
-scale = Vector2( 1, 0.59 )
+position = Vector2( -104, -127 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="squareshadow" type="NinePatchRect" parent="Game/CursorLayer/cursor/effectGoodTooltip/whitesquare"]
 modulate = Color( 1, 1, 1, 0.352941 )
-margin_left = -194.0
-margin_top = -161.0
-margin_right = 1616.0
-margin_bottom = 1164.0
-rect_scale = Vector2( 0.1, 0.04 )
+margin_left = -100.0
+margin_top = -6.0
+margin_right = 1673.0
+margin_bottom = 1305.0
+rect_scale = Vector2( 0.11, 0.04 )
 texture = ExtResource( 8 )
 patch_margin_left = 332
 patch_margin_top = 339
 patch_margin_right = 328
 patch_margin_bottom = 314
 __meta__ = {
-"_edit_use_anchors_": true
+"_edit_use_anchors_": false
 }
 
 [node name="whitesquare" type="Sprite" parent="Game/CursorLayer/cursor/effectGoodTooltip/whitesquare"]
 modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
-position = Vector2( -104, -134 )
+position = Vector2( 0, 20 )
 scale = Vector2( 0.16, 0.04 )
 texture = ExtResource( 9 )
 
-[node name="Description" type="Label" parent="Game/CursorLayer/cursor/effectGoodTooltip"]
+[node name="topsquare" type="Node2D" parent="Game/CursorLayer/cursor/effectGoodTooltip"]
+position = Vector2( -104, -146 )
+scale = Vector2( 1, 0.97 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow" type="NinePatchRect" parent="Game/CursorLayer/cursor/effectGoodTooltip/topsquare"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -100.0
+margin_top = -6.0
+margin_right = 1673.0
+margin_bottom = 1305.0
+rect_scale = Vector2( 0.11, 0.04 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="whitesquare" type="Sprite" parent="Game/CursorLayer/cursor/effectGoodTooltip/topsquare"]
+modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
+position = Vector2( 0, 20 )
+scale = Vector2( 0.16, 0.04 )
+texture = ExtResource( 9 )
+
+[node name="Duration" type="Label" parent="Game/CursorLayer/cursor/effectGoodTooltip"]
 margin_left = -182.0
-margin_top = -127.0
+margin_top = -128.0
 margin_right = -26.0
 margin_bottom = -105.0
 custom_fonts/font = SubResource( 2 )
-text = "description"
+text = "Duration"
 align = 1
 valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Description" type="Label" parent="Game/CursorLayer/cursor/effectGoodTooltip"]
+margin_left = -180.0
+margin_top = -105.0
+margin_right = -29.0
+margin_bottom = -83.0
+custom_fonts/font = SubResource( 2 )
+text = "Description"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -712,20 +752,21 @@ __meta__ = {
 
 [node name="effectBadTooltip" type="Node2D" parent="Game/CursorLayer/cursor"]
 visible = false
-position = Vector2( 200, 122 )
+position = Vector2( 211, 114 )
+
+[node name="whitesquare" type="Node2D" parent="Game/CursorLayer/cursor/effectBadTooltip"]
+position = Vector2( -104, -127 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="whitesquare" type="Node2D" parent="Game/CursorLayer/cursor/effectBadTooltip"]
-
 [node name="squareshadow" type="NinePatchRect" parent="Game/CursorLayer/cursor/effectBadTooltip/whitesquare"]
 modulate = Color( 1, 1, 1, 0.352941 )
-margin_left = -194.0
-margin_top = -161.0
-margin_right = 1616.0
-margin_bottom = 1214.0
-rect_scale = Vector2( 0.1, 0.04 )
+margin_left = -100.0
+margin_top = -6.0
+margin_right = 1673.0
+margin_bottom = 1305.0
+rect_scale = Vector2( 0.11, 0.04 )
 texture = ExtResource( 8 )
 patch_margin_left = 332
 patch_margin_top = 339
@@ -737,19 +778,60 @@ __meta__ = {
 
 [node name="whitesquare" type="Sprite" parent="Game/CursorLayer/cursor/effectBadTooltip/whitesquare"]
 modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
-position = Vector2( -104, -134 )
+position = Vector2( 0, 20 )
 scale = Vector2( 0.16, 0.04 )
 texture = ExtResource( 9 )
 
-[node name="Description" type="Label" parent="Game/CursorLayer/cursor/effectBadTooltip"]
+[node name="topsquare" type="Node2D" parent="Game/CursorLayer/cursor/effectBadTooltip"]
+position = Vector2( -104, -146 )
+scale = Vector2( 1, 0.97 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="squareshadow" type="NinePatchRect" parent="Game/CursorLayer/cursor/effectBadTooltip/topsquare"]
+modulate = Color( 1, 1, 1, 0.352941 )
+margin_left = -100.0
+margin_top = -6.0
+margin_right = 1673.0
+margin_bottom = 1305.0
+rect_scale = Vector2( 0.11, 0.04 )
+texture = ExtResource( 8 )
+patch_margin_left = 332
+patch_margin_top = 339
+patch_margin_right = 328
+patch_margin_bottom = 314
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="whitesquare" type="Sprite" parent="Game/CursorLayer/cursor/effectBadTooltip/topsquare"]
+modulate = Color( 0.286275, 0.282353, 0.282353, 1 )
+position = Vector2( 0, 20 )
+scale = Vector2( 0.16, 0.04 )
+texture = ExtResource( 9 )
+
+[node name="Duration" type="Label" parent="Game/CursorLayer/cursor/effectBadTooltip"]
 margin_left = -182.0
-margin_top = -127.0
+margin_top = -128.0
 margin_right = -26.0
 margin_bottom = -105.0
 custom_fonts/font = SubResource( 2 )
-text = "description"
+text = "Duration"
 align = 1
 valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Description" type="Label" parent="Game/CursorLayer/cursor/effectBadTooltip"]
+margin_left = -180.0
+margin_top = -105.0
+margin_right = -29.0
+margin_bottom = -83.0
+custom_fonts/font = SubResource( 2 )
+text = "Description"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false

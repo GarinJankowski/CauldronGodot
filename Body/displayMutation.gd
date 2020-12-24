@@ -55,9 +55,9 @@ func makeSprite():
 	
 	var pos = bodyMutation.positive
 	get_node("backSprite").set_texture(load("res://Body/mutation_back" + pos + ".png"))
-	get_node("mutationSprite").set_texture(load("res://Body/" + pos + " Mutations/mutation_" + bodyMutation.mutationName + ".png"))
-	if get_node("mutationSprite").texture == null:
-		get_node("mutationSprite").set_texture(load("res://Body/" + pos + " Mutations/mutation_" + pos + ".png"))
+#	get_node("mutationSprite").set_texture(load("res://Body/" + pos + " Mutations/mutation_" + bodyMutation.mutationName + ".png"))
+#	if get_node("mutationSprite").texture == null:
+	get_node("mutationSprite").set_texture(load("res://Body/" + pos + " Mutations/mutation_" + pos + ".png"))
 		
 	updateMultiplier()
 

@@ -260,7 +260,7 @@ func checkCopyEffects():
 		copy += 1
 	if myself.hasEffect("Throw") && cardType == "Attack" && hasOffensiveAction():
 		copy += 1
-	if myself.hasEffect("Inspire") && cardType == "Spell" && !"manaCost" in cardActions && cardName != "Thunderstorm" && cardName != "Drown":
+	if myself.hasEffect("Inspire") && cardType == "Spell" && !"manaCost" in cardActions:
 		copy += 1
 	return copy
 	
@@ -339,15 +339,15 @@ func checkOtherEffects():
 		myself.trigger("Wound")
 	
 	#effects that occur when you deal damage through a card
-	var damagedealtcounter = 0
+	var damage_dealt_counter = 0
 	var counter = 0
 	while counter < cardProperties.size():
 		if cardProperties[counter] == "Damage Dealt":
-			damagedealtcounter += 1
+			damage_dealt_counter += 1
 			cardProperties.remove(counter)
 		else:
 			counter += 1
-	for i in damagedealtcounter:
+	for i in damage_dealt_counter:
 		if myself.hasEffect("Attack Heal") && cardType == "Attack":
 			Combat.gainHealth(int(actionValues["dealDirectDamage"]), self)
 			myself.tickEffect("Attack Heal")
@@ -555,6 +555,11 @@ func cardLogOutput():
 						addword = "the " + opponent.enemyName
 					if word == "their":
 						addword += "'s"
+			elif word == "they":
+				if !myself.isPlayer():
+					addword = "you"
+				else:
+					addword = "they"
 			elif word == "are":
 				if !myself.isPlayer():
 					addword = "is"

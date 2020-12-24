@@ -117,7 +117,7 @@ Step Back	Defend	Gain 1 distance. Gain 3 energy. Burn this card.	{You} step{s} {
 											
 Fortify	Defend	Gain 1 block for 3 turns. Add (Dex)/2 block and 1 turn to every block effect you have. Lose 10 energy.	"{You} fortif{y} {your} defenses, gaining {gainBlock} block."	"gainBlock: 1, 3"	UNIQUEFUNCTION	gainEnergy: -10					
 Stabilize	Defend	Gain (Dex) block for 1 turn. Gain 6 energy.	{You} gain{s} {gainBlock} block for {gainBlockTurns}.	"gainBlock: Dex, 1"	gainEnergy: 6						
-Reinforce	Defend	"For 3 turns, gain (Dex)/2 block for 1 turn."	"{You} reinforce{s} {your} defense, gaining {blockOTValue} block for {blockOTTurns}."	"blockOT: Dex / 2, 3"	gainEnergy: -3						
+Reinforce	Defend	"For 3 turns, gain (Dex)/2 block for 1 turn. Lose 3 energy."	"{You} reinforce{s} {your} defense, gaining {blockOTValue} block for {blockOTTurns}."	"blockOT: Dex / 2, 3"	gainEnergy: -3						
 Regrow	Defend	Gain (Dex) health. Gain 6 energy.	{You} gain{s} {gainHealth} health.	gainHealth: Dex	gainEnergy: 6						
 Divert	Defend	"For 2 turns, retain excess energy. Next turn, gain (Dex)x2 energy. Burn this card."	"{You} divert{s} {enemyName}, gaining {energyOTValue} energy next turn."	"energyOT: Dex * 2, 1"	"selfEffect: Energized, 2"	burn					
 Block	Defend	Gain 1 shield for 1 turn. Gain (Dex) energy next turn. Discard this for 3 turns.	{You} block{s} for {gainShield} shield for {gainShieldTurns}.	"gainShield: 1, 1"	"energyOT: Dex, 1"	discard: 5					
@@ -199,7 +199,7 @@ EchoGhost	Spell	The opponent takes 1d5 damage for (Int)/2 turns. Gain (Int)/2 ma
 Echo	Spell	"Gain (Int)/2 mana. If played if on an Extra Turn, the opponent takes 1d5 damage for (Int)/2 turns."	{You} gain{s} {gainMana} mana.	ALTERNATE: extraTurn	gainMana: Int / 2						
 Jinx	Spell	"For (Int)/6+2 turns, the opponent's cards target themselves."	{You} jinx{s} {enemyName} for [you]{effectTurns}[n].	manaCost: 10	"effect: Jinx, Int / 6 + 2"						
 Attack Failure	Spell	Fail your Attack.	[enemy]{You} fail{s} {your} attack.								
-Emphasize	Spell	You and the opponent gain (Int)/2 Strength and Intellgience for 4 turns. Gain (Int)/4 mana. Gain 4 energy.	[you]Both {you} and {enemyName} grow in power.	"gainStat: Strength, Int / 2, 4"	"enemygainStat: Strength, Int / 2, 4"	"enemygainStat: Intelligence, Int / 2, 4"	"gainStat: Intelligence, Int / 2, 4"	gainMana: Int / 4	gainEnergy: 4		
+Encourage	Spell	You and the opponent gain (Int)/2 Strength and Intellgience for 4 turns. Gain (Int)/4 mana. Gain 4 energy.	[you]Both {you} and {enemyName} grow in power.	"gainStat: Strength, Int / 2, 4"	"enemygainStat: Strength, Int / 2, 4"	"enemygainStat: Intelligence, Int / 2, 4"	"gainStat: Intelligence, Int / 2, 4"	gainMana: Int / 4	gainEnergy: 4		
 Regenerate	Spell	"Next turn, gain (Int)d4 health."	[you]{You} begin{s} to regenerate.	manaCost: 6	"healthOT: Int d 4, 1"						
 Sap	Spell	Deal 1d(Int) damage. Gain mana equal to the damage dealt.	{You} sap{s} {enemyName} for {dealDirectDamage} damage and gain{s} {gainMana} mana.	dealDirectDamage: 1 d Int	gainMana: dealDirectDamage						
 Sharpen	Spell	"For 3 turns, Attacks deal (Int) more damage."	[you]{Your} attacks become deadlier.	manaCost: 4	"selfEffect: Sharpen, Int, 3"						
@@ -211,6 +211,8 @@ Melt	Spell	Lose (Int) energy twice next turn and gain (Int)x2 mana.	[you]{You} s
 Kinesis	Spell	Gain 2d(Int) Strength and 2d(Int) Dexterity for 2 turns. Gain (Int) energy.	{You} enhance{s} {your} movements and gain{s} {gainEnergy} energy.	manaCost: 5	"gainStat: Strength, 2 d Int, 2"	"gainStat: Dexterity, 2 d Int, 2"	gainEnergy: Int				
 Sense	Spell	"For 1 turn, ignore the next card the opponent uses on you. Triggering this gives (Int) energy and mana."	[you]{You} sense{s} an incoming attack.	"selfEffect: Sense, 1"							
 Sense Energy	Spell	Gain (Int) energy and mana.	"{You} avoided the sensed attack, gaining {gainEnergy} energy and {gainMana} mana."	gainEnergy: Int	gainMana: Int						
+Shock	Spell	The opponent takes 1d3 damage for 3 turns. Gain (Int)/2 mana.	"{You} shock{s} {enemyName}, dealing damage over {directDamageOTTurns}."	"directDamageOT: 1 d 3, 3"	gainMana: Int / 2						
+Stun	Spell	Deal 1d(Int) damage. The opponent cannot act for 1 turn.	"{You} stun{s} {enemyName}, dealing {dealDirectDamage} damage."	manaCost: 7	dealDirectDamage: 1 d Int	"effect: Stun, 1"					
 											
 Thunderstorm	Spell	"Every turn, spend 2 mana to deal 1d(Int) damage."	[you]A storm begins to brew.	"selfEffect: Thunderstorm, 1 d Int"							
 Tornado	Spell	You gain 6 energy and cannot use Attacks for (Int)/2 turns.	You summon a whirling cyclone for [you]{selfEffectTurns}.	manaCost: 10	"selfEffect: Tornado, 6, Int / 2"						
@@ -251,6 +253,12 @@ Return	Spell	Turn back time. Lose 66% of your health. Gain a permanent ally equa
 Skip	Spell	"Take 1 damage. Trigger all your effects (Int)/4 times, reducing any durations by that amount."	{You} take{s} {takeDirectDamage} damage. {You} fast forward{s} {your} body [you]{times}[n] in time.	manaCost: 2	takeDirectDamage: 1	UNIQUEFUNCTION	logFirst				
 Nullify	Spell	"Your health, energy, and mana cannot be changed for 2 turns."	[you]{You} feel{s} numb.	manaCost: 5	"selfEffect: Nullify, 2"						
 Adjust	Spell	"If your last card was an Attack, Defend, or Spell, lose either 10 mana, energy, or health, respectively. Gain (Int)x2 of the other two."	N/A	UNIQUEFUNCTION							
+Doom	Spell	"In (Int) turns, the opponent takes 1d(Int) damage 5 times. Burn this card. Costs 5 mana."	{You} doom{s} {their} fate. {they} will be struck in {effectTurns}.	manaCost: 5	selfEffect: Doom (Attacker)	"effect: Doom (Target), Int, Int"	burn				
+Doom Damage	Spell	Deal 1d(Int) damage 5 times.	Doom strikes {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Int	dealDirectDamage: 1 d Int	dealDirectDamage: 1 d Int	dealDirectDamage: 1 d Int	dealDirectDamage: 1 d Int			
+Shackle	Spell	"Gain 3 mana for 3 turns. If anyone has been Doomed before, you and the opponent cannot change Distance for (Int)/3 turns. "	{You} gain{s} mana for {manaOTTurns}.	ALTERNATE: effect=Doom (Attacker)	"manaOT: 3, Int / 3"						
+ShackleGhost	Spell	Gain 3 mana for 3 turns. You and the opponent cannot change Distance for (Int)/3 turns. 	{You} shackle{s} all combatants in place and gain{s} mana for {manaOTTurns}.	"manaOT: 3, Int / 3"	"selfEffect: Shackle, Int / 3"	"effect: Shackle, Int / 3"					
+Provoke	Spell	"Lower all Doom timers by 1, removing another (Int)/4 on anyone Shackled."	[you]The doom draws closer.	manaCost: 3	UNIQUEFUNCTION						
+Conclude	Spell	Set all Doom timers to the currently lowest one.	[you]The doom is nigh.	manaCost: 10	UNIQUEFUNCTION						
 											
 Strength Potion	Device 1	Gain 10 Strength for 3 turns.	[b]{You} consume{s} the strength potion.	"gainStat: Strength, 10, 3"							
 Dexterity Potion	Device 1	Gain 10 Dexterity for 3 turns.	[l]{You} consume{s} the dexterity potion.	"gainStat: Dexterity, 10, 3"							
@@ -366,8 +374,8 @@ Struggle	Harmful	Pierce yourself. Burn this card.	[you]{You} struggle{s} to esca
 											
 Dig	Defend	Gain 1 shield for 2 turns. Gain 1 distance. Add a Tighten to your deck. Discard this card for 6 turns.	"{You} hide{s} {yourself} in the ground, moving {away} and gaining {gainShield} shield."	gainDistance: 1	gainShield: 2	insertSelfDeck: Tighten (1)	link: 3	discard: 6			
 Tighten	Spell	Gain 3 Strength for 3 turns. Burn this card.	{You} strengthen{s} {your} attacks.	"gainStat: Strength, 3, 3"	UNIQUEFLAG: ramping	burn					
-Strangulate	Attack	Apply a 2d(Str) stranglehold with 6 hp. Gain 1 mana. Burn this card..	[you]{You} wrap{s} {yourself} around {enemyName}.	stranglehold: 6	gainMana: 1	burn	link: 2				
-Strangulate (Attack)	Attack	Deal 2d(Str) damage.	{You} strangle{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 2 d Str							
+Strangulate	Attack	Apply a 1d(Str) stranglehold with 6 hp. Gain 1 mana. Burn this card..	[you]{You} wrap{s} {yourself} around {enemyName}.	stranglehold: 6	gainMana: 1	burn	link: 2				
+Strangulate (Attack)	Attack	Deal 1d(Str) damage.	{You} strangle{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str							
 Strangulate (Release)	Defend	Release the enemy from any strangleholds. Add a Constrict to your deck. Lose 1 mana. Fill your hand with Attacks. Burn this card.	[enemy]{You} retreat{s} into the ground.	release	gainMana: -1	fill: Attack					
 Worm Lunge	Attack	Deal 2+2d(Str) damage.	"{You} lunge{s} at {enemyName}, closing distance and biting {them} for {dealDirectDamage} damage."	distanceCost: 1	dealDirectDamage: 2 d Str + 2	link: 4	flow				
 Worm Bite	Attack	Deal 1d(Str) damage.	{You} bite{s} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str	link: 1						
@@ -413,7 +421,7 @@ Ant Shield	Defend	"For 1+1d(Dex) turns, damage taken is halved and being Attacke
 Ant Lash	Attack	Apply Ants for 3 turns. Burn this card.	[you]{You} lash{es} back and throw{s} ants at {enemyName}.	forceUsable	"effect: Ants, 3"	burn					
 Ant Strike	Attack	Deal 1d(Str) damage. Apply Ants for a turn. Burn this card.	"{You} form{s} an appendage and strike{s} {enemyName}, dealing {dealDirectDamage} damage and [you]covering {them} with ants[n]."	forceUsable	dealDirectDamage: 1 d Str	"effect: Ants, 1"	burn				
 Ant Compress	Attack	Add an Ant Launch to your hand. Burn this card.	[you]{You} compress{es} {yourself}.	forceUsable	gainMana: 5	burn	stay: 1				
-Ant Launch	Attack	"Projectile. Apply 4 rounds of Ants, with each for a certain amount of turns from 1-4. Burn this card."	[you]{You} launch{es} a ball of ants at {enemyName}.	forceUsable	manaCost: 10	projectile	"effect: Ants, Int / 8 + 1"	"effect: Ants, Int / 8 + 2"	"effect: Ants, Int / 8 + 3"	"effect: Ants, Int / 8 + 4"	burn
+Ant Launch	Attack	"Projectile. Apply 4 rounds of Ants, with each round lasting a certain amount of turns from 1-4. Burn this card."	[you]{You} launch{es} a ball of ants at {enemyName}.	forceUsable	manaCost: 10	projectile	"effect: Ants, Int / 8 + 1"	"effect: Ants, Int / 8 + 2"	"effect: Ants, Int / 8 + 3"	"effect: Ants, Int / 8 + 4"	burn
 											
 Form Rocks	Spell	Gain (Int)d2 block for 3 turns. Gain 3 mana. Discard this card for 3 turns.	{You} start{s} to form rocks for [you]{blockOTTurns}.	"blockOT: Int d 2, 3"	gainMana: 2	discard: 3	link: 2				
 Rock Throw	Attack	Projectile. Deal damage equal to your block.	"{You} throw{s} {your} rocks at {enemyName}, dealing {dealDirectDamage} damage."	manaCost: 1	dealDirectDamage: block	link: 3	projectile				
@@ -490,7 +498,7 @@ Let Go	Attack	Create 5 turn ally with 5 health that deals 1d(Str) damage per tur
 											
 Block Attack	Defend	Gain 1 shield for 2 turns. Discard this card for 6 turns.	{You} gain{s} {gainShield} shield.	"gainShield: 1, 2"	discard: 6	link: 4					
 Lift Shield	Attack	Add a Shield Bash to your hand.	[you]{You} lift{s} up {your} shield.	insertSelfDeck: Shield Bash (1)	fill: Bash	link: 2					
-Shield Bash	Attack	Deal (Str)d3 plus your shield as damage. Burn this card.	{You} bash{es} {enemyName} for {dealDirectDamage} damage.	dealDirectDamage: Str d 3 + effect(Shield)	burn	link: 3					
+Shield Bash	Attack	Deal (Str)d3 plus your shield as damage. Burn this card.	{You} bash{es} {enemyName} for {dealDirectDamage} damage.	forceUsable	dealDirectDamage: Str d 3 + effect(Shield)	burn	link: 3				
 Double Slam	Attack	Deal 1d(Str) damage twice. Discard this card for 3 turns.	{You} slam{s} {enemyName} [you]twice[n] for {dealDirectDamage} damage.	dealDirectDamage: 1 d Str	dealDirectDamage: 1 d Str	discard: 3	link: 1				
 Last Stand	Defend	Gain (Dex) shield for 5 turns. Remove all Block Attack cards from your deck.	"{You} make{s} a last stand, gaining {gainShield} shield."	"gainShield: Dex, 5"	burnDeck: Block Attack						
 											
