@@ -285,6 +285,14 @@ func endTurnEffects():
 
 #set the turn to someone
 func nextTurn():
+	# if the card just used was instant, this whole method will be skipped
+	if turn == "guy" && guy.onInstantTurn:
+		guy.onInstantTurn = false
+		return
+	elif turn == "enemy" && enemy.onInstantTurn:
+		enemy.onInstantTurn = false
+		return
+			
 	endTurnEffects()
 	
 	if checkEndCombat():

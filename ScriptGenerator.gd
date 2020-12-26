@@ -48,7 +48,7 @@ func createCardFunctions(cardstring):
 	var logOutput = ""
 	var cardActions = {}
 	var actionValues = {}
-	var cardProperties = []
+	var cardProperties = {"Damage Dealt": 0}
 	var uniqueFlags = []
 	var uniqueValue = 0
 	
@@ -88,14 +88,20 @@ func createCardFunctions(cardstring):
 	functionString = "\n\nfunc useCard(copytimes = 0):"
 	var costString = ""
 	
+	var drawString = "\n\nfunc drawFunction():"
+	var leaveString = "\n\nfunc leaveFunction():"
+	
 	#this variable is for cards with multiple alternates
 	var alternates = 0
+	
+	var currentStringName = "functionString"
+	var currentString = ""
 	
 	for i in values.size():
 		var action = values[i]
 		if action == "CUSTOMCOPYFUNCTION":
 			scriptString += uniqueCopyFunction(cardName, actionValues)
-			cardProperties.append(action)
+			cardProperties[action] = null
 		elif action == "UNIQUEFUNCTION":
 			functionString += uniqueCardFunction(cardName, actionValues)
 		elif action == "release":
@@ -104,8 +110,8 @@ func createCardFunctions(cardstring):
 			functionString += "\n\t" + sname + ".enemy.removeEffect('Stranglehold (Target)')"
 			functionString += "\n\t" + sname + ".me.removeEffect('Stranglehold (Attacker)')"
 			functionString += "\n\tCard.CombatDeck.get_ref().addTempCard('" + cardName.replace(" (Release)", "") + "')"
-			cardProperties.append("burn")
-			cardProperties.append("forceUsable")
+			cardProperties["burn"] = null
+			cardProperties["forceUsable"] = null
 		elif action == "priority":
 			uniqueFlags.append("topPriority")
 		elif action == "flow" || action == "push":
@@ -202,7 +208,7 @@ func createCardFunctions(cardstring):
 			elif act[0] == "stranglehold":
 				functionString += tab + "Card.addEffect(opponent, 'Stranglehold (Target)', '', -1)"
 				functionString += tab + "Card.addEffect(myself, 'Stranglehold (Attacker)', Card.calculate('" + act[1] + "'), -1)"
-				cardProperties.append("stranglehold")
+				cardProperties["stranglehold"] = null
 			elif act[0].ends_with("gainStat"):
 				actionValues[act[0] + "Value"] = 0
 				actionValues[act[0] + "Turns"] = 0
@@ -298,12 +304,12 @@ func createCardFunctions(cardstring):
 				var ghostName = cardName + "Ghost"
 				if alternates > 1:
 					ghostName += str(alternates)
-				functionString += tab + "\tCard.cardProperties.append('usedAlternate')"
+				functionString += tab + "\tCard.cardProperties['usedAlternate'] = null"
 				functionString += tab + "\tCard.textlog.cancel('" + cardName + "')"
 				functionString += tab + "\tmyself.useGhostCard('" + ghostName + "', Combat, copytimes)"
 				functionString += tab + "\treturn"
 				functionString += tab + "elif copytimes > 0:"
-				functionString += tab + "\tCard.cardProperties.append('noAlternate')"
+				functionString += tab + "\tCard.cardProperties['noAlternate'] = null"
 			elif act[0].ends_with("Cost"):
 				var thing = act[0].replace("Cost", "")
 				var f = "gain" + thing.capitalize()
@@ -345,11 +351,21 @@ func createCardFunctions(cardstring):
 				else:
 					functionString += tab + "actionValues['" + act[0] + "'] += " + target + "Combat." + f + "(Card.calculate(cardActions['" + act[0] + "']), Card)"
 		elif len(action) > 0:
-			cardProperties.append(action)
+			cardProperties[action] = null
+			
+		if currentStringName == "functionString":
+			functionString += currentString
+		elif currentStringName == "drawString":
+			drawString += currentString
+		elif currentStringName == "leaveString":
+			leaveString += currentString
+		currentString = ""
 	
 	if "dealDirectDamage" in actionValues:
 		var aimString = "\n\tmyself.trigger('Aim')"
 		functionString = functionString.replace("func useCard():", "func useCard():" + aimString)
+	if "instantUse" in cardProperties:
+		functionString += "\n\tmyself.onInstantTurn = true"
 	
 	var logString = ""
 	if logOutput != 'N/A':
@@ -367,6 +383,8 @@ func createCardFunctions(cardstring):
 	var usableString = "\n\nfunc isUsable():"
 	usableString += "\n\tif Card.handIndex == -1"
 	#
+	if "unusable" in cardProperties:
+		usableString += " || True"
 	if "manaCost" in cardActions:
 		usableString += " || (-int(cardActions['manaCost']) > myself.CurrentMana && !myself.hasEffect('No Mana Cost'))"
 	if "energyCost" in cardActions:
@@ -390,7 +408,7 @@ func createCardFunctions(cardstring):
 		var uniquecostlist = uniqueCardCost(cardName)
 		usableString += uniquecostlist[0]
 		costDescription += uniquecostlist[1]
-		cardProperties.append("uniquecost")
+		cardProperties["uniquecost"] = null
 	usableString += ":\n\t\treturn false\n\treturn true"
 	scriptString += usableString
 	
@@ -412,10 +430,10 @@ func createCardFunctions(cardstring):
 	liststring += "}"
 	varString += liststring
 	
-	liststring = "\nvar cardProperties = ["
-	for value in cardProperties:
-		liststring += "'" + value + "',"
-	liststring += "]"
+	liststring = "\nvar cardProperties = {"
+	for key in cardProperties:
+		liststring += "'" + key + "': " + str(cardProperties[key]).to_lower() + ","
+	liststring += "}"
 	varString += liststring
 	
 	liststring = "\nvar uniqueFlags = ["
@@ -434,7 +452,7 @@ func createCardFunctions(cardstring):
 	
 	scriptString = varString + scriptString
 
-#	if cardName == "Reform":
+#	if cardName == "Doom":
 #		print(scriptString)
 	script.set_source_code(scriptString)
 	script.resource_name = "Card" + cardName
@@ -855,16 +873,16 @@ func createEffectFunctions(effectstring):
 	
 	var effectName
 	var effectDescription
-	var effectProperties = []
+	var effectProperties = {}
 	
 	var values = effectstring.replace("\"", "").split("\t")
 	effectName = values[0]
 	values.remove(0)
 	if int(values[0]) == -1:
-		effectProperties.append("permanent")
-		effectProperties.append("stackable")
+		effectProperties["permanent"] = null
+		effectProperties["stackable"] = null
 	values.remove(0)
-	effectProperties.append(values[0])
+	effectProperties[values[0]] = null
 	values.remove(0)
 	effectDescription = values[0]
 	values.remove(0)
@@ -891,19 +909,19 @@ func createEffectFunctions(effectstring):
 			elif action == "unstackable":
 				effectProperties.erase("stackable")
 			else:
-				effectProperties.append(action)
+				effectProperties[action] = null
 				if action == "ally":
 					effectProperties.erase("stackable")
 		elif action.begins_with("gainStat"):
 			var things = action.split(": ")[1].split(", ")
 			initString += "\n\tmyself.addTempStat('" + things[0] + "', Effect.calculate('" + things[1] + "'))"
 			endString += "\n\tmyself.addTempStat('" + things[0] + "', -Effect.calculate('" + things[1] + "'))"
-			effectProperties.append("stat")
+			effectProperties["stat"] = null
 		elif action.begins_with("cycle"):
 			if "permanent" in effectProperties:
 				effectProperties.erase("stackable")
 			var tab = "\n\t"
-			effectProperties.append("cycle")
+			effectProperties["cycle"] = null
 			initString += tab + "cycle = Effect.calculate('" + str(action.split(": ")[1]) + "')"
 			initString += tab + "if cycle < 1:"
 			initString += tab + "\tcycle = 1"
@@ -949,7 +967,7 @@ func createEffectFunctions(effectstring):
 			elif act[0] == "trigger":
 				actionstring += tab + "opponent.trigger('" + act[1] + "')"
 				if !"counterpart" in effectProperties:
-					effectProperties.append("counterpart")
+					effectProperties["counterpart"] = null
 			elif act[0].ends_with("seCard"):
 				var user = "myself"
 				var combat = ""
@@ -999,26 +1017,26 @@ func createEffectFunctions(effectstring):
 		endString = "\n\tpass"
 	else:
 		replaceable = false
-		effectProperties.append("end function")
+		effectProperties["end function"] = null
 	
 	#if the effect has all empty methods, is unstackable, and is not an ally, then it will be replaced if reapplied to the Affected
 	if replaceable:
-		effectProperties.append("replaceable")
+		effectProperties["replaceable"] = null
 	
 	scriptString += initString + "\n\nfunc turnFunction():" + turnString + "\n\nfunc triggerFunction():" + triggerString + "\n\nfunc endFunction():\n\tif (!myself.isAlive() || (opponent != null && !opponent.isAlive())) && !'stat' in effectProperties:\n\t\treturn" + endString
 	var varString = "\nvar effectName = '" + effectName + "'"
 	varString += "\nvar effectDescription = \"" + effectDescription + "\""
 
 	if actives > 0:
-		effectProperties.append("active")
-	var liststring = "\nvar effectProperties = ["
-	for prop in effectProperties:
-		liststring += "'" + prop + "',"
-	liststring += "]"
+		effectProperties["active"] = null
+	var liststring = "\nvar effectProperties = {"
+	for key in effectProperties:
+		liststring += "'" + key + "': " + str(effectProperties[key]).to_lower() + ","
+	liststring += "}"
 	varString += liststring
 	scriptString = varString + scriptString
 	
-#	if effectName == "Stranglehold (Attacker)" || effectName == "Stranglehold (Target)":
+#	if effectName == "Strength Up":
 #		print_debug(scriptString)
 	script.set_source_code(scriptString)
 	script.resource_name = "Effect" + effectName
@@ -1038,7 +1056,7 @@ func uniqueEffectFunction(effectName, whichstring):
 			functionstr += tab + "opponent.currentCombatDeck.addTempCard(Card.cardName + ' (Release)')"
 			functionstr += tab + "opponent.currentCombatDeck.fillHand(Card.cardName + ' (Release)')"
 			functionstr += tab + "opponent.currentCombatDeck.printHand()"
-			functionstr += tab + "effectProperties.append('released')"
+			functionstr += tab + "effectProperties['released'] = null"
 	elif effectName == "Stranglehold (Attacker)":
 		functionstr += tab + "myself.useGhostCard(Card.cardName + ' (Attack)', Combat)"
 	elif effectName == "Protostar":

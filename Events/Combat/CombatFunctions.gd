@@ -276,7 +276,7 @@ func directDamage(damage, myself, opponent, Card):
 		change(opponent, "Health", -usedmg)
 	
 	if Card != null && myself != opponent:
-		Card.cardProperties.append("Damage Dealt")
+		Card.cardProperties["Damage Dealt"] += 1
 	
 	return calcdmg
 	

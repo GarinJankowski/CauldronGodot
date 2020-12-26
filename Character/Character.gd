@@ -133,6 +133,7 @@ func init():
 	#Bag.addMod("", 0)
 	#Body.addMutation("")
 	#addStat("", 0)
+	Bag.addGear("Wild Headdress")
 
 
 func gainExperience(value):

@@ -40,6 +40,7 @@ var mutationStats = {
 }
 
 var onExtraTurn = false
+var onInstantTurn = false
 
 #these are only used for enemies for now
 var startCard = false

@@ -9,7 +9,7 @@ var costDescription = ""
 var logOutput = ""
 var cardActions = {}
 var actionValues = {}
-var cardProperties = []
+var cardProperties = {}
 var savedValues = {}
 var uniqueFlags = []
 var uniqueValue = 0
@@ -311,7 +311,7 @@ func checkCardTypeEffects():
 			myself.trigger("Parting Shot")
 		if "dealDirectDamage" in actionValues:
 			if myself.trigger("Ignite"):
-				cardProperties.append("ignite")
+				cardProperties["ignite"] = null
 		myself.trigger("Attack Trap")
 	if cardType == "Defend":
 		if CombatDeck.get_ref():
@@ -339,15 +339,7 @@ func checkOtherEffects():
 		myself.trigger("Wound")
 	
 	#effects that occur when you deal damage through a card
-	var damage_dealt_counter = 0
-	var counter = 0
-	while counter < cardProperties.size():
-		if cardProperties[counter] == "Damage Dealt":
-			damage_dealt_counter += 1
-			cardProperties.remove(counter)
-		else:
-			counter += 1
-	for i in damage_dealt_counter:
+	for i in cardProperties["Damage Dealt"]:
 		if myself.hasEffect("Attack Heal") && cardType == "Attack":
 			Combat.gainHealth(int(actionValues["dealDirectDamage"]), self)
 			myself.tickEffect("Attack Heal")
@@ -364,6 +356,7 @@ func checkOtherEffects():
 		myself.trigger("Stealth")
 		opponent.trigger("Sleep")
 		opponent.trigger("Ant Shield")
+	cardProperties["Damage Dealt"] = 0
 
 func addEffect(target, effectName, value, turns):
 	var operators = "+-*/d"
@@ -698,7 +691,7 @@ func changeToDevice():
 	cardDescription = cardDescription.replace("Burn this", "Destroy this")
 	cardSprite.set_texture(load("res://Card/CardSprites/card_Device.png"))
 	get_node("Top/descriptionText").text = cardDescription
-	cardProperties.append("itemTurnedDevice")
+	cardProperties["itemTurnedDevice"] = null
 
 func glowOff():
 	get_node("glow").visible = false

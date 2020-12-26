@@ -169,15 +169,25 @@ func removeEffect(effectName, effect = null):
 				effectList.erase(effectName)
 		else:
 			var chain = effectList[effectName]
+			var index = len(chain)-1
 			var list
-			if chain[0].good:
+			if chain[index].good:
 				list = goodList
 			else:
 				list = badList
-			for eff in chain:
-				list.erase(eff)
-				eff.remove()
-			effectList.erase(effectName)
+			list.erase(chain[index])
+			chain[index].remove()
+			chain.erase[index]
+#			var chain = effectList[effectName]
+#			var list
+#			if chain[0].good:
+#				list = goodList
+#			else:
+#				list = badList
+#			for eff in chain:
+#				list.erase(eff)
+#				eff.remove()
+#			effectList.erase(effectName)
 	updatePositions()
 
 #moves all effects to their correct positions on the Affected plate
